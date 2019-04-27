@@ -39,10 +39,26 @@ func main() {
 		SourceAmount:             "100",
 		SourceCurrencyCode:       "643",
 		SystemsTraceAuditNumber:  "350421",
+		CardAcceptor: visa.CardAcceptor{
+			Address: visa.Address{
+				City:    "Foster City",
+				Country: "RU",
+				County:  "San Mateo",
+				State:   "CA",
+				ZipCode: "94404",
+			},
+			IDCode:     "ABCD1234ABCD123",
+			Name:       "ABCD",
+			TerminalID: "ABCD1234",
+		},
 	}
 
-	resp, _ := client.GetForexChangeRate(testData)
+	resp, err := client.GetForexChangeRate("EYaCiuJW6LS", testData)
 
-	log.Println(resp)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	log.Println(string(resp))
 
 }

@@ -5,8 +5,6 @@ import (
 	"crypto/x509"
 	"encoding/base64"
 	"net/http"
-
-	"github.com/levigross/grequests"
 )
 
 const (
@@ -19,7 +17,7 @@ const (
 
 // A Client manages communication with the Visa API.
 type Client struct { // HTTP client used to communicate with the API.
-	oauthClient *grequests.RequestOptions // Oauth 1 client to set authentication up
+	HttpClient *http.Client // Oauth 1 client to set authentication up
 
 	// Base URL for API requests. Defaults to the public Visa API.
 	BaseURL string
@@ -78,11 +76,10 @@ func NewClient(userID string, password string, cert tls.Certificate, ca []byte, 
 	}
 
 	tlsConfig.BuildNameToCertificate()
-	client.oauthClient = &grequests.RequestOptions{
-		HTTPClient: &http.Client{
-			Transport: &http.Transport{TLSClientConfig: tlsConfig},
-		},
-	}
+
+	transport := &http.Transport{TLSClientConfig: tlsConfig}
+
+	client.HttpClient = &http.Client{Transport: transport}
 
 	return client, nil
 }
