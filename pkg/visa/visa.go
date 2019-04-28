@@ -17,7 +17,7 @@ const (
 
 // A Client manages communication with the Visa API.
 type Client struct { // HTTP client used to communicate with the API.
-	HttpClient *http.Client // Oauth 1 client to set authentication up
+	HTTPClient *http.Client // Oauth 1 client to set authentication up
 
 	// Base URL for API requests. Defaults to the public Visa API.
 	BaseURL string
@@ -79,7 +79,7 @@ func NewClient(userID string, password string, cert tls.Certificate, ca []byte, 
 
 	transport := &http.Transport{TLSClientConfig: tlsConfig}
 
-	client.HttpClient = &http.Client{Transport: transport}
+	client.HTTPClient = &http.Client{Transport: transport}
 
 	return client, nil
 }

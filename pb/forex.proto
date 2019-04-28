@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package visa;
+
+
+service VisaForexService {
+    rpc GetForexConversion (VisaForexRequest) returns (VisaForexReply) {}
+}
+
+
+// Address card address
+message Address {
+    // @inject_tag: json:"city,omitempty"
+    string City = 1;
+    // @inject_tag: json:"country,omitempty"
+    string Country = 2;
+    // @inject_tag: json:"county,omitempty"
+    string County = 3;
+    // @inject_tag: json:"state,omitempty"
+    string State = 4;
+    // @inject_tag: json:"zipCode,omitempty"
+    string ZipCode = 5;
+}
+
+// CardAcceptor id
+message CardAcceptor {
+    // @inject_tag: json:"adress,omitempty"
+    Address Address = 1;
+    // @inject_tag: json:"idcode,omitempty"
+    string IDCode     = 2;
+    // @inject_tag: json:"name,omitempty"
+    string Name       =3;
+    // @inject_tag: json:"terminalId,omitempty"
+	string TerminalID = 4;
+}
+
+
+message VisaForexRequest {
+    // @inject_tag: json:"cardAcceptor"
+    CardAcceptor   CardAcceptor = 1;
+    // @inject_tag: json:"destinationCurrencyCode,omitempty"
+    string DestinationCurrencyCode  =2;
+    // @inject_tag: json:"markUpRate,omitempty"
+    string MarkUpRate              =3;
+    // @inject_tag: json:"retrievalReferenceNumber,omitempty"
+    string RetrievalReferenceNumber =4;
+    // @inject_tag: json:"sourceAmount,omitempty"
+    string SourceAmount             =5;
+    // @inject_tag: json:"sourceCurrencyCode,omitempty"
+    string SourceCurrencyCode       =6;
+    // @inject_tag: json:"systemsTraceAuditNumber,omitempty"
+	string SystemsTraceAuditNumber  =7;
+
+}
+
+message VisaForexReply {
+    // @inject_tag: json:"conversionRate,omitempty"
+    float ConversionRate              =1;
+    // @inject_tag: json:"destinationAmount,omitempty"
+    string DestinationAmount            =2;
+    // @inject_tag: json:"markUpRateApplied,omitempty"
+    string MarkUpRateApplied            =3;
+    // @inject_tag: json:"originalDestnAmtBeforeMarkUp,omitempty"
+	string OriginalDestnAmtBeforeMarkUp =4;
+}
