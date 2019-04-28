@@ -4,12 +4,13 @@ import (
 	"context"
 	"crypto/tls"
 	"github.com/joho/godotenv"
-	"github.com/micro/go-grpc"
-	"github.com/micro/go-micro"
 	pb "github.com/ubunifupay/visa/pb"
 	"github.com/ubunifupay/visa/pkg/visa"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 	"io/ioutil"
 	"log"
+	"net"
 	"os"
 )
 
@@ -17,8 +18,9 @@ var client *visa.Client
 
 type server struct{}
 
-func (s *server) GetForexRate(ctx context.Context, transactionID string, request *pb.VisaForexRequest) (*pb.VisaForexReply, error) {
-
+func (s *server) GetForexConversion(ctx context.Context, request *pb.VisaForexRequest) (*pb.VisaForexReply, error) {
+	// TODO: use the exact value supplied
+	transactionID := ""
 	response, err := client.GetForexChangeRate(transactionID, request)
 
 	//TODO: Add logics to handle after this
@@ -47,14 +49,19 @@ func main() {
 	ca, _ := ioutil.ReadFile(caPath)
 	client, _ = visa.NewClient(userID, password, cert, ca, visa.SANDBOX)
 
-	service := grpc.NewService(
-		micro.Name("greeter"),
-	)
+	lis, err := net.Listen("tcp", ":5088")
 
-	service.Init()
+	if err != nil {
+		log.Fatalf("Failed to listen: %v", err)
+	}
+	s := grpc.NewServer()
 
-	if err := service.Run(); err != nil {
-		log.Fatal(err)
+	pb.RegisterVisaServiceServer(s, &server{})
+
+	reflection.Register(s)
+
+	if err := s.Serve(lis); err != nil {
+		log.Fatalf("Failed to serve: %v", err)
 	}
 
 }

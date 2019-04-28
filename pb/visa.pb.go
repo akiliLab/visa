@@ -25,15 +25,15 @@ const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 // Address card address
 type Address struct {
 	// @inject_tag: json:"city,omitempty"
-	City string `protobuf:"bytes,1,opt,name=City,proto3" json:"City,omitempty"`
+	City string `protobuf:"bytes,1,opt,name=City,proto3" json:"city,omitempty"`
 	// @inject_tag: json:"country,omitempty"
-	Country string `protobuf:"bytes,2,opt,name=Country,proto3" json:"Country,omitempty"`
+	Country string `protobuf:"bytes,2,opt,name=Country,proto3" json:"country,omitempty"`
 	// @inject_tag: json:"county,omitempty"
-	County string `protobuf:"bytes,3,opt,name=County,proto3" json:"County,omitempty"`
+	County string `protobuf:"bytes,3,opt,name=County,proto3" json:"county,omitempty"`
 	// @inject_tag: json:"state,omitempty"
-	State string `protobuf:"bytes,4,opt,name=State,proto3" json:"State,omitempty"`
+	State string `protobuf:"bytes,4,opt,name=State,proto3" json:"state,omitempty"`
 	// @inject_tag: json:"zipCode,omitempty"
-	ZipCode              string   `protobuf:"bytes,5,opt,name=ZipCode,proto3" json:"ZipCode,omitempty"`
+	ZipCode              string   `protobuf:"bytes,5,opt,name=ZipCode,proto3" json:"zipCode,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -102,13 +102,13 @@ func (m *Address) GetZipCode() string {
 // CardAcceptor id
 type CardAcceptor struct {
 	// @inject_tag: json:"adress,omitempty"
-	Address *Address `protobuf:"bytes,1,opt,name=Address,proto3" json:"Address,omitempty"`
+	Address *Address `protobuf:"bytes,1,opt,name=Address,proto3" json:"adress,omitempty"`
 	// @inject_tag: json:"idcode,omitempty"
-	IDCode string `protobuf:"bytes,2,opt,name=IDCode,proto3" json:"IDCode,omitempty"`
+	IDCode string `protobuf:"bytes,2,opt,name=IDCode,proto3" json:"idcode,omitempty"`
 	// @inject_tag: json:"name,omitempty"
-	Name string `protobuf:"bytes,3,opt,name=Name,proto3" json:"Name,omitempty"`
+	Name string `protobuf:"bytes,3,opt,name=Name,proto3" json:"name,omitempty"`
 	// @inject_tag: json:"terminalId,omitempty"
-	TerminalID           string   `protobuf:"bytes,4,opt,name=TerminalID,proto3" json:"TerminalID,omitempty"`
+	TerminalID           string   `protobuf:"bytes,4,opt,name=TerminalID,proto3" json:"terminalId,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -169,19 +169,19 @@ func (m *CardAcceptor) GetTerminalID() string {
 
 type VisaForexRequest struct {
 	// @inject_tag: json:"cardAcceptor"
-	CardAcceptor *CardAcceptor `protobuf:"bytes,1,opt,name=CardAcceptor,proto3" json:"CardAcceptor,omitempty"`
+	CardAcceptor *CardAcceptor `protobuf:"bytes,1,opt,name=CardAcceptor,proto3" json:"cardAcceptor"`
 	// @inject_tag: json:"destinationCurrencyCode,omitempty"
-	DestinationCurrencyCode string `protobuf:"bytes,2,opt,name=DestinationCurrencyCode,proto3" json:"DestinationCurrencyCode,omitempty"`
+	DestinationCurrencyCode string `protobuf:"bytes,2,opt,name=DestinationCurrencyCode,proto3" json:"destinationCurrencyCode,omitempty"`
 	// @inject_tag: json:"markUpRate,omitempty"
-	MarkUpRate string `protobuf:"bytes,3,opt,name=MarkUpRate,proto3" json:"MarkUpRate,omitempty"`
+	MarkUpRate string `protobuf:"bytes,3,opt,name=MarkUpRate,proto3" json:"markUpRate,omitempty"`
 	// @inject_tag: json:"retrievalReferenceNumber,omitempty"
-	RetrievalReferenceNumber string `protobuf:"bytes,4,opt,name=RetrievalReferenceNumber,proto3" json:"RetrievalReferenceNumber,omitempty"`
+	RetrievalReferenceNumber string `protobuf:"bytes,4,opt,name=RetrievalReferenceNumber,proto3" json:"retrievalReferenceNumber,omitempty"`
 	// @inject_tag: json:"sourceAmount,omitempty"
-	SourceAmount string `protobuf:"bytes,5,opt,name=SourceAmount,proto3" json:"SourceAmount,omitempty"`
+	SourceAmount string `protobuf:"bytes,5,opt,name=SourceAmount,proto3" json:"sourceAmount,omitempty"`
 	// @inject_tag: json:"sourceCurrencyCode,omitempty"
-	SourceCurrencyCode string `protobuf:"bytes,6,opt,name=SourceCurrencyCode,proto3" json:"SourceCurrencyCode,omitempty"`
+	SourceCurrencyCode string `protobuf:"bytes,6,opt,name=SourceCurrencyCode,proto3" json:"sourceCurrencyCode,omitempty"`
 	// @inject_tag: json:"systemsTraceAuditNumber,omitempty"
-	SystemsTraceAuditNumber string   `protobuf:"bytes,7,opt,name=SystemsTraceAuditNumber,proto3" json:"SystemsTraceAuditNumber,omitempty"`
+	SystemsTraceAuditNumber string   `protobuf:"bytes,7,opt,name=SystemsTraceAuditNumber,proto3" json:"systemsTraceAuditNumber,omitempty"`
 	XXX_NoUnkeyedLiteral    struct{} `json:"-"`
 	XXX_unrecognized        []byte   `json:"-"`
 	XXX_sizecache           int32    `json:"-"`
@@ -263,13 +263,13 @@ func (m *VisaForexRequest) GetSystemsTraceAuditNumber() string {
 
 type VisaForexReply struct {
 	// @inject_tag: json:"conversionRate,omitempty"
-	ConversionRate float32 `protobuf:"fixed32,1,opt,name=ConversionRate,proto3" json:"ConversionRate,omitempty"`
+	ConversionRate float32 `protobuf:"fixed32,1,opt,name=ConversionRate,proto3" json:"conversionRate,omitempty"`
 	// @inject_tag: json:"destinationAmount,omitempty"
-	DestinationAmount string `protobuf:"bytes,2,opt,name=DestinationAmount,proto3" json:"DestinationAmount,omitempty"`
+	DestinationAmount string `protobuf:"bytes,2,opt,name=DestinationAmount,proto3" json:"destinationAmount,omitempty"`
 	// @inject_tag: json:"markUpRateApplied,omitempty"
-	MarkUpRateApplied string `protobuf:"bytes,3,opt,name=MarkUpRateApplied,proto3" json:"MarkUpRateApplied,omitempty"`
+	MarkUpRateApplied string `protobuf:"bytes,3,opt,name=MarkUpRateApplied,proto3" json:"markUpRateApplied,omitempty"`
 	// @inject_tag: json:"originalDestnAmtBeforeMarkUp,omitempty"
-	OriginalDestnAmtBeforeMarkUp string   `protobuf:"bytes,4,opt,name=OriginalDestnAmtBeforeMarkUp,proto3" json:"OriginalDestnAmtBeforeMarkUp,omitempty"`
+	OriginalDestnAmtBeforeMarkUp string   `protobuf:"bytes,4,opt,name=OriginalDestnAmtBeforeMarkUp,proto3" json:"originalDestnAmtBeforeMarkUp,omitempty"`
 	XXX_NoUnkeyedLiteral         struct{} `json:"-"`
 	XXX_unrecognized             []byte   `json:"-"`
 	XXX_sizecache                int32    `json:"-"`

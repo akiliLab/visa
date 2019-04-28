@@ -12,4 +12,4 @@ test: install
 
 proto-gen:
 	 protoc --go_out=plugins=grpc:. ./pb/*.proto
-	 protoc-go-inject-tag -input=./pb/forex.pb.go
+	 protoc-go-inject-tag -input=./pb/visa.pb.go
