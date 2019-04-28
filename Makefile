@@ -11,5 +11,5 @@ test: install
 	go test ./...
 
 proto-gen:
-	 protoc --go_out=plugins=grpc:. ./pb/*.proto
+	 protoc --micro_out=. --go_out=plugins=grpc:. ./pb/*.proto
 	 protoc-go-inject-tag -input=./pb/visa.pb.go
