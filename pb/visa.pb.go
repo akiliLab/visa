@@ -24,16 +24,11 @@ const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 // Address card address
 type Address struct {
-	// @inject_tag: json:"city,omitempty"
-	City string `protobuf:"bytes,1,opt,name=City,proto3" json:"city,omitempty"`
-	// @inject_tag: json:"country,omitempty"
-	Country string `protobuf:"bytes,2,opt,name=Country,proto3" json:"country,omitempty"`
-	// @inject_tag: json:"county,omitempty"
-	County string `protobuf:"bytes,3,opt,name=County,proto3" json:"county,omitempty"`
-	// @inject_tag: json:"state,omitempty"
-	State string `protobuf:"bytes,4,opt,name=State,proto3" json:"state,omitempty"`
-	// @inject_tag: json:"zipCode,omitempty"
-	ZipCode              string   `protobuf:"bytes,5,opt,name=ZipCode,proto3" json:"zipCode,omitempty"`
+	City                 string   `protobuf:"bytes,1,opt,name=city,proto3" json:"city,omitempty"`
+	Country              string   `protobuf:"bytes,2,opt,name=country,proto3" json:"country,omitempty"`
+	County               string   `protobuf:"bytes,3,opt,name=county,proto3" json:"county,omitempty"`
+	State                string   `protobuf:"bytes,4,opt,name=state,proto3" json:"state,omitempty"`
+	ZipCode              string   `protobuf:"bytes,5,opt,name=zipCode,proto3" json:"zipCode,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -101,14 +96,10 @@ func (m *Address) GetZipCode() string {
 
 // CardAcceptor id
 type CardAcceptor struct {
-	// @inject_tag: json:"adress,omitempty"
-	Address *Address `protobuf:"bytes,1,opt,name=Address,proto3" json:"adress,omitempty"`
-	// @inject_tag: json:"idcode,omitempty"
-	IDCode string `protobuf:"bytes,2,opt,name=IDCode,proto3" json:"idcode,omitempty"`
-	// @inject_tag: json:"name,omitempty"
-	Name string `protobuf:"bytes,3,opt,name=Name,proto3" json:"name,omitempty"`
-	// @inject_tag: json:"terminalId,omitempty"
-	TerminalID           string   `protobuf:"bytes,4,opt,name=TerminalID,proto3" json:"terminalId,omitempty"`
+	Address              *Address `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
+	Idcode               string   `protobuf:"bytes,2,opt,name=idcode,proto3" json:"idcode,omitempty"`
+	Name                 string   `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	TerminalId           string   `protobuf:"bytes,4,opt,name=terminalId,proto3" json:"terminalId,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -146,9 +137,9 @@ func (m *CardAcceptor) GetAddress() *Address {
 	return nil
 }
 
-func (m *CardAcceptor) GetIDCode() string {
+func (m *CardAcceptor) GetIdcode() string {
 	if m != nil {
-		return m.IDCode
+		return m.Idcode
 	}
 	return ""
 }
@@ -160,38 +151,2495 @@ func (m *CardAcceptor) GetName() string {
 	return ""
 }
 
-func (m *CardAcceptor) GetTerminalID() string {
+func (m *CardAcceptor) GetTerminalId() string {
 	if m != nil {
-		return m.TerminalID
+		return m.TerminalId
+	}
+	return ""
+}
+
+type MagneticStripeData struct {
+	// Conditional: string | Length: maximum 76 Conditional: string | hex binary
+	// value is sent as String, Length: maximum 19
+	Track1Data           string   `protobuf:"bytes,1,opt,name=track1Data,proto3" json:"track1Data,omitempty"`
+	Track2Data           string   `protobuf:"bytes,2,opt,name=track2Data,proto3" json:"track2Data,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *MagneticStripeData) Reset()         { *m = MagneticStripeData{} }
+func (m *MagneticStripeData) String() string { return proto.CompactTextString(m) }
+func (*MagneticStripeData) ProtoMessage()    {}
+func (*MagneticStripeData) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cb0a7d9e34538282, []int{2}
+}
+
+func (m *MagneticStripeData) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_MagneticStripeData.Unmarshal(m, b)
+}
+func (m *MagneticStripeData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_MagneticStripeData.Marshal(b, m, deterministic)
+}
+func (m *MagneticStripeData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MagneticStripeData.Merge(m, src)
+}
+func (m *MagneticStripeData) XXX_Size() int {
+	return xxx_messageInfo_MagneticStripeData.Size(m)
+}
+func (m *MagneticStripeData) XXX_DiscardUnknown() {
+	xxx_messageInfo_MagneticStripeData.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MagneticStripeData proto.InternalMessageInfo
+
+func (m *MagneticStripeData) GetTrack1Data() string {
+	if m != nil {
+		return m.Track1Data
+	}
+	return ""
+}
+
+func (m *MagneticStripeData) GetTrack2Data() string {
+	if m != nil {
+		return m.Track2Data
+	}
+	return ""
+}
+
+type PointOfServiceData struct {
+	// Conditional: integer | positive, Length: totaldigits 2
+	PanEntryMode int64 `protobuf:"varint,1,opt,name=panEntryMode,proto3" json:"panEntryMode,omitempty"`
+	// Conditional: integer | positive,Length: totalDigits 2
+	PosConditionCode int64 `protobuf:"varint,2,opt,name=posConditionCode,proto3" json:"posConditionCode,omitempty"`
+	// Conditional: string | Length: 1 , max: 1 characters
+	MotoECIIndicator     string   `protobuf:"bytes,3,opt,name=motoECIIndicator,proto3" json:"motoECIIndicator,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *PointOfServiceData) Reset()         { *m = PointOfServiceData{} }
+func (m *PointOfServiceData) String() string { return proto.CompactTextString(m) }
+func (*PointOfServiceData) ProtoMessage()    {}
+func (*PointOfServiceData) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cb0a7d9e34538282, []int{3}
+}
+
+func (m *PointOfServiceData) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PointOfServiceData.Unmarshal(m, b)
+}
+func (m *PointOfServiceData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PointOfServiceData.Marshal(b, m, deterministic)
+}
+func (m *PointOfServiceData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PointOfServiceData.Merge(m, src)
+}
+func (m *PointOfServiceData) XXX_Size() int {
+	return xxx_messageInfo_PointOfServiceData.Size(m)
+}
+func (m *PointOfServiceData) XXX_DiscardUnknown() {
+	xxx_messageInfo_PointOfServiceData.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PointOfServiceData proto.InternalMessageInfo
+
+func (m *PointOfServiceData) GetPanEntryMode() int64 {
+	if m != nil {
+		return m.PanEntryMode
+	}
+	return 0
+}
+
+func (m *PointOfServiceData) GetPosConditionCode() int64 {
+	if m != nil {
+		return m.PosConditionCode
+	}
+	return 0
+}
+
+func (m *PointOfServiceData) GetMotoECIIndicator() string {
+	if m != nil {
+		return m.MotoECIIndicator
+	}
+	return ""
+}
+
+type PointOfServiceCapability struct {
+	PosTerminalType int64 `protobuf:"varint,1,opt,name=posTerminalType,proto3" json:"posTerminalType,omitempty"`
+	// Conditional: integer | positive, Length: totalDigits 1
+	PosTerminalEntryCapability int64    `protobuf:"varint,2,opt,name=posTerminalEntryCapability,proto3" json:"posTerminalEntryCapability,omitempty"`
+	XXX_NoUnkeyedLiteral       struct{} `json:"-"`
+	XXX_unrecognized           []byte   `json:"-"`
+	XXX_sizecache              int32    `json:"-"`
+}
+
+func (m *PointOfServiceCapability) Reset()         { *m = PointOfServiceCapability{} }
+func (m *PointOfServiceCapability) String() string { return proto.CompactTextString(m) }
+func (*PointOfServiceCapability) ProtoMessage()    {}
+func (*PointOfServiceCapability) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cb0a7d9e34538282, []int{4}
+}
+
+func (m *PointOfServiceCapability) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PointOfServiceCapability.Unmarshal(m, b)
+}
+func (m *PointOfServiceCapability) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PointOfServiceCapability.Marshal(b, m, deterministic)
+}
+func (m *PointOfServiceCapability) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PointOfServiceCapability.Merge(m, src)
+}
+func (m *PointOfServiceCapability) XXX_Size() int {
+	return xxx_messageInfo_PointOfServiceCapability.Size(m)
+}
+func (m *PointOfServiceCapability) XXX_DiscardUnknown() {
+	xxx_messageInfo_PointOfServiceCapability.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PointOfServiceCapability proto.InternalMessageInfo
+
+func (m *PointOfServiceCapability) GetPosTerminalType() int64 {
+	if m != nil {
+		return m.PosTerminalType
+	}
+	return 0
+}
+
+func (m *PointOfServiceCapability) GetPosTerminalEntryCapability() int64 {
+	if m != nil {
+		return m.PosTerminalEntryCapability
+	}
+	return 0
+}
+
+type PinData struct {
+	PinDataBlock string `protobuf:"bytes,1,opt,name=pinDataBlock,proto3" json:"pinDataBlock,omitempty"`
+	// Conditional: object
+	SecurityRelatedControlInfo *PointOfServiceCapability `protobuf:"bytes,2,opt,name=securityRelatedControlInfo,proto3" json:"securityRelatedControlInfo,omitempty"`
+	XXX_NoUnkeyedLiteral       struct{}                  `json:"-"`
+	XXX_unrecognized           []byte                    `json:"-"`
+	XXX_sizecache              int32                     `json:"-"`
+}
+
+func (m *PinData) Reset()         { *m = PinData{} }
+func (m *PinData) String() string { return proto.CompactTextString(m) }
+func (*PinData) ProtoMessage()    {}
+func (*PinData) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cb0a7d9e34538282, []int{5}
+}
+
+func (m *PinData) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PinData.Unmarshal(m, b)
+}
+func (m *PinData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PinData.Marshal(b, m, deterministic)
+}
+func (m *PinData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PinData.Merge(m, src)
+}
+func (m *PinData) XXX_Size() int {
+	return xxx_messageInfo_PinData.Size(m)
+}
+func (m *PinData) XXX_DiscardUnknown() {
+	xxx_messageInfo_PinData.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PinData proto.InternalMessageInfo
+
+func (m *PinData) GetPinDataBlock() string {
+	if m != nil {
+		return m.PinDataBlock
+	}
+	return ""
+}
+
+func (m *PinData) GetSecurityRelatedControlInfo() *PointOfServiceCapability {
+	if m != nil {
+		return m.SecurityRelatedControlInfo
+	}
+	return nil
+}
+
+type SecurityRelatedControlInfo struct {
+	// Conditional: integer |positive Length: totalDigits 2
+	PinBlockFormatCode int64 `protobuf:"varint,1,opt,name=pinBlockFormatCode,proto3" json:"pinBlockFormatCode,omitempty"`
+	// Conditional: integer |positive Length: totalDigits 2
+	ZoneKeyIndex         int64    `protobuf:"varint,2,opt,name=zoneKeyIndex,proto3" json:"zoneKeyIndex,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *SecurityRelatedControlInfo) Reset()         { *m = SecurityRelatedControlInfo{} }
+func (m *SecurityRelatedControlInfo) String() string { return proto.CompactTextString(m) }
+func (*SecurityRelatedControlInfo) ProtoMessage()    {}
+func (*SecurityRelatedControlInfo) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cb0a7d9e34538282, []int{6}
+}
+
+func (m *SecurityRelatedControlInfo) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_SecurityRelatedControlInfo.Unmarshal(m, b)
+}
+func (m *SecurityRelatedControlInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_SecurityRelatedControlInfo.Marshal(b, m, deterministic)
+}
+func (m *SecurityRelatedControlInfo) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SecurityRelatedControlInfo.Merge(m, src)
+}
+func (m *SecurityRelatedControlInfo) XXX_Size() int {
+	return xxx_messageInfo_SecurityRelatedControlInfo.Size(m)
+}
+func (m *SecurityRelatedControlInfo) XXX_DiscardUnknown() {
+	xxx_messageInfo_SecurityRelatedControlInfo.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SecurityRelatedControlInfo proto.InternalMessageInfo
+
+func (m *SecurityRelatedControlInfo) GetPinBlockFormatCode() int64 {
+	if m != nil {
+		return m.PinBlockFormatCode
+	}
+	return 0
+}
+
+func (m *SecurityRelatedControlInfo) GetZoneKeyIndex() int64 {
+	if m != nil {
+		return m.ZoneKeyIndex
+	}
+	return 0
+}
+
+// --- START Transaction Requests ---
+type PullFundsTransactionRequest struct {
+	SystemsTraceAuditNumber int64 `protobuf:"varint,1,opt,name=systemsTraceAuditNumber,proto3" json:"systemsTraceAuditNumber,omitempty"`
+	// ydddhhnnnnnn(numeric characters only), Length: 12
+	RetrievalReferenceNumber string `protobuf:"bytes,2,opt,name=retrievalReferenceNumber,proto3" json:"retrievalReferenceNumber,omitempty"`
+	// RFC3339. dateTime | YYYY-MM-DDThh:mm:ss. The date and time you
+	// submit the transaction
+	AocalTransactionDateTime   string `protobuf:"bytes,3,opt,name=aocalTransactionDateTime,proto3" json:"aocalTransactionDateTime,omitempty"`
+	AcquiringBin               int64  `protobuf:"varint,4,opt,name=acquiringBin,proto3" json:"acquiringBin,omitempty"`
+	AcquirerCountryCode        int64  `protobuf:"varint,5,opt,name=acquirerCountryCode,proto3" json:"acquirerCountryCode,omitempty"`
+	SenderPrimaryAccountNumber string `protobuf:"bytes,6,opt,name=senderPrimaryAccountNumber,proto3" json:"senderPrimaryAccountNumber,omitempty"`
+	SenderCardExpiryDate       string `protobuf:"bytes,7,opt,name=senderCardExpiryDate,proto3" json:"senderCardExpiryDate,omitempty"`
+	SenderCurrencyCode         string `protobuf:"bytes,8,opt,name=senderCurrencyCode,proto3" json:"senderCurrencyCode,omitempty"`
+	// Optional: decimal | Length: totalDigits 12,fractionDigits 3 (minimum value
+	// is 0)
+	Amount float32 `protobuf:"fixed32,9,opt,name=amount,proto3" json:"amount,omitempty"`
+	// Optional: decimal | Length: totalDigits 12,fractionDigits 3(minimum value
+	// is 0)
+	Surcharge float32 `protobuf:"fixed32,10,opt,name=surcharge,proto3" json:"surcharge,omitempty"`
+	Cavv      string  `protobuf:"bytes,11,opt,name=cavv,proto3" json:"cavv,omitempty"`
+	// Optional: decimal | Length: totalDigits 12, fractionDigits 3 (minimum value
+	// is 0)
+	ForeignExchangeFeeTransaction float32 `protobuf:"fixed32,12,opt,name=foreignExchangeFeeTransaction,proto3" json:"foreignExchangeFeeTransaction,omitempty"`
+	BusinessApplicationId         string  `protobuf:"bytes,13,opt,name=businessApplicationId,proto3" json:"businessApplicationId,omitempty"`
+	// Conditional: integer | Length: total 4 digits
+	MerchantCategoryCode     int64                     `protobuf:"varint,14,opt,name=merchantCategoryCode,proto3" json:"merchantCategoryCode,omitempty"`
+	CardAcceptor             *CardAcceptor             `protobuf:"bytes,15,opt,name=cardAcceptor,proto3" json:"cardAcceptor,omitempty"`
+	MagneticStripeData       *MagneticStripeData       `protobuf:"bytes,16,opt,name=magneticStripeData,proto3" json:"magneticStripeData,omitempty"`
+	PointOfServiceData       *PointOfServiceData       `protobuf:"bytes,17,opt,name=pointOfServiceData,proto3" json:"pointOfServiceData,omitempty"`
+	PointOfServiceCapability *PointOfServiceCapability `protobuf:"bytes,18,opt,name=pointOfServiceCapability,proto3" json:"pointOfServiceCapability,omitempty"`
+	PinData                  *PinData                  `protobuf:"bytes,19,opt,name=pinData,proto3" json:"pinData,omitempty"`
+	FeeProgramIndicator      string                    `protobuf:"bytes,20,opt,name=feeProgramIndicator,proto3" json:"feeProgramIndicator,omitempty"`
+	XXX_NoUnkeyedLiteral     struct{}                  `json:"-"`
+	XXX_unrecognized         []byte                    `json:"-"`
+	XXX_sizecache            int32                     `json:"-"`
+}
+
+func (m *PullFundsTransactionRequest) Reset()         { *m = PullFundsTransactionRequest{} }
+func (m *PullFundsTransactionRequest) String() string { return proto.CompactTextString(m) }
+func (*PullFundsTransactionRequest) ProtoMessage()    {}
+func (*PullFundsTransactionRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cb0a7d9e34538282, []int{7}
+}
+
+func (m *PullFundsTransactionRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PullFundsTransactionRequest.Unmarshal(m, b)
+}
+func (m *PullFundsTransactionRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PullFundsTransactionRequest.Marshal(b, m, deterministic)
+}
+func (m *PullFundsTransactionRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PullFundsTransactionRequest.Merge(m, src)
+}
+func (m *PullFundsTransactionRequest) XXX_Size() int {
+	return xxx_messageInfo_PullFundsTransactionRequest.Size(m)
+}
+func (m *PullFundsTransactionRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_PullFundsTransactionRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PullFundsTransactionRequest proto.InternalMessageInfo
+
+func (m *PullFundsTransactionRequest) GetSystemsTraceAuditNumber() int64 {
+	if m != nil {
+		return m.SystemsTraceAuditNumber
+	}
+	return 0
+}
+
+func (m *PullFundsTransactionRequest) GetRetrievalReferenceNumber() string {
+	if m != nil {
+		return m.RetrievalReferenceNumber
+	}
+	return ""
+}
+
+func (m *PullFundsTransactionRequest) GetAocalTransactionDateTime() string {
+	if m != nil {
+		return m.AocalTransactionDateTime
+	}
+	return ""
+}
+
+func (m *PullFundsTransactionRequest) GetAcquiringBin() int64 {
+	if m != nil {
+		return m.AcquiringBin
+	}
+	return 0
+}
+
+func (m *PullFundsTransactionRequest) GetAcquirerCountryCode() int64 {
+	if m != nil {
+		return m.AcquirerCountryCode
+	}
+	return 0
+}
+
+func (m *PullFundsTransactionRequest) GetSenderPrimaryAccountNumber() string {
+	if m != nil {
+		return m.SenderPrimaryAccountNumber
+	}
+	return ""
+}
+
+func (m *PullFundsTransactionRequest) GetSenderCardExpiryDate() string {
+	if m != nil {
+		return m.SenderCardExpiryDate
+	}
+	return ""
+}
+
+func (m *PullFundsTransactionRequest) GetSenderCurrencyCode() string {
+	if m != nil {
+		return m.SenderCurrencyCode
+	}
+	return ""
+}
+
+func (m *PullFundsTransactionRequest) GetAmount() float32 {
+	if m != nil {
+		return m.Amount
+	}
+	return 0
+}
+
+func (m *PullFundsTransactionRequest) GetSurcharge() float32 {
+	if m != nil {
+		return m.Surcharge
+	}
+	return 0
+}
+
+func (m *PullFundsTransactionRequest) GetCavv() string {
+	if m != nil {
+		return m.Cavv
+	}
+	return ""
+}
+
+func (m *PullFundsTransactionRequest) GetForeignExchangeFeeTransaction() float32 {
+	if m != nil {
+		return m.ForeignExchangeFeeTransaction
+	}
+	return 0
+}
+
+func (m *PullFundsTransactionRequest) GetBusinessApplicationId() string {
+	if m != nil {
+		return m.BusinessApplicationId
+	}
+	return ""
+}
+
+func (m *PullFundsTransactionRequest) GetMerchantCategoryCode() int64 {
+	if m != nil {
+		return m.MerchantCategoryCode
+	}
+	return 0
+}
+
+func (m *PullFundsTransactionRequest) GetCardAcceptor() *CardAcceptor {
+	if m != nil {
+		return m.CardAcceptor
+	}
+	return nil
+}
+
+func (m *PullFundsTransactionRequest) GetMagneticStripeData() *MagneticStripeData {
+	if m != nil {
+		return m.MagneticStripeData
+	}
+	return nil
+}
+
+func (m *PullFundsTransactionRequest) GetPointOfServiceData() *PointOfServiceData {
+	if m != nil {
+		return m.PointOfServiceData
+	}
+	return nil
+}
+
+func (m *PullFundsTransactionRequest) GetPointOfServiceCapability() *PointOfServiceCapability {
+	if m != nil {
+		return m.PointOfServiceCapability
+	}
+	return nil
+}
+
+func (m *PullFundsTransactionRequest) GetPinData() *PinData {
+	if m != nil {
+		return m.PinData
+	}
+	return nil
+}
+
+func (m *PullFundsTransactionRequest) GetFeeProgramIndicator() string {
+	if m != nil {
+		return m.FeeProgramIndicator
+	}
+	return ""
+}
+
+type PushFundsTransactionRequest struct {
+	SystemsTraceAuditNumber int64 `protobuf:"varint,1,opt,name=systemsTraceAuditNumber,proto3" json:"systemsTraceAuditNumber,omitempty"`
+	// ydddhhnnnnnn(numeric characters only), Length: 12
+	RetrievalReferenceNumber string `protobuf:"bytes,2,opt,name=retrievalReferenceNumber,proto3" json:"retrievalReferenceNumber,omitempty"`
+	// RFC3339. dateTime | YYYY-MM-DDThh:mm:ss. The date and time you submit the
+	// transaction
+	LocalTransactionDateTime string `protobuf:"bytes,3,opt,name=localTransactionDateTime,proto3" json:"localTransactionDateTime,omitempty"`
+	AcquiringBin             int64  `protobuf:"varint,4,opt,name=acquiringBin,proto3" json:"acquiringBin,omitempty"`
+	AcquirerCountryCode      int64  `protobuf:"varint,5,opt,name=acquirerCountryCode,proto3" json:"acquirerCountryCode,omitempty"`
+	SenderAccountNumber      string `protobuf:"bytes,6,opt,name=senderAccountNumber,proto3" json:"senderAccountNumber,omitempty"`
+	SenderAddress            string `protobuf:"bytes,7,opt,name=senderAddress,proto3" json:"senderAddress,omitempty"`
+	SenderCity               string `protobuf:"bytes,8,opt,name=senderCity,proto3" json:"senderCity,omitempty"`
+	SenderStateCode          string `protobuf:"bytes,9,opt,name=senderStateCode,proto3" json:"senderStateCode,omitempty"`
+	SenderCountryCode        string `protobuf:"bytes,10,opt,name=senderCountryCode,proto3" json:"senderCountryCode,omitempty"`
+	SenderName               string `protobuf:"bytes,11,opt,name=senderName,proto3" json:"senderName,omitempty"`
+	// Optional: string | only alphabets (a-z, A-Z) and/or numbers (0-9) allowed ,
+	// max: 16 characters
+	SenderReference   string `protobuf:"bytes,12,opt,name=senderReference,proto3" json:"senderReference,omitempty"`
+	SenderDateOfBirth string `protobuf:"bytes,13,opt,name=senderDateOfBirth,proto3" json:"senderDateOfBirth,omitempty"`
+	// Conditional: string | Length: minimum 1, maximum 30
+	RecipientName                 string `protobuf:"bytes,14,opt,name=recipientName,proto3" json:"recipientName,omitempty"`
+	RecipientPrimaryAccountNumber string `protobuf:"bytes,15,opt,name=recipientPrimaryAccountNumber,proto3" json:"recipientPrimaryAccountNumber,omitempty"`
+	TransactionIdentifier         int64  `protobuf:"varint,16,opt,name=transactionIdentifier,proto3" json:"transactionIdentifier,omitempty"`
+	TransactionCurrencyCode       string `protobuf:"bytes,17,opt,name=transactionCurrencyCode,proto3" json:"transactionCurrencyCode,omitempty"`
+	SourceOfFundsCode             string `protobuf:"bytes,18,opt,name=sourceOfFundsCode,proto3" json:"sourceOfFundsCode,omitempty"`
+	// Optional: decimal | Length: totalDigits 12,fractionDigits 3 (minimum value
+	// is 0)
+	Amount                float32 `protobuf:"fixed32,19,opt,name=amount,proto3" json:"amount,omitempty"`
+	BusinessApplicationId string  `protobuf:"bytes,20,opt,name=businessApplicationId,proto3" json:"businessApplicationId,omitempty"`
+	// Conditional: integer | Length: total 4 digits
+	MerchantCategoryCode     int64                     `protobuf:"varint,21,opt,name=merchantCategoryCode,proto3" json:"merchantCategoryCode,omitempty"`
+	CardAcceptor             *CardAcceptor             `protobuf:"bytes,22,opt,name=cardAcceptor,proto3" json:"cardAcceptor,omitempty"`
+	MagneticStripeData       *MagneticStripeData       `protobuf:"bytes,23,opt,name=magneticStripeData,proto3" json:"magneticStripeData,omitempty"`
+	PointOfServiceData       *PointOfServiceData       `protobuf:"bytes,24,opt,name=pointOfServiceData,proto3" json:"pointOfServiceData,omitempty"`
+	PointOfServiceCapability *PointOfServiceCapability `protobuf:"bytes,25,opt,name=pointOfServiceCapability,proto3" json:"pointOfServiceCapability,omitempty"`
+	PinData                  *PinData                  `protobuf:"bytes,26,opt,name=pinData,proto3" json:"pinData,omitempty"`
+	FeeProgramIndicator      string                    `protobuf:"bytes,29,opt,name=feeProgramIndicator,proto3" json:"feeProgramIndicator,omitempty"`
+	XXX_NoUnkeyedLiteral     struct{}                  `json:"-"`
+	XXX_unrecognized         []byte                    `json:"-"`
+	XXX_sizecache            int32                     `json:"-"`
+}
+
+func (m *PushFundsTransactionRequest) Reset()         { *m = PushFundsTransactionRequest{} }
+func (m *PushFundsTransactionRequest) String() string { return proto.CompactTextString(m) }
+func (*PushFundsTransactionRequest) ProtoMessage()    {}
+func (*PushFundsTransactionRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cb0a7d9e34538282, []int{8}
+}
+
+func (m *PushFundsTransactionRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PushFundsTransactionRequest.Unmarshal(m, b)
+}
+func (m *PushFundsTransactionRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PushFundsTransactionRequest.Marshal(b, m, deterministic)
+}
+func (m *PushFundsTransactionRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PushFundsTransactionRequest.Merge(m, src)
+}
+func (m *PushFundsTransactionRequest) XXX_Size() int {
+	return xxx_messageInfo_PushFundsTransactionRequest.Size(m)
+}
+func (m *PushFundsTransactionRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_PushFundsTransactionRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PushFundsTransactionRequest proto.InternalMessageInfo
+
+func (m *PushFundsTransactionRequest) GetSystemsTraceAuditNumber() int64 {
+	if m != nil {
+		return m.SystemsTraceAuditNumber
+	}
+	return 0
+}
+
+func (m *PushFundsTransactionRequest) GetRetrievalReferenceNumber() string {
+	if m != nil {
+		return m.RetrievalReferenceNumber
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequest) GetLocalTransactionDateTime() string {
+	if m != nil {
+		return m.LocalTransactionDateTime
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequest) GetAcquiringBin() int64 {
+	if m != nil {
+		return m.AcquiringBin
+	}
+	return 0
+}
+
+func (m *PushFundsTransactionRequest) GetAcquirerCountryCode() int64 {
+	if m != nil {
+		return m.AcquirerCountryCode
+	}
+	return 0
+}
+
+func (m *PushFundsTransactionRequest) GetSenderAccountNumber() string {
+	if m != nil {
+		return m.SenderAccountNumber
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequest) GetSenderAddress() string {
+	if m != nil {
+		return m.SenderAddress
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequest) GetSenderCity() string {
+	if m != nil {
+		return m.SenderCity
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequest) GetSenderStateCode() string {
+	if m != nil {
+		return m.SenderStateCode
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequest) GetSenderCountryCode() string {
+	if m != nil {
+		return m.SenderCountryCode
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequest) GetSenderName() string {
+	if m != nil {
+		return m.SenderName
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequest) GetSenderReference() string {
+	if m != nil {
+		return m.SenderReference
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequest) GetSenderDateOfBirth() string {
+	if m != nil {
+		return m.SenderDateOfBirth
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequest) GetRecipientName() string {
+	if m != nil {
+		return m.RecipientName
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequest) GetRecipientPrimaryAccountNumber() string {
+	if m != nil {
+		return m.RecipientPrimaryAccountNumber
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequest) GetTransactionIdentifier() int64 {
+	if m != nil {
+		return m.TransactionIdentifier
+	}
+	return 0
+}
+
+func (m *PushFundsTransactionRequest) GetTransactionCurrencyCode() string {
+	if m != nil {
+		return m.TransactionCurrencyCode
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequest) GetSourceOfFundsCode() string {
+	if m != nil {
+		return m.SourceOfFundsCode
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequest) GetAmount() float32 {
+	if m != nil {
+		return m.Amount
+	}
+	return 0
+}
+
+func (m *PushFundsTransactionRequest) GetBusinessApplicationId() string {
+	if m != nil {
+		return m.BusinessApplicationId
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequest) GetMerchantCategoryCode() int64 {
+	if m != nil {
+		return m.MerchantCategoryCode
+	}
+	return 0
+}
+
+func (m *PushFundsTransactionRequest) GetCardAcceptor() *CardAcceptor {
+	if m != nil {
+		return m.CardAcceptor
+	}
+	return nil
+}
+
+func (m *PushFundsTransactionRequest) GetMagneticStripeData() *MagneticStripeData {
+	if m != nil {
+		return m.MagneticStripeData
+	}
+	return nil
+}
+
+func (m *PushFundsTransactionRequest) GetPointOfServiceData() *PointOfServiceData {
+	if m != nil {
+		return m.PointOfServiceData
+	}
+	return nil
+}
+
+func (m *PushFundsTransactionRequest) GetPointOfServiceCapability() *PointOfServiceCapability {
+	if m != nil {
+		return m.PointOfServiceCapability
+	}
+	return nil
+}
+
+func (m *PushFundsTransactionRequest) GetPinData() *PinData {
+	if m != nil {
+		return m.PinData
+	}
+	return nil
+}
+
+func (m *PushFundsTransactionRequest) GetFeeProgramIndicator() string {
+	if m != nil {
+		return m.FeeProgramIndicator
+	}
+	return ""
+}
+
+type ReverseFundsTransactionRequest struct {
+	SystemsTraceAuditNumber int64 `protobuf:"varint,1,opt,name=systemsTraceAuditNumber,proto3" json:"systemsTraceAuditNumber,omitempty"`
+	// ydddhhnnnnnn(numeric characters only), Length: 12
+	RetrievalReferenceNumber string `protobuf:"bytes,2,opt,name=retrievalReferenceNumber,proto3" json:"retrievalReferenceNumber,omitempty"`
+	// RFC3339. dateTime | YYYY-MM-DDThh:mm:ss. The date and time you submit the
+	// transaction
+	LocalTransactionDateTime   string `protobuf:"bytes,3,opt,name=localTransactionDateTime,proto3" json:"localTransactionDateTime,omitempty"`
+	AcquiringBin               string `protobuf:"bytes,4,opt,name=acquiringBin,proto3" json:"acquiringBin,omitempty"`
+	AcquirerCountryCode        int64  `protobuf:"varint,5,opt,name=acquirerCountryCode,proto3" json:"acquirerCountryCode,omitempty"`
+	SenderPrimaryAccountNumber string `protobuf:"bytes,6,opt,name=senderPrimaryAccountNumber,proto3" json:"senderPrimaryAccountNumber,omitempty"`
+	SenderCardExpiryDate       string `protobuf:"bytes,7,opt,name=senderCardExpiryDate,proto3" json:"senderCardExpiryDate,omitempty"`
+	SenderCurrencyCode         string `protobuf:"bytes,8,opt,name=senderCurrencyCode,proto3" json:"senderCurrencyCode,omitempty"`
+	TransactionIdentifier      string `protobuf:"bytes,9,opt,name=transactionIdentifier,proto3" json:"transactionIdentifier,omitempty"`
+	// Optional: decimal | Length: totalDigits 12, fractionDigits 3 (minimum value
+	// is 0)
+	Amount float32 `protobuf:"fixed32,10,opt,name=amount,proto3" json:"amount,omitempty"`
+	// Optional: decimal | Length: totalDigits 12, fractionDigits 3(minimum value
+	// is 0)
+	Surcharge float32 `protobuf:"fixed32,11,opt,name=surcharge,proto3" json:"surcharge,omitempty"`
+	// Optional: decimal | Length: totalDigits 12, fractionDigits 3(minimum value
+	// is 0)
+	ForeignExchangeFeeTransaction float32                      `protobuf:"fixed32,12,opt,name=foreignExchangeFeeTransaction,proto3" json:"foreignExchangeFeeTransaction,omitempty"`
+	OriginalDataElements          *ReverseOriginalDataElements `protobuf:"bytes,13,opt,name=originalDataElements,proto3" json:"originalDataElements,omitempty"`
+	CardAcceptor                  *CardAcceptor                `protobuf:"bytes,14,opt,name=cardAcceptor,proto3" json:"cardAcceptor,omitempty"`
+	PointOfServiceData            *PointOfServiceData          `protobuf:"bytes,15,opt,name=pointOfServiceData,proto3" json:"pointOfServiceData,omitempty"`
+	PointOfServiceCapability      *PointOfServiceCapability    `protobuf:"bytes,16,opt,name=pointOfServiceCapability,proto3" json:"pointOfServiceCapability,omitempty"`
+	FeeProgramIndicator           string                       `protobuf:"bytes,29,opt,name=feeProgramIndicator,proto3" json:"feeProgramIndicator,omitempty"`
+	XXX_NoUnkeyedLiteral          struct{}                     `json:"-"`
+	XXX_unrecognized              []byte                       `json:"-"`
+	XXX_sizecache                 int32                        `json:"-"`
+}
+
+func (m *ReverseFundsTransactionRequest) Reset()         { *m = ReverseFundsTransactionRequest{} }
+func (m *ReverseFundsTransactionRequest) String() string { return proto.CompactTextString(m) }
+func (*ReverseFundsTransactionRequest) ProtoMessage()    {}
+func (*ReverseFundsTransactionRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cb0a7d9e34538282, []int{9}
+}
+
+func (m *ReverseFundsTransactionRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ReverseFundsTransactionRequest.Unmarshal(m, b)
+}
+func (m *ReverseFundsTransactionRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ReverseFundsTransactionRequest.Marshal(b, m, deterministic)
+}
+func (m *ReverseFundsTransactionRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReverseFundsTransactionRequest.Merge(m, src)
+}
+func (m *ReverseFundsTransactionRequest) XXX_Size() int {
+	return xxx_messageInfo_ReverseFundsTransactionRequest.Size(m)
+}
+func (m *ReverseFundsTransactionRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ReverseFundsTransactionRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ReverseFundsTransactionRequest proto.InternalMessageInfo
+
+func (m *ReverseFundsTransactionRequest) GetSystemsTraceAuditNumber() int64 {
+	if m != nil {
+		return m.SystemsTraceAuditNumber
+	}
+	return 0
+}
+
+func (m *ReverseFundsTransactionRequest) GetRetrievalReferenceNumber() string {
+	if m != nil {
+		return m.RetrievalReferenceNumber
+	}
+	return ""
+}
+
+func (m *ReverseFundsTransactionRequest) GetLocalTransactionDateTime() string {
+	if m != nil {
+		return m.LocalTransactionDateTime
+	}
+	return ""
+}
+
+func (m *ReverseFundsTransactionRequest) GetAcquiringBin() string {
+	if m != nil {
+		return m.AcquiringBin
+	}
+	return ""
+}
+
+func (m *ReverseFundsTransactionRequest) GetAcquirerCountryCode() int64 {
+	if m != nil {
+		return m.AcquirerCountryCode
+	}
+	return 0
+}
+
+func (m *ReverseFundsTransactionRequest) GetSenderPrimaryAccountNumber() string {
+	if m != nil {
+		return m.SenderPrimaryAccountNumber
+	}
+	return ""
+}
+
+func (m *ReverseFundsTransactionRequest) GetSenderCardExpiryDate() string {
+	if m != nil {
+		return m.SenderCardExpiryDate
+	}
+	return ""
+}
+
+func (m *ReverseFundsTransactionRequest) GetSenderCurrencyCode() string {
+	if m != nil {
+		return m.SenderCurrencyCode
+	}
+	return ""
+}
+
+func (m *ReverseFundsTransactionRequest) GetTransactionIdentifier() string {
+	if m != nil {
+		return m.TransactionIdentifier
+	}
+	return ""
+}
+
+func (m *ReverseFundsTransactionRequest) GetAmount() float32 {
+	if m != nil {
+		return m.Amount
+	}
+	return 0
+}
+
+func (m *ReverseFundsTransactionRequest) GetSurcharge() float32 {
+	if m != nil {
+		return m.Surcharge
+	}
+	return 0
+}
+
+func (m *ReverseFundsTransactionRequest) GetForeignExchangeFeeTransaction() float32 {
+	if m != nil {
+		return m.ForeignExchangeFeeTransaction
+	}
+	return 0
+}
+
+func (m *ReverseFundsTransactionRequest) GetOriginalDataElements() *ReverseOriginalDataElements {
+	if m != nil {
+		return m.OriginalDataElements
+	}
+	return nil
+}
+
+func (m *ReverseFundsTransactionRequest) GetCardAcceptor() *CardAcceptor {
+	if m != nil {
+		return m.CardAcceptor
+	}
+	return nil
+}
+
+func (m *ReverseFundsTransactionRequest) GetPointOfServiceData() *PointOfServiceData {
+	if m != nil {
+		return m.PointOfServiceData
+	}
+	return nil
+}
+
+func (m *ReverseFundsTransactionRequest) GetPointOfServiceCapability() *PointOfServiceCapability {
+	if m != nil {
+		return m.PointOfServiceCapability
+	}
+	return nil
+}
+
+func (m *ReverseFundsTransactionRequest) GetFeeProgramIndicator() string {
+	if m != nil {
+		return m.FeeProgramIndicator
+	}
+	return ""
+}
+
+type ReverseOriginalDataElements struct {
+	ApprovalCode            string   `protobuf:"bytes,1,opt,name=approvalCode,proto3" json:"approvalCode,omitempty"`
+	SystemsTraceAuditNumber int64    `protobuf:"varint,2,opt,name=systemsTraceAuditNumber,proto3" json:"systemsTraceAuditNumber,omitempty"`
+	TransmissionDateTime    string   `protobuf:"bytes,3,opt,name=transmissionDateTime,proto3" json:"transmissionDateTime,omitempty"`
+	AcquiringBin            int64    `protobuf:"varint,4,opt,name=acquiringBin,proto3" json:"acquiringBin,omitempty"`
+	XXX_NoUnkeyedLiteral    struct{} `json:"-"`
+	XXX_unrecognized        []byte   `json:"-"`
+	XXX_sizecache           int32    `json:"-"`
+}
+
+func (m *ReverseOriginalDataElements) Reset()         { *m = ReverseOriginalDataElements{} }
+func (m *ReverseOriginalDataElements) String() string { return proto.CompactTextString(m) }
+func (*ReverseOriginalDataElements) ProtoMessage()    {}
+func (*ReverseOriginalDataElements) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cb0a7d9e34538282, []int{10}
+}
+
+func (m *ReverseOriginalDataElements) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ReverseOriginalDataElements.Unmarshal(m, b)
+}
+func (m *ReverseOriginalDataElements) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ReverseOriginalDataElements.Marshal(b, m, deterministic)
+}
+func (m *ReverseOriginalDataElements) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReverseOriginalDataElements.Merge(m, src)
+}
+func (m *ReverseOriginalDataElements) XXX_Size() int {
+	return xxx_messageInfo_ReverseOriginalDataElements.Size(m)
+}
+func (m *ReverseOriginalDataElements) XXX_DiscardUnknown() {
+	xxx_messageInfo_ReverseOriginalDataElements.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ReverseOriginalDataElements proto.InternalMessageInfo
+
+func (m *ReverseOriginalDataElements) GetApprovalCode() string {
+	if m != nil {
+		return m.ApprovalCode
+	}
+	return ""
+}
+
+func (m *ReverseOriginalDataElements) GetSystemsTraceAuditNumber() int64 {
+	if m != nil {
+		return m.SystemsTraceAuditNumber
+	}
+	return 0
+}
+
+func (m *ReverseOriginalDataElements) GetTransmissionDateTime() string {
+	if m != nil {
+		return m.TransmissionDateTime
+	}
+	return ""
+}
+
+func (m *ReverseOriginalDataElements) GetAcquiringBin() int64 {
+	if m != nil {
+		return m.AcquiringBin
+	}
+	return 0
+}
+
+type PullFundsTransactionRequestMultiData struct {
+	// RFC3339. dateTime | YYYY-MM-DDThh:mm:ss. The date and time you submit the
+	// transaction
+	LocalTransactionDateTime string `protobuf:"bytes,1,opt,name=localTransactionDateTime,proto3" json:"localTransactionDateTime,omitempty"`
+	SystemsTraceAuditNumber  int64  `protobuf:"varint,2,opt,name=systemsTraceAuditNumber,proto3" json:"systemsTraceAuditNumber,omitempty"`
+	// ydddhhnnnnnn(numeric characters only), Length: 12
+	RetrievalReferenceNumber   string `protobuf:"bytes,3,opt,name=retrievalReferenceNumber,proto3" json:"retrievalReferenceNumber,omitempty"`
+	SenderPrimaryAccountNumber string `protobuf:"bytes,4,opt,name=senderPrimaryAccountNumber,proto3" json:"senderPrimaryAccountNumber,omitempty"`
+	SenderCardExpiryDate       string `protobuf:"bytes,15,opt,name=senderCardExpiryDate,proto3" json:"senderCardExpiryDate,omitempty"`
+	SenderCurrencyCode         string `protobuf:"bytes,5,opt,name=senderCurrencyCode,proto3" json:"senderCurrencyCode,omitempty"`
+	// Optional: decimal | Length: totalDigits 12, fractionDigits 3 (minimum value
+	// is 0)
+	Amount float32 `protobuf:"fixed32,6,opt,name=amount,proto3" json:"amount,omitempty"`
+	// Optional: decimal | Length: totalDigits 12, fractionDigits 3 (minimum value
+	// is 0)
+	Surcharge float32 `protobuf:"fixed32,7,opt,name=surcharge,proto3" json:"surcharge,omitempty"`
+	Cavv      string  `protobuf:"bytes,8,opt,name=cavv,proto3" json:"cavv,omitempty"`
+	// Optional: decimal | Length: totalDigits 12, fractionDigits 3 (minimum value
+	// is 0)
+	ForeignExchangeFeeTransaction float32                   `protobuf:"fixed32,9,opt,name=foreignExchangeFeeTransaction,proto3" json:"foreignExchangeFeeTransaction,omitempty"`
+	CardAcceptor                  *CardAcceptor             `protobuf:"bytes,10,opt,name=cardAcceptor,proto3" json:"cardAcceptor,omitempty"`
+	MagneticStripeData            *MagneticStripeData       `protobuf:"bytes,11,opt,name=magneticStripeData,proto3" json:"magneticStripeData,omitempty"`
+	PointOfServiceData            *PointOfServiceData       `protobuf:"bytes,12,opt,name=pointOfServiceData,proto3" json:"pointOfServiceData,omitempty"`
+	PointOfServiceCapability      *PointOfServiceCapability `protobuf:"bytes,13,opt,name=pointOfServiceCapability,proto3" json:"pointOfServiceCapability,omitempty"`
+	PinData                       *PinData                  `protobuf:"bytes,14,opt,name=pinData,proto3" json:"pinData,omitempty"`
+	XXX_NoUnkeyedLiteral          struct{}                  `json:"-"`
+	XXX_unrecognized              []byte                    `json:"-"`
+	XXX_sizecache                 int32                     `json:"-"`
+}
+
+func (m *PullFundsTransactionRequestMultiData) Reset()         { *m = PullFundsTransactionRequestMultiData{} }
+func (m *PullFundsTransactionRequestMultiData) String() string { return proto.CompactTextString(m) }
+func (*PullFundsTransactionRequestMultiData) ProtoMessage()    {}
+func (*PullFundsTransactionRequestMultiData) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cb0a7d9e34538282, []int{11}
+}
+
+func (m *PullFundsTransactionRequestMultiData) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PullFundsTransactionRequestMultiData.Unmarshal(m, b)
+}
+func (m *PullFundsTransactionRequestMultiData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PullFundsTransactionRequestMultiData.Marshal(b, m, deterministic)
+}
+func (m *PullFundsTransactionRequestMultiData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PullFundsTransactionRequestMultiData.Merge(m, src)
+}
+func (m *PullFundsTransactionRequestMultiData) XXX_Size() int {
+	return xxx_messageInfo_PullFundsTransactionRequestMultiData.Size(m)
+}
+func (m *PullFundsTransactionRequestMultiData) XXX_DiscardUnknown() {
+	xxx_messageInfo_PullFundsTransactionRequestMultiData.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PullFundsTransactionRequestMultiData proto.InternalMessageInfo
+
+func (m *PullFundsTransactionRequestMultiData) GetLocalTransactionDateTime() string {
+	if m != nil {
+		return m.LocalTransactionDateTime
+	}
+	return ""
+}
+
+func (m *PullFundsTransactionRequestMultiData) GetSystemsTraceAuditNumber() int64 {
+	if m != nil {
+		return m.SystemsTraceAuditNumber
+	}
+	return 0
+}
+
+func (m *PullFundsTransactionRequestMultiData) GetRetrievalReferenceNumber() string {
+	if m != nil {
+		return m.RetrievalReferenceNumber
+	}
+	return ""
+}
+
+func (m *PullFundsTransactionRequestMultiData) GetSenderPrimaryAccountNumber() string {
+	if m != nil {
+		return m.SenderPrimaryAccountNumber
+	}
+	return ""
+}
+
+func (m *PullFundsTransactionRequestMultiData) GetSenderCardExpiryDate() string {
+	if m != nil {
+		return m.SenderCardExpiryDate
+	}
+	return ""
+}
+
+func (m *PullFundsTransactionRequestMultiData) GetSenderCurrencyCode() string {
+	if m != nil {
+		return m.SenderCurrencyCode
+	}
+	return ""
+}
+
+func (m *PullFundsTransactionRequestMultiData) GetAmount() float32 {
+	if m != nil {
+		return m.Amount
+	}
+	return 0
+}
+
+func (m *PullFundsTransactionRequestMultiData) GetSurcharge() float32 {
+	if m != nil {
+		return m.Surcharge
+	}
+	return 0
+}
+
+func (m *PullFundsTransactionRequestMultiData) GetCavv() string {
+	if m != nil {
+		return m.Cavv
+	}
+	return ""
+}
+
+func (m *PullFundsTransactionRequestMultiData) GetForeignExchangeFeeTransaction() float32 {
+	if m != nil {
+		return m.ForeignExchangeFeeTransaction
+	}
+	return 0
+}
+
+func (m *PullFundsTransactionRequestMultiData) GetCardAcceptor() *CardAcceptor {
+	if m != nil {
+		return m.CardAcceptor
+	}
+	return nil
+}
+
+func (m *PullFundsTransactionRequestMultiData) GetMagneticStripeData() *MagneticStripeData {
+	if m != nil {
+		return m.MagneticStripeData
+	}
+	return nil
+}
+
+func (m *PullFundsTransactionRequestMultiData) GetPointOfServiceData() *PointOfServiceData {
+	if m != nil {
+		return m.PointOfServiceData
+	}
+	return nil
+}
+
+func (m *PullFundsTransactionRequestMultiData) GetPointOfServiceCapability() *PointOfServiceCapability {
+	if m != nil {
+		return m.PointOfServiceCapability
+	}
+	return nil
+}
+
+func (m *PullFundsTransactionRequestMultiData) GetPinData() *PinData {
+	if m != nil {
+		return m.PinData
+	}
+	return nil
+}
+
+type PushFundsTransactionRequestMultiData struct {
+	SystemsTraceAuditNumber int64 `protobuf:"varint,1,opt,name=systemsTraceAuditNumber,proto3" json:"systemsTraceAuditNumber,omitempty"`
+	// ydddhhnnnnnn(numeric characters only), Length: 12
+	RetrievalReferenceNumber string `protobuf:"bytes,2,opt,name=retrievalReferenceNumber,proto3" json:"retrievalReferenceNumber,omitempty"`
+	// RFC3339. dateTime | YYYY-MM-DDThh:mm:ss. The date and time you
+	// submit the transaction
+	LocalTransactionDateTime string `protobuf:"bytes,3,opt,name=localTransactionDateTime,proto3" json:"localTransactionDateTime,omitempty"`
+	SenderAccountNumber      string `protobuf:"bytes,4,opt,name=senderAccountNumber,proto3" json:"senderAccountNumber,omitempty"`
+	SenderAddress            string `protobuf:"bytes,5,opt,name=senderAddress,proto3" json:"senderAddress,omitempty"`
+	SenderCity               string `protobuf:"bytes,6,opt,name=senderCity,proto3" json:"senderCity,omitempty"`
+	SenderStateCode          string `protobuf:"bytes,7,opt,name=senderStateCode,proto3" json:"senderStateCode,omitempty"`
+	SenderCountryCode        string `protobuf:"bytes,8,opt,name=senderCountryCode,proto3" json:"senderCountryCode,omitempty"`
+	SenderName               string `protobuf:"bytes,9,opt,name=senderName,proto3" json:"senderName,omitempty"`
+	// Optional: string | only alphabets (a-z, A-Z) and/or numbers (0-9)
+	// allowed , max: 16 characters
+	SenderReference   string `protobuf:"bytes,10,opt,name=senderReference,proto3" json:"senderReference,omitempty"`
+	SenderDateOfBirth string `protobuf:"bytes,11,opt,name=senderDateOfBirth,proto3" json:"senderDateOfBirth,omitempty"`
+	// Conditional: string | Length: minimum 1, maximum 30
+	RecipientName                 string `protobuf:"bytes,12,opt,name=recipientName,proto3" json:"recipientName,omitempty"`
+	RecipientPrimaryAccountNumber string `protobuf:"bytes,13,opt,name=recipientPrimaryAccountNumber,proto3" json:"recipientPrimaryAccountNumber,omitempty"`
+	TransactionIdentifier         int64  `protobuf:"varint,14,opt,name=transactionIdentifier,proto3" json:"transactionIdentifier,omitempty"`
+	TransactionCurrencyCode       string `protobuf:"bytes,15,opt,name=transactionCurrencyCode,proto3" json:"transactionCurrencyCode,omitempty"`
+	SourceOfFundsCode             string `protobuf:"bytes,16,opt,name=sourceOfFundsCode,proto3" json:"sourceOfFundsCode,omitempty"`
+	// Optional: decimal | Length: totalDigits 12,
+	// fractionDigits 3 (minimum value is 0)
+	Amount                   float32                   `protobuf:"fixed32,18,opt,name=amount,proto3" json:"amount,omitempty"`
+	CardAcceptor             *CardAcceptor             `protobuf:"bytes,19,opt,name=cardAcceptor,proto3" json:"cardAcceptor,omitempty"`
+	MagneticStripeData       *MagneticStripeData       `protobuf:"bytes,20,opt,name=magneticStripeData,proto3" json:"magneticStripeData,omitempty"`
+	PointOfServiceData       *PointOfServiceData       `protobuf:"bytes,21,opt,name=pointOfServiceData,proto3" json:"pointOfServiceData,omitempty"`
+	PointOfServiceCapability *PointOfServiceCapability `protobuf:"bytes,22,opt,name=pointOfServiceCapability,proto3" json:"pointOfServiceCapability,omitempty"`
+	PinData                  *PinData                  `protobuf:"bytes,23,opt,name=pinData,proto3" json:"pinData,omitempty"`
+	FeeProgramIndicator      string                    `protobuf:"bytes,24,opt,name=feeProgramIndicator,proto3" json:"feeProgramIndicator,omitempty"`
+	XXX_NoUnkeyedLiteral     struct{}                  `json:"-"`
+	XXX_unrecognized         []byte                    `json:"-"`
+	XXX_sizecache            int32                     `json:"-"`
+}
+
+func (m *PushFundsTransactionRequestMultiData) Reset()         { *m = PushFundsTransactionRequestMultiData{} }
+func (m *PushFundsTransactionRequestMultiData) String() string { return proto.CompactTextString(m) }
+func (*PushFundsTransactionRequestMultiData) ProtoMessage()    {}
+func (*PushFundsTransactionRequestMultiData) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cb0a7d9e34538282, []int{12}
+}
+
+func (m *PushFundsTransactionRequestMultiData) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PushFundsTransactionRequestMultiData.Unmarshal(m, b)
+}
+func (m *PushFundsTransactionRequestMultiData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PushFundsTransactionRequestMultiData.Marshal(b, m, deterministic)
+}
+func (m *PushFundsTransactionRequestMultiData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PushFundsTransactionRequestMultiData.Merge(m, src)
+}
+func (m *PushFundsTransactionRequestMultiData) XXX_Size() int {
+	return xxx_messageInfo_PushFundsTransactionRequestMultiData.Size(m)
+}
+func (m *PushFundsTransactionRequestMultiData) XXX_DiscardUnknown() {
+	xxx_messageInfo_PushFundsTransactionRequestMultiData.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PushFundsTransactionRequestMultiData proto.InternalMessageInfo
+
+func (m *PushFundsTransactionRequestMultiData) GetSystemsTraceAuditNumber() int64 {
+	if m != nil {
+		return m.SystemsTraceAuditNumber
+	}
+	return 0
+}
+
+func (m *PushFundsTransactionRequestMultiData) GetRetrievalReferenceNumber() string {
+	if m != nil {
+		return m.RetrievalReferenceNumber
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequestMultiData) GetLocalTransactionDateTime() string {
+	if m != nil {
+		return m.LocalTransactionDateTime
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequestMultiData) GetSenderAccountNumber() string {
+	if m != nil {
+		return m.SenderAccountNumber
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequestMultiData) GetSenderAddress() string {
+	if m != nil {
+		return m.SenderAddress
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequestMultiData) GetSenderCity() string {
+	if m != nil {
+		return m.SenderCity
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequestMultiData) GetSenderStateCode() string {
+	if m != nil {
+		return m.SenderStateCode
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequestMultiData) GetSenderCountryCode() string {
+	if m != nil {
+		return m.SenderCountryCode
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequestMultiData) GetSenderName() string {
+	if m != nil {
+		return m.SenderName
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequestMultiData) GetSenderReference() string {
+	if m != nil {
+		return m.SenderReference
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequestMultiData) GetSenderDateOfBirth() string {
+	if m != nil {
+		return m.SenderDateOfBirth
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequestMultiData) GetRecipientName() string {
+	if m != nil {
+		return m.RecipientName
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequestMultiData) GetRecipientPrimaryAccountNumber() string {
+	if m != nil {
+		return m.RecipientPrimaryAccountNumber
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequestMultiData) GetTransactionIdentifier() int64 {
+	if m != nil {
+		return m.TransactionIdentifier
+	}
+	return 0
+}
+
+func (m *PushFundsTransactionRequestMultiData) GetTransactionCurrencyCode() string {
+	if m != nil {
+		return m.TransactionCurrencyCode
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequestMultiData) GetSourceOfFundsCode() string {
+	if m != nil {
+		return m.SourceOfFundsCode
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequestMultiData) GetAmount() float32 {
+	if m != nil {
+		return m.Amount
+	}
+	return 0
+}
+
+func (m *PushFundsTransactionRequestMultiData) GetCardAcceptor() *CardAcceptor {
+	if m != nil {
+		return m.CardAcceptor
+	}
+	return nil
+}
+
+func (m *PushFundsTransactionRequestMultiData) GetMagneticStripeData() *MagneticStripeData {
+	if m != nil {
+		return m.MagneticStripeData
+	}
+	return nil
+}
+
+func (m *PushFundsTransactionRequestMultiData) GetPointOfServiceData() *PointOfServiceData {
+	if m != nil {
+		return m.PointOfServiceData
+	}
+	return nil
+}
+
+func (m *PushFundsTransactionRequestMultiData) GetPointOfServiceCapability() *PointOfServiceCapability {
+	if m != nil {
+		return m.PointOfServiceCapability
+	}
+	return nil
+}
+
+func (m *PushFundsTransactionRequestMultiData) GetPinData() *PinData {
+	if m != nil {
+		return m.PinData
+	}
+	return nil
+}
+
+func (m *PushFundsTransactionRequestMultiData) GetFeeProgramIndicator() string {
+	if m != nil {
+		return m.FeeProgramIndicator
+	}
+	return ""
+}
+
+type ReverseFundsTransactionRequestMultiData struct {
+	SystemsTraceAuditNumber int64 `protobuf:"varint,1,opt,name=systemsTraceAuditNumber,proto3" json:"systemsTraceAuditNumber,omitempty"`
+	// ydddhhnnnnnn(numeric characters only), Length: 12
+	RetrievalReferenceNumber string `protobuf:"bytes,2,opt,name=retrievalReferenceNumber,proto3" json:"retrievalReferenceNumber,omitempty"`
+	TransactionIdentifier    int64  `protobuf:"varint,3,opt,name=transactionIdentifier,proto3" json:"transactionIdentifier,omitempty"`
+	// RFC3339. dateTime | YYYY-MM-DDThh:mm:ss. The date and time you
+	// submit the transaction
+	LocalTransactionDateTime   string `protobuf:"bytes,4,opt,name=localTransactionDateTime,proto3" json:"localTransactionDateTime,omitempty"`
+	SenderPrimaryAccountNumber string `protobuf:"bytes,5,opt,name=senderPrimaryAccountNumber,proto3" json:"senderPrimaryAccountNumber,omitempty"`
+	SenderCardExpiryDate       string `protobuf:"bytes,6,opt,name=senderCardExpiryDate,proto3" json:"senderCardExpiryDate,omitempty"`
+	SenderCurrencyCode         string `protobuf:"bytes,7,opt,name=senderCurrencyCode,proto3" json:"senderCurrencyCode,omitempty"`
+	// Optional: decimal | Length: totalDigits 12,
+	// fractionDigits 3 (minimum value is 0)
+	Amount float32 `protobuf:"fixed32,8,opt,name=amount,proto3" json:"amount,omitempty"`
+	// Optional: decimal | Length: totalDigits 12,
+	// fractionDigits 3(minimum value is 0)
+	Surcharge float32 `protobuf:"fixed32,9,opt,name=surcharge,proto3" json:"surcharge,omitempty"`
+	// Optional: decimal | Length: totalDigits 12, fractionDigits 3
+	// (minimum value is 0)
+	ForeignExchangeFeeTransaction float32                      `protobuf:"fixed32,10,opt,name=foreignExchangeFeeTransaction,proto3" json:"foreignExchangeFeeTransaction,omitempty"`
+	OriginalDataElements          *ReverseOriginalDataElements `protobuf:"bytes,11,opt,name=originalDataElements,proto3" json:"originalDataElements,omitempty"`
+	CardAcceptor                  *CardAcceptor                `protobuf:"bytes,12,opt,name=cardAcceptor,proto3" json:"cardAcceptor,omitempty"`
+	PointOfServiceData            *PointOfServiceData          `protobuf:"bytes,13,opt,name=pointOfServiceData,proto3" json:"pointOfServiceData,omitempty"`
+	PointOfServiceCapability      *PointOfServiceCapability    `protobuf:"bytes,14,opt,name=pointOfServiceCapability,proto3" json:"pointOfServiceCapability,omitempty"`
+	FeeProgramIndicator           string                       `protobuf:"bytes,15,opt,name=feeProgramIndicator,proto3" json:"feeProgramIndicator,omitempty"`
+	XXX_NoUnkeyedLiteral          struct{}                     `json:"-"`
+	XXX_unrecognized              []byte                       `json:"-"`
+	XXX_sizecache                 int32                        `json:"-"`
+}
+
+func (m *ReverseFundsTransactionRequestMultiData) Reset() {
+	*m = ReverseFundsTransactionRequestMultiData{}
+}
+func (m *ReverseFundsTransactionRequestMultiData) String() string { return proto.CompactTextString(m) }
+func (*ReverseFundsTransactionRequestMultiData) ProtoMessage()    {}
+func (*ReverseFundsTransactionRequestMultiData) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cb0a7d9e34538282, []int{13}
+}
+
+func (m *ReverseFundsTransactionRequestMultiData) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ReverseFundsTransactionRequestMultiData.Unmarshal(m, b)
+}
+func (m *ReverseFundsTransactionRequestMultiData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ReverseFundsTransactionRequestMultiData.Marshal(b, m, deterministic)
+}
+func (m *ReverseFundsTransactionRequestMultiData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReverseFundsTransactionRequestMultiData.Merge(m, src)
+}
+func (m *ReverseFundsTransactionRequestMultiData) XXX_Size() int {
+	return xxx_messageInfo_ReverseFundsTransactionRequestMultiData.Size(m)
+}
+func (m *ReverseFundsTransactionRequestMultiData) XXX_DiscardUnknown() {
+	xxx_messageInfo_ReverseFundsTransactionRequestMultiData.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ReverseFundsTransactionRequestMultiData proto.InternalMessageInfo
+
+func (m *ReverseFundsTransactionRequestMultiData) GetSystemsTraceAuditNumber() int64 {
+	if m != nil {
+		return m.SystemsTraceAuditNumber
+	}
+	return 0
+}
+
+func (m *ReverseFundsTransactionRequestMultiData) GetRetrievalReferenceNumber() string {
+	if m != nil {
+		return m.RetrievalReferenceNumber
+	}
+	return ""
+}
+
+func (m *ReverseFundsTransactionRequestMultiData) GetTransactionIdentifier() int64 {
+	if m != nil {
+		return m.TransactionIdentifier
+	}
+	return 0
+}
+
+func (m *ReverseFundsTransactionRequestMultiData) GetLocalTransactionDateTime() string {
+	if m != nil {
+		return m.LocalTransactionDateTime
+	}
+	return ""
+}
+
+func (m *ReverseFundsTransactionRequestMultiData) GetSenderPrimaryAccountNumber() string {
+	if m != nil {
+		return m.SenderPrimaryAccountNumber
+	}
+	return ""
+}
+
+func (m *ReverseFundsTransactionRequestMultiData) GetSenderCardExpiryDate() string {
+	if m != nil {
+		return m.SenderCardExpiryDate
+	}
+	return ""
+}
+
+func (m *ReverseFundsTransactionRequestMultiData) GetSenderCurrencyCode() string {
+	if m != nil {
+		return m.SenderCurrencyCode
+	}
+	return ""
+}
+
+func (m *ReverseFundsTransactionRequestMultiData) GetAmount() float32 {
+	if m != nil {
+		return m.Amount
+	}
+	return 0
+}
+
+func (m *ReverseFundsTransactionRequestMultiData) GetSurcharge() float32 {
+	if m != nil {
+		return m.Surcharge
+	}
+	return 0
+}
+
+func (m *ReverseFundsTransactionRequestMultiData) GetForeignExchangeFeeTransaction() float32 {
+	if m != nil {
+		return m.ForeignExchangeFeeTransaction
+	}
+	return 0
+}
+
+func (m *ReverseFundsTransactionRequestMultiData) GetOriginalDataElements() *ReverseOriginalDataElements {
+	if m != nil {
+		return m.OriginalDataElements
+	}
+	return nil
+}
+
+func (m *ReverseFundsTransactionRequestMultiData) GetCardAcceptor() *CardAcceptor {
+	if m != nil {
+		return m.CardAcceptor
+	}
+	return nil
+}
+
+func (m *ReverseFundsTransactionRequestMultiData) GetPointOfServiceData() *PointOfServiceData {
+	if m != nil {
+		return m.PointOfServiceData
+	}
+	return nil
+}
+
+func (m *ReverseFundsTransactionRequestMultiData) GetPointOfServiceCapability() *PointOfServiceCapability {
+	if m != nil {
+		return m.PointOfServiceCapability
+	}
+	return nil
+}
+
+func (m *ReverseFundsTransactionRequestMultiData) GetFeeProgramIndicator() string {
+	if m != nil {
+		return m.FeeProgramIndicator
+	}
+	return ""
+}
+
+type PullFundsTransactionRequestMulti struct {
+	// RFC3339. dateTime | YYYY-MM-DDThh:mm:ss. The date and time you submit the
+	// transaction
+	LocalTransactionDateTime string `protobuf:"bytes,1,opt,name=localTransactionDateTime,proto3" json:"localTransactionDateTime,omitempty"`
+	AcquiringBin             int64  `protobuf:"varint,2,opt,name=acquiringBin,proto3" json:"acquiringBin,omitempty"`
+	AcquirerCountryCode      int64  `protobuf:"varint,3,opt,name=acquirerCountryCode,proto3" json:"acquirerCountryCode,omitempty"`
+	BusinessApplicationId    string `protobuf:"bytes,4,opt,name=businessApplicationId,proto3" json:"businessApplicationId,omitempty"`
+	// Conditional: integer | Length: total 4 digits
+	MerchantCategoryCode int64                                   `protobuf:"varint,5,opt,name=merchantCategoryCode,proto3" json:"merchantCategoryCode,omitempty"`
+	Request              []*PullFundsTransactionRequestMultiData `protobuf:"bytes,6,rep,name=request,proto3" json:"request,omitempty"`
+	FeeProgramIndicator  string                                  `protobuf:"bytes,7,opt,name=feeProgramIndicator,proto3" json:"feeProgramIndicator,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                                `json:"-"`
+	XXX_unrecognized     []byte                                  `json:"-"`
+	XXX_sizecache        int32                                   `json:"-"`
+}
+
+func (m *PullFundsTransactionRequestMulti) Reset()         { *m = PullFundsTransactionRequestMulti{} }
+func (m *PullFundsTransactionRequestMulti) String() string { return proto.CompactTextString(m) }
+func (*PullFundsTransactionRequestMulti) ProtoMessage()    {}
+func (*PullFundsTransactionRequestMulti) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cb0a7d9e34538282, []int{14}
+}
+
+func (m *PullFundsTransactionRequestMulti) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PullFundsTransactionRequestMulti.Unmarshal(m, b)
+}
+func (m *PullFundsTransactionRequestMulti) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PullFundsTransactionRequestMulti.Marshal(b, m, deterministic)
+}
+func (m *PullFundsTransactionRequestMulti) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PullFundsTransactionRequestMulti.Merge(m, src)
+}
+func (m *PullFundsTransactionRequestMulti) XXX_Size() int {
+	return xxx_messageInfo_PullFundsTransactionRequestMulti.Size(m)
+}
+func (m *PullFundsTransactionRequestMulti) XXX_DiscardUnknown() {
+	xxx_messageInfo_PullFundsTransactionRequestMulti.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PullFundsTransactionRequestMulti proto.InternalMessageInfo
+
+func (m *PullFundsTransactionRequestMulti) GetLocalTransactionDateTime() string {
+	if m != nil {
+		return m.LocalTransactionDateTime
+	}
+	return ""
+}
+
+func (m *PullFundsTransactionRequestMulti) GetAcquiringBin() int64 {
+	if m != nil {
+		return m.AcquiringBin
+	}
+	return 0
+}
+
+func (m *PullFundsTransactionRequestMulti) GetAcquirerCountryCode() int64 {
+	if m != nil {
+		return m.AcquirerCountryCode
+	}
+	return 0
+}
+
+func (m *PullFundsTransactionRequestMulti) GetBusinessApplicationId() string {
+	if m != nil {
+		return m.BusinessApplicationId
+	}
+	return ""
+}
+
+func (m *PullFundsTransactionRequestMulti) GetMerchantCategoryCode() int64 {
+	if m != nil {
+		return m.MerchantCategoryCode
+	}
+	return 0
+}
+
+func (m *PullFundsTransactionRequestMulti) GetRequest() []*PullFundsTransactionRequestMultiData {
+	if m != nil {
+		return m.Request
+	}
+	return nil
+}
+
+func (m *PullFundsTransactionRequestMulti) GetFeeProgramIndicator() string {
+	if m != nil {
+		return m.FeeProgramIndicator
+	}
+	return ""
+}
+
+type PushFundsTransactionRequestMulti struct {
+	// RFC3339. dateTime | YYYY-MM-DDThh:mm:ss. The date and time you
+	// submit the transaction
+	LocalTransactionDateTime string `protobuf:"bytes,1,opt,name=localTransactionDateTime,proto3" json:"localTransactionDateTime,omitempty"`
+	AcquiringBin             int64  `protobuf:"varint,2,opt,name=acquiringBin,proto3" json:"acquiringBin,omitempty"`
+	AcquirerCountryCode      int64  `protobuf:"varint,3,opt,name=acquirerCountryCode,proto3" json:"acquirerCountryCode,omitempty"`
+	BusinessApplicationId    string `protobuf:"bytes,4,opt,name=businessApplicationId,proto3" json:"businessApplicationId,omitempty"`
+	// Conditional: integer | Length: total 4 digits
+	MerchantCategoryCode int64                                   `protobuf:"varint,5,opt,name=merchantCategoryCode,proto3" json:"merchantCategoryCode,omitempty"`
+	Request              []*PushFundsTransactionRequestMultiData `protobuf:"bytes,6,rep,name=request,proto3" json:"request,omitempty"`
+	FeeProgramIndicator  string                                  `protobuf:"bytes,7,opt,name=feeProgramIndicator,proto3" json:"feeProgramIndicator,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                                `json:"-"`
+	XXX_unrecognized     []byte                                  `json:"-"`
+	XXX_sizecache        int32                                   `json:"-"`
+}
+
+func (m *PushFundsTransactionRequestMulti) Reset()         { *m = PushFundsTransactionRequestMulti{} }
+func (m *PushFundsTransactionRequestMulti) String() string { return proto.CompactTextString(m) }
+func (*PushFundsTransactionRequestMulti) ProtoMessage()    {}
+func (*PushFundsTransactionRequestMulti) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cb0a7d9e34538282, []int{15}
+}
+
+func (m *PushFundsTransactionRequestMulti) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PushFundsTransactionRequestMulti.Unmarshal(m, b)
+}
+func (m *PushFundsTransactionRequestMulti) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PushFundsTransactionRequestMulti.Marshal(b, m, deterministic)
+}
+func (m *PushFundsTransactionRequestMulti) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PushFundsTransactionRequestMulti.Merge(m, src)
+}
+func (m *PushFundsTransactionRequestMulti) XXX_Size() int {
+	return xxx_messageInfo_PushFundsTransactionRequestMulti.Size(m)
+}
+func (m *PushFundsTransactionRequestMulti) XXX_DiscardUnknown() {
+	xxx_messageInfo_PushFundsTransactionRequestMulti.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PushFundsTransactionRequestMulti proto.InternalMessageInfo
+
+func (m *PushFundsTransactionRequestMulti) GetLocalTransactionDateTime() string {
+	if m != nil {
+		return m.LocalTransactionDateTime
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequestMulti) GetAcquiringBin() int64 {
+	if m != nil {
+		return m.AcquiringBin
+	}
+	return 0
+}
+
+func (m *PushFundsTransactionRequestMulti) GetAcquirerCountryCode() int64 {
+	if m != nil {
+		return m.AcquirerCountryCode
+	}
+	return 0
+}
+
+func (m *PushFundsTransactionRequestMulti) GetBusinessApplicationId() string {
+	if m != nil {
+		return m.BusinessApplicationId
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequestMulti) GetMerchantCategoryCode() int64 {
+	if m != nil {
+		return m.MerchantCategoryCode
+	}
+	return 0
+}
+
+func (m *PushFundsTransactionRequestMulti) GetRequest() []*PushFundsTransactionRequestMultiData {
+	if m != nil {
+		return m.Request
+	}
+	return nil
+}
+
+func (m *PushFundsTransactionRequestMulti) GetFeeProgramIndicator() string {
+	if m != nil {
+		return m.FeeProgramIndicator
+	}
+	return ""
+}
+
+type ReverseFundsTransactionRequestMulti struct {
+	// RFC3339. dateTime | YYYY-MM-DDThh:mm:ss. The date and time you
+	// submit the transaction
+	LocalTransactionDateTime string                                     `protobuf:"bytes,1,opt,name=localTransactionDateTime,proto3" json:"localTransactionDateTime,omitempty"`
+	AcquiringBin             int64                                      `protobuf:"varint,2,opt,name=acquiringBin,proto3" json:"acquiringBin,omitempty"`
+	AcquirerCountryCode      int64                                      `protobuf:"varint,3,opt,name=acquirerCountryCode,proto3" json:"acquirerCountryCode,omitempty"`
+	Request                  []*ReverseFundsTransactionRequestMultiData `protobuf:"bytes,4,rep,name=request,proto3" json:"request,omitempty"`
+	XXX_NoUnkeyedLiteral     struct{}                                   `json:"-"`
+	XXX_unrecognized         []byte                                     `json:"-"`
+	XXX_sizecache            int32                                      `json:"-"`
+}
+
+func (m *ReverseFundsTransactionRequestMulti) Reset()         { *m = ReverseFundsTransactionRequestMulti{} }
+func (m *ReverseFundsTransactionRequestMulti) String() string { return proto.CompactTextString(m) }
+func (*ReverseFundsTransactionRequestMulti) ProtoMessage()    {}
+func (*ReverseFundsTransactionRequestMulti) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cb0a7d9e34538282, []int{16}
+}
+
+func (m *ReverseFundsTransactionRequestMulti) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ReverseFundsTransactionRequestMulti.Unmarshal(m, b)
+}
+func (m *ReverseFundsTransactionRequestMulti) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ReverseFundsTransactionRequestMulti.Marshal(b, m, deterministic)
+}
+func (m *ReverseFundsTransactionRequestMulti) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReverseFundsTransactionRequestMulti.Merge(m, src)
+}
+func (m *ReverseFundsTransactionRequestMulti) XXX_Size() int {
+	return xxx_messageInfo_ReverseFundsTransactionRequestMulti.Size(m)
+}
+func (m *ReverseFundsTransactionRequestMulti) XXX_DiscardUnknown() {
+	xxx_messageInfo_ReverseFundsTransactionRequestMulti.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ReverseFundsTransactionRequestMulti proto.InternalMessageInfo
+
+func (m *ReverseFundsTransactionRequestMulti) GetLocalTransactionDateTime() string {
+	if m != nil {
+		return m.LocalTransactionDateTime
+	}
+	return ""
+}
+
+func (m *ReverseFundsTransactionRequestMulti) GetAcquiringBin() int64 {
+	if m != nil {
+		return m.AcquiringBin
+	}
+	return 0
+}
+
+func (m *ReverseFundsTransactionRequestMulti) GetAcquirerCountryCode() int64 {
+	if m != nil {
+		return m.AcquirerCountryCode
+	}
+	return 0
+}
+
+func (m *ReverseFundsTransactionRequestMulti) GetRequest() []*ReverseFundsTransactionRequestMultiData {
+	if m != nil {
+		return m.Request
+	}
+	return nil
+}
+
+// --- START Response Structs ---
+type PullFundsTransactionResponse struct {
+	StatusIdentifier string `protobuf:"bytes,1,opt,name=statusIdentifier,proto3" json:"statusIdentifier,omitempty"`
+	// integer | positive and required when call does not timeout, Length: 15
+	TransactionIdentifier int64    `protobuf:"varint,2,opt,name=transactionIdentifier,proto3" json:"transactionIdentifier,omitempty"`
+	ActionCode            string   `protobuf:"bytes,3,opt,name=actionCode,proto3" json:"actionCode,omitempty"`
+	ApprovalCode          string   `protobuf:"bytes,4,opt,name=approvalCode,proto3" json:"approvalCode,omitempty"`
+	TransmissionDateTime  string   `protobuf:"bytes,5,opt,name=transmissionDateTime,proto3" json:"transmissionDateTime,omitempty"`
+	CavvResultCode        string   `protobuf:"bytes,6,opt,name=cavvResultCode,proto3" json:"cavvResultCode,omitempty"`
+	ResponseCode          string   `protobuf:"bytes,7,opt,name=responseCode,proto3" json:"responseCode,omitempty"`
+	FeeProgramIndicator   string   `protobuf:"bytes,8,opt,name=feeProgramIndicator,proto3" json:"feeProgramIndicator,omitempty"`
+	ErrorMessage          string   `protobuf:"bytes,9,opt,name=errorMessage,proto3" json:"errorMessage,omitempty"`
+	XXX_NoUnkeyedLiteral  struct{} `json:"-"`
+	XXX_unrecognized      []byte   `json:"-"`
+	XXX_sizecache         int32    `json:"-"`
+}
+
+func (m *PullFundsTransactionResponse) Reset()         { *m = PullFundsTransactionResponse{} }
+func (m *PullFundsTransactionResponse) String() string { return proto.CompactTextString(m) }
+func (*PullFundsTransactionResponse) ProtoMessage()    {}
+func (*PullFundsTransactionResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cb0a7d9e34538282, []int{17}
+}
+
+func (m *PullFundsTransactionResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PullFundsTransactionResponse.Unmarshal(m, b)
+}
+func (m *PullFundsTransactionResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PullFundsTransactionResponse.Marshal(b, m, deterministic)
+}
+func (m *PullFundsTransactionResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PullFundsTransactionResponse.Merge(m, src)
+}
+func (m *PullFundsTransactionResponse) XXX_Size() int {
+	return xxx_messageInfo_PullFundsTransactionResponse.Size(m)
+}
+func (m *PullFundsTransactionResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_PullFundsTransactionResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PullFundsTransactionResponse proto.InternalMessageInfo
+
+func (m *PullFundsTransactionResponse) GetStatusIdentifier() string {
+	if m != nil {
+		return m.StatusIdentifier
+	}
+	return ""
+}
+
+func (m *PullFundsTransactionResponse) GetTransactionIdentifier() int64 {
+	if m != nil {
+		return m.TransactionIdentifier
+	}
+	return 0
+}
+
+func (m *PullFundsTransactionResponse) GetActionCode() string {
+	if m != nil {
+		return m.ActionCode
+	}
+	return ""
+}
+
+func (m *PullFundsTransactionResponse) GetApprovalCode() string {
+	if m != nil {
+		return m.ApprovalCode
+	}
+	return ""
+}
+
+func (m *PullFundsTransactionResponse) GetTransmissionDateTime() string {
+	if m != nil {
+		return m.TransmissionDateTime
+	}
+	return ""
+}
+
+func (m *PullFundsTransactionResponse) GetCavvResultCode() string {
+	if m != nil {
+		return m.CavvResultCode
+	}
+	return ""
+}
+
+func (m *PullFundsTransactionResponse) GetResponseCode() string {
+	if m != nil {
+		return m.ResponseCode
+	}
+	return ""
+}
+
+func (m *PullFundsTransactionResponse) GetFeeProgramIndicator() string {
+	if m != nil {
+		return m.FeeProgramIndicator
+	}
+	return ""
+}
+
+func (m *PullFundsTransactionResponse) GetErrorMessage() string {
+	if m != nil {
+		return m.ErrorMessage
+	}
+	return ""
+}
+
+type PushFundsTransactionResponse struct {
+	StatusIdentifier string `protobuf:"bytes,1,opt,name=statusIdentifier,proto3" json:"statusIdentifier,omitempty"`
+	// integer | positive and required when call does not timeout, Length: 15
+	TransactionIdentifier  int64    `protobuf:"varint,2,opt,name=transactionIdentifier,proto3" json:"transactionIdentifier,omitempty"`
+	ActionCode             string   `protobuf:"bytes,3,opt,name=actionCode,proto3" json:"actionCode,omitempty"`
+	ApprovalCode           string   `protobuf:"bytes,4,opt,name=approvalCode,proto3" json:"approvalCode,omitempty"`
+	TransmissionDateTime   string   `protobuf:"bytes,5,opt,name=transmissionDateTime,proto3" json:"transmissionDateTime,omitempty"`
+	CavvResultCode         string   `protobuf:"bytes,6,opt,name=cavvResultCode,proto3" json:"cavvResultCode,omitempty"`
+	ResponseCode           string   `protobuf:"bytes,7,opt,name=responseCode,proto3" json:"responseCode,omitempty"`
+	FeeProgramIndicator    string   `protobuf:"bytes,8,opt,name=feeProgramIndicator,proto3" json:"feeProgramIndicator,omitempty"`
+	ErrorMessage           string   `protobuf:"bytes,9,opt,name=errorMessage,proto3" json:"errorMessage,omitempty"`
+	PrepaidBalanceCurrency string   `protobuf:"bytes,10,opt,name=PrepaidBalanceCurrency,proto3" json:"PrepaidBalanceCurrency,omitempty"`
+	PrepaidBalance         string   `protobuf:"bytes,11,opt,name=PrepaidBalance,proto3" json:"PrepaidBalance,omitempty"`
+	XXX_NoUnkeyedLiteral   struct{} `json:"-"`
+	XXX_unrecognized       []byte   `json:"-"`
+	XXX_sizecache          int32    `json:"-"`
+}
+
+func (m *PushFundsTransactionResponse) Reset()         { *m = PushFundsTransactionResponse{} }
+func (m *PushFundsTransactionResponse) String() string { return proto.CompactTextString(m) }
+func (*PushFundsTransactionResponse) ProtoMessage()    {}
+func (*PushFundsTransactionResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cb0a7d9e34538282, []int{18}
+}
+
+func (m *PushFundsTransactionResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PushFundsTransactionResponse.Unmarshal(m, b)
+}
+func (m *PushFundsTransactionResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PushFundsTransactionResponse.Marshal(b, m, deterministic)
+}
+func (m *PushFundsTransactionResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PushFundsTransactionResponse.Merge(m, src)
+}
+func (m *PushFundsTransactionResponse) XXX_Size() int {
+	return xxx_messageInfo_PushFundsTransactionResponse.Size(m)
+}
+func (m *PushFundsTransactionResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_PushFundsTransactionResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PushFundsTransactionResponse proto.InternalMessageInfo
+
+func (m *PushFundsTransactionResponse) GetStatusIdentifier() string {
+	if m != nil {
+		return m.StatusIdentifier
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionResponse) GetTransactionIdentifier() int64 {
+	if m != nil {
+		return m.TransactionIdentifier
+	}
+	return 0
+}
+
+func (m *PushFundsTransactionResponse) GetActionCode() string {
+	if m != nil {
+		return m.ActionCode
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionResponse) GetApprovalCode() string {
+	if m != nil {
+		return m.ApprovalCode
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionResponse) GetTransmissionDateTime() string {
+	if m != nil {
+		return m.TransmissionDateTime
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionResponse) GetCavvResultCode() string {
+	if m != nil {
+		return m.CavvResultCode
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionResponse) GetResponseCode() string {
+	if m != nil {
+		return m.ResponseCode
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionResponse) GetFeeProgramIndicator() string {
+	if m != nil {
+		return m.FeeProgramIndicator
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionResponse) GetErrorMessage() string {
+	if m != nil {
+		return m.ErrorMessage
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionResponse) GetPrepaidBalanceCurrency() string {
+	if m != nil {
+		return m.PrepaidBalanceCurrency
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionResponse) GetPrepaidBalance() string {
+	if m != nil {
+		return m.PrepaidBalance
+	}
+	return ""
+}
+
+// --- START Multi Response Structs ---
+type ReverseFundsTransactionResponse struct {
+	StatusIdentifier string `protobuf:"bytes,1,opt,name=StatusIdentifier,proto3" json:"StatusIdentifier,omitempty"`
+	// integer | positive and required when call
+	// does not timeout, Length: 15
+	TransactionIdentifier int64    `protobuf:"varint,2,opt,name=TransactionIdentifier,proto3" json:"TransactionIdentifier,omitempty"`
+	ActionCode            string   `protobuf:"bytes,3,opt,name=ActionCode,proto3" json:"ActionCode,omitempty"`
+	ApprovalCode          string   `protobuf:"bytes,4,opt,name=ApprovalCode,proto3" json:"ApprovalCode,omitempty"`
+	TransmissionDateTime  string   `protobuf:"bytes,5,opt,name=TransmissionDateTime,proto3" json:"TransmissionDateTime,omitempty"`
+	ResponseCode          string   `protobuf:"bytes,6,opt,name=ResponseCode,proto3" json:"ResponseCode,omitempty"`
+	FeeProgramIndicator   string   `protobuf:"bytes,7,opt,name=FeeProgramIndicator,proto3" json:"FeeProgramIndicator,omitempty"`
+	ErrorMessage          string   `protobuf:"bytes,8,opt,name=ErrorMessage,proto3" json:"ErrorMessage,omitempty"`
+	XXX_NoUnkeyedLiteral  struct{} `json:"-"`
+	XXX_unrecognized      []byte   `json:"-"`
+	XXX_sizecache         int32    `json:"-"`
+}
+
+func (m *ReverseFundsTransactionResponse) Reset()         { *m = ReverseFundsTransactionResponse{} }
+func (m *ReverseFundsTransactionResponse) String() string { return proto.CompactTextString(m) }
+func (*ReverseFundsTransactionResponse) ProtoMessage()    {}
+func (*ReverseFundsTransactionResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cb0a7d9e34538282, []int{19}
+}
+
+func (m *ReverseFundsTransactionResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ReverseFundsTransactionResponse.Unmarshal(m, b)
+}
+func (m *ReverseFundsTransactionResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ReverseFundsTransactionResponse.Marshal(b, m, deterministic)
+}
+func (m *ReverseFundsTransactionResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReverseFundsTransactionResponse.Merge(m, src)
+}
+func (m *ReverseFundsTransactionResponse) XXX_Size() int {
+	return xxx_messageInfo_ReverseFundsTransactionResponse.Size(m)
+}
+func (m *ReverseFundsTransactionResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ReverseFundsTransactionResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ReverseFundsTransactionResponse proto.InternalMessageInfo
+
+func (m *ReverseFundsTransactionResponse) GetStatusIdentifier() string {
+	if m != nil {
+		return m.StatusIdentifier
+	}
+	return ""
+}
+
+func (m *ReverseFundsTransactionResponse) GetTransactionIdentifier() int64 {
+	if m != nil {
+		return m.TransactionIdentifier
+	}
+	return 0
+}
+
+func (m *ReverseFundsTransactionResponse) GetActionCode() string {
+	if m != nil {
+		return m.ActionCode
+	}
+	return ""
+}
+
+func (m *ReverseFundsTransactionResponse) GetApprovalCode() string {
+	if m != nil {
+		return m.ApprovalCode
+	}
+	return ""
+}
+
+func (m *ReverseFundsTransactionResponse) GetTransmissionDateTime() string {
+	if m != nil {
+		return m.TransmissionDateTime
+	}
+	return ""
+}
+
+func (m *ReverseFundsTransactionResponse) GetResponseCode() string {
+	if m != nil {
+		return m.ResponseCode
+	}
+	return ""
+}
+
+func (m *ReverseFundsTransactionResponse) GetFeeProgramIndicator() string {
+	if m != nil {
+		return m.FeeProgramIndicator
+	}
+	return ""
+}
+
+func (m *ReverseFundsTransactionResponse) GetErrorMessage() string {
+	if m != nil {
+		return m.ErrorMessage
+	}
+	return ""
+}
+
+type PullFundsTransactionRequestMultiResponse struct {
+	StatusIdentifier string `protobuf:"bytes,1,opt,name=statusIdentifier,proto3" json:"statusIdentifier,omitempty"`
+	// RFC3339. dateTime | YYYY-MM-DDThh:mm:ss. The date and time you
+	// submit the transaction
+	LocalTransactionDateTime string `protobuf:"bytes,2,opt,name=localTransactionDateTime,proto3" json:"localTransactionDateTime,omitempty"`
+	AcquiringBin             int64  `protobuf:"varint,3,opt,name=acquiringBin,proto3" json:"acquiringBin,omitempty"`
+	AcquirerCountryCode      int64  `protobuf:"varint,4,opt,name=acquirerCountryCode,proto3" json:"acquirerCountryCode,omitempty"`
+	BusinessApplicationId    string `protobuf:"bytes,5,opt,name=businessApplicationId,proto3" json:"businessApplicationId,omitempty"`
+	// Conditional: integer | Length: total 4 digits
+	MerchantCategoryCode string                                  `protobuf:"bytes,6,opt,name=merchantCategoryCode,proto3" json:"merchantCategoryCode,omitempty"`
+	Request              []*PullFundsTransactionRequestMultiData `protobuf:"bytes,7,rep,name=request,proto3" json:"request,omitempty"`
+	FeeProgramIndicator  string                                  `protobuf:"bytes,8,opt,name=feeProgramIndicator,proto3" json:"feeProgramIndicator,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                                `json:"-"`
+	XXX_unrecognized     []byte                                  `json:"-"`
+	XXX_sizecache        int32                                   `json:"-"`
+}
+
+func (m *PullFundsTransactionRequestMultiResponse) Reset() {
+	*m = PullFundsTransactionRequestMultiResponse{}
+}
+func (m *PullFundsTransactionRequestMultiResponse) String() string { return proto.CompactTextString(m) }
+func (*PullFundsTransactionRequestMultiResponse) ProtoMessage()    {}
+func (*PullFundsTransactionRequestMultiResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cb0a7d9e34538282, []int{20}
+}
+
+func (m *PullFundsTransactionRequestMultiResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PullFundsTransactionRequestMultiResponse.Unmarshal(m, b)
+}
+func (m *PullFundsTransactionRequestMultiResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PullFundsTransactionRequestMultiResponse.Marshal(b, m, deterministic)
+}
+func (m *PullFundsTransactionRequestMultiResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PullFundsTransactionRequestMultiResponse.Merge(m, src)
+}
+func (m *PullFundsTransactionRequestMultiResponse) XXX_Size() int {
+	return xxx_messageInfo_PullFundsTransactionRequestMultiResponse.Size(m)
+}
+func (m *PullFundsTransactionRequestMultiResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_PullFundsTransactionRequestMultiResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PullFundsTransactionRequestMultiResponse proto.InternalMessageInfo
+
+func (m *PullFundsTransactionRequestMultiResponse) GetStatusIdentifier() string {
+	if m != nil {
+		return m.StatusIdentifier
+	}
+	return ""
+}
+
+func (m *PullFundsTransactionRequestMultiResponse) GetLocalTransactionDateTime() string {
+	if m != nil {
+		return m.LocalTransactionDateTime
+	}
+	return ""
+}
+
+func (m *PullFundsTransactionRequestMultiResponse) GetAcquiringBin() int64 {
+	if m != nil {
+		return m.AcquiringBin
+	}
+	return 0
+}
+
+func (m *PullFundsTransactionRequestMultiResponse) GetAcquirerCountryCode() int64 {
+	if m != nil {
+		return m.AcquirerCountryCode
+	}
+	return 0
+}
+
+func (m *PullFundsTransactionRequestMultiResponse) GetBusinessApplicationId() string {
+	if m != nil {
+		return m.BusinessApplicationId
+	}
+	return ""
+}
+
+func (m *PullFundsTransactionRequestMultiResponse) GetMerchantCategoryCode() string {
+	if m != nil {
+		return m.MerchantCategoryCode
+	}
+	return ""
+}
+
+func (m *PullFundsTransactionRequestMultiResponse) GetRequest() []*PullFundsTransactionRequestMultiData {
+	if m != nil {
+		return m.Request
+	}
+	return nil
+}
+
+func (m *PullFundsTransactionRequestMultiResponse) GetFeeProgramIndicator() string {
+	if m != nil {
+		return m.FeeProgramIndicator
+	}
+	return ""
+}
+
+type PushFundsTransactionRequestMultiResponse struct {
+	StatusIdentifier string `protobuf:"bytes,1,opt,name=statusIdentifier,proto3" json:"statusIdentifier,omitempty"`
+	// RFC3339. dateTime | YYYY-MM-DDThh:mm:ss. The date and time you
+	// submit the transaction
+	LocalTransactionDateTime string `protobuf:"bytes,2,opt,name=localTransactionDateTime,proto3" json:"localTransactionDateTime,omitempty"`
+	AcquiringBin             int64  `protobuf:"varint,3,opt,name=acquiringBin,proto3" json:"acquiringBin,omitempty"`
+	AcquirerCountryCode      int64  `protobuf:"varint,4,opt,name=acquirerCountryCode,proto3" json:"acquirerCountryCode,omitempty"`
+	BusinessApplicationId    string `protobuf:"bytes,5,opt,name=businessApplicationId,proto3" json:"businessApplicationId,omitempty"`
+	// Conditional: integer | Length: total 4 digits
+	MerchantCategoryCode string                                  `protobuf:"bytes,6,opt,name=merchantCategoryCode,proto3" json:"merchantCategoryCode,omitempty"`
+	Request              []*PushFundsTransactionRequestMultiData `protobuf:"bytes,7,rep,name=request,proto3" json:"request,omitempty"`
+	FeeProgramIndicator  string                                  `protobuf:"bytes,8,opt,name=feeProgramIndicator,proto3" json:"feeProgramIndicator,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                                `json:"-"`
+	XXX_unrecognized     []byte                                  `json:"-"`
+	XXX_sizecache        int32                                   `json:"-"`
+}
+
+func (m *PushFundsTransactionRequestMultiResponse) Reset() {
+	*m = PushFundsTransactionRequestMultiResponse{}
+}
+func (m *PushFundsTransactionRequestMultiResponse) String() string { return proto.CompactTextString(m) }
+func (*PushFundsTransactionRequestMultiResponse) ProtoMessage()    {}
+func (*PushFundsTransactionRequestMultiResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cb0a7d9e34538282, []int{21}
+}
+
+func (m *PushFundsTransactionRequestMultiResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PushFundsTransactionRequestMultiResponse.Unmarshal(m, b)
+}
+func (m *PushFundsTransactionRequestMultiResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PushFundsTransactionRequestMultiResponse.Marshal(b, m, deterministic)
+}
+func (m *PushFundsTransactionRequestMultiResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PushFundsTransactionRequestMultiResponse.Merge(m, src)
+}
+func (m *PushFundsTransactionRequestMultiResponse) XXX_Size() int {
+	return xxx_messageInfo_PushFundsTransactionRequestMultiResponse.Size(m)
+}
+func (m *PushFundsTransactionRequestMultiResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_PushFundsTransactionRequestMultiResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PushFundsTransactionRequestMultiResponse proto.InternalMessageInfo
+
+func (m *PushFundsTransactionRequestMultiResponse) GetStatusIdentifier() string {
+	if m != nil {
+		return m.StatusIdentifier
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequestMultiResponse) GetLocalTransactionDateTime() string {
+	if m != nil {
+		return m.LocalTransactionDateTime
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequestMultiResponse) GetAcquiringBin() int64 {
+	if m != nil {
+		return m.AcquiringBin
+	}
+	return 0
+}
+
+func (m *PushFundsTransactionRequestMultiResponse) GetAcquirerCountryCode() int64 {
+	if m != nil {
+		return m.AcquirerCountryCode
+	}
+	return 0
+}
+
+func (m *PushFundsTransactionRequestMultiResponse) GetBusinessApplicationId() string {
+	if m != nil {
+		return m.BusinessApplicationId
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequestMultiResponse) GetMerchantCategoryCode() string {
+	if m != nil {
+		return m.MerchantCategoryCode
+	}
+	return ""
+}
+
+func (m *PushFundsTransactionRequestMultiResponse) GetRequest() []*PushFundsTransactionRequestMultiData {
+	if m != nil {
+		return m.Request
+	}
+	return nil
+}
+
+func (m *PushFundsTransactionRequestMultiResponse) GetFeeProgramIndicator() string {
+	if m != nil {
+		return m.FeeProgramIndicator
+	}
+	return ""
+}
+
+type ReverseFundsTransactionRequestMultiResponse struct {
+	StatusIdentifier      string `protobuf:"bytes,1,opt,name=statusIdentifier,proto3" json:"statusIdentifier,omitempty"`
+	TransactionIdentifier int64  `protobuf:"varint,2,opt,name=transactionIdentifier,proto3" json:"transactionIdentifier,omitempty"`
+	// call does not timeout, Length: 15
+	Response             []*ReverseFundsTransactionResponseAftrResponse `protobuf:"bytes,3,rep,name=response,proto3" json:"response,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                                       `json:"-"`
+	XXX_unrecognized     []byte                                         `json:"-"`
+	XXX_sizecache        int32                                          `json:"-"`
+}
+
+func (m *ReverseFundsTransactionRequestMultiResponse) Reset() {
+	*m = ReverseFundsTransactionRequestMultiResponse{}
+}
+func (m *ReverseFundsTransactionRequestMultiResponse) String() string {
+	return proto.CompactTextString(m)
+}
+func (*ReverseFundsTransactionRequestMultiResponse) ProtoMessage() {}
+func (*ReverseFundsTransactionRequestMultiResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cb0a7d9e34538282, []int{22}
+}
+
+func (m *ReverseFundsTransactionRequestMultiResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ReverseFundsTransactionRequestMultiResponse.Unmarshal(m, b)
+}
+func (m *ReverseFundsTransactionRequestMultiResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ReverseFundsTransactionRequestMultiResponse.Marshal(b, m, deterministic)
+}
+func (m *ReverseFundsTransactionRequestMultiResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReverseFundsTransactionRequestMultiResponse.Merge(m, src)
+}
+func (m *ReverseFundsTransactionRequestMultiResponse) XXX_Size() int {
+	return xxx_messageInfo_ReverseFundsTransactionRequestMultiResponse.Size(m)
+}
+func (m *ReverseFundsTransactionRequestMultiResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ReverseFundsTransactionRequestMultiResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ReverseFundsTransactionRequestMultiResponse proto.InternalMessageInfo
+
+func (m *ReverseFundsTransactionRequestMultiResponse) GetStatusIdentifier() string {
+	if m != nil {
+		return m.StatusIdentifier
+	}
+	return ""
+}
+
+func (m *ReverseFundsTransactionRequestMultiResponse) GetTransactionIdentifier() int64 {
+	if m != nil {
+		return m.TransactionIdentifier
+	}
+	return 0
+}
+
+func (m *ReverseFundsTransactionRequestMultiResponse) GetResponse() []*ReverseFundsTransactionResponseAftrResponse {
+	if m != nil {
+		return m.Response
+	}
+	return nil
+}
+
+type ReverseFundsTransactionResponseAftrResponse struct {
+	AftrResponseDetail      *ReverseFundsTransactionResponseAftrResponseDetail `protobuf:"bytes,1,opt,name=aftrResponseDetail,proto3" json:"aftrResponseDetail,omitempty"`
+	SystemsTraceAuditNumber int64                                              `protobuf:"varint,3,opt,name=SystemsTraceAuditNumber,proto3" json:"SystemsTraceAuditNumber,omitempty"`
+	XXX_NoUnkeyedLiteral    struct{}                                           `json:"-"`
+	XXX_unrecognized        []byte                                             `json:"-"`
+	XXX_sizecache           int32                                              `json:"-"`
+}
+
+func (m *ReverseFundsTransactionResponseAftrResponse) Reset() {
+	*m = ReverseFundsTransactionResponseAftrResponse{}
+}
+func (m *ReverseFundsTransactionResponseAftrResponse) String() string {
+	return proto.CompactTextString(m)
+}
+func (*ReverseFundsTransactionResponseAftrResponse) ProtoMessage() {}
+func (*ReverseFundsTransactionResponseAftrResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cb0a7d9e34538282, []int{23}
+}
+
+func (m *ReverseFundsTransactionResponseAftrResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ReverseFundsTransactionResponseAftrResponse.Unmarshal(m, b)
+}
+func (m *ReverseFundsTransactionResponseAftrResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ReverseFundsTransactionResponseAftrResponse.Marshal(b, m, deterministic)
+}
+func (m *ReverseFundsTransactionResponseAftrResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReverseFundsTransactionResponseAftrResponse.Merge(m, src)
+}
+func (m *ReverseFundsTransactionResponseAftrResponse) XXX_Size() int {
+	return xxx_messageInfo_ReverseFundsTransactionResponseAftrResponse.Size(m)
+}
+func (m *ReverseFundsTransactionResponseAftrResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ReverseFundsTransactionResponseAftrResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ReverseFundsTransactionResponseAftrResponse proto.InternalMessageInfo
+
+func (m *ReverseFundsTransactionResponseAftrResponse) GetAftrResponseDetail() *ReverseFundsTransactionResponseAftrResponseDetail {
+	if m != nil {
+		return m.AftrResponseDetail
+	}
+	return nil
+}
+
+func (m *ReverseFundsTransactionResponseAftrResponse) GetSystemsTraceAuditNumber() int64 {
+	if m != nil {
+		return m.SystemsTraceAuditNumber
+	}
+	return 0
+}
+
+type ReverseFundsTransactionResponseAftrResponseDetail struct {
+	ActionCode           string   `protobuf:"bytes,1,opt,name=actionCode,proto3" json:"actionCode,omitempty"`
+	ApprovalCode         string   `protobuf:"bytes,2,opt,name=approvalCode,proto3" json:"approvalCode,omitempty"`
+	TransmissionDateTime string   `protobuf:"bytes,3,opt,name=transmissionDateTime,proto3" json:"transmissionDateTime,omitempty"`
+	CavvResultCode       string   `protobuf:"bytes,4,opt,name=cavvResultCode,proto3" json:"cavvResultCode,omitempty"`
+	ResponseCode         string   `protobuf:"bytes,5,opt,name=responseCode,proto3" json:"responseCode,omitempty"`
+	FeeProgramIndicator  string   `protobuf:"bytes,6,opt,name=feeProgramIndicator,proto3" json:"feeProgramIndicator,omitempty"`
+	ErrorMessage         string   `protobuf:"bytes,7,opt,name=errorMessage,proto3" json:"errorMessage,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ReverseFundsTransactionResponseAftrResponseDetail) Reset() {
+	*m = ReverseFundsTransactionResponseAftrResponseDetail{}
+}
+func (m *ReverseFundsTransactionResponseAftrResponseDetail) String() string {
+	return proto.CompactTextString(m)
+}
+func (*ReverseFundsTransactionResponseAftrResponseDetail) ProtoMessage() {}
+func (*ReverseFundsTransactionResponseAftrResponseDetail) Descriptor() ([]byte, []int) {
+	return fileDescriptor_cb0a7d9e34538282, []int{24}
+}
+
+func (m *ReverseFundsTransactionResponseAftrResponseDetail) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ReverseFundsTransactionResponseAftrResponseDetail.Unmarshal(m, b)
+}
+func (m *ReverseFundsTransactionResponseAftrResponseDetail) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ReverseFundsTransactionResponseAftrResponseDetail.Marshal(b, m, deterministic)
+}
+func (m *ReverseFundsTransactionResponseAftrResponseDetail) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReverseFundsTransactionResponseAftrResponseDetail.Merge(m, src)
+}
+func (m *ReverseFundsTransactionResponseAftrResponseDetail) XXX_Size() int {
+	return xxx_messageInfo_ReverseFundsTransactionResponseAftrResponseDetail.Size(m)
+}
+func (m *ReverseFundsTransactionResponseAftrResponseDetail) XXX_DiscardUnknown() {
+	xxx_messageInfo_ReverseFundsTransactionResponseAftrResponseDetail.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ReverseFundsTransactionResponseAftrResponseDetail proto.InternalMessageInfo
+
+func (m *ReverseFundsTransactionResponseAftrResponseDetail) GetActionCode() string {
+	if m != nil {
+		return m.ActionCode
+	}
+	return ""
+}
+
+func (m *ReverseFundsTransactionResponseAftrResponseDetail) GetApprovalCode() string {
+	if m != nil {
+		return m.ApprovalCode
+	}
+	return ""
+}
+
+func (m *ReverseFundsTransactionResponseAftrResponseDetail) GetTransmissionDateTime() string {
+	if m != nil {
+		return m.TransmissionDateTime
+	}
+	return ""
+}
+
+func (m *ReverseFundsTransactionResponseAftrResponseDetail) GetCavvResultCode() string {
+	if m != nil {
+		return m.CavvResultCode
+	}
+	return ""
+}
+
+func (m *ReverseFundsTransactionResponseAftrResponseDetail) GetResponseCode() string {
+	if m != nil {
+		return m.ResponseCode
+	}
+	return ""
+}
+
+func (m *ReverseFundsTransactionResponseAftrResponseDetail) GetFeeProgramIndicator() string {
+	if m != nil {
+		return m.FeeProgramIndicator
+	}
+	return ""
+}
+
+func (m *ReverseFundsTransactionResponseAftrResponseDetail) GetErrorMessage() string {
+	if m != nil {
+		return m.ErrorMessage
 	}
 	return ""
 }
 
 type VisaForexRequest struct {
-	// @inject_tag: json:"cardAcceptor"
-	CardAcceptor *CardAcceptor `protobuf:"bytes,1,opt,name=CardAcceptor,proto3" json:"cardAcceptor"`
-	// @inject_tag: json:"destinationCurrencyCode,omitempty"
-	DestinationCurrencyCode string `protobuf:"bytes,2,opt,name=DestinationCurrencyCode,proto3" json:"destinationCurrencyCode,omitempty"`
-	// @inject_tag: json:"markUpRate,omitempty"
-	MarkUpRate string `protobuf:"bytes,3,opt,name=MarkUpRate,proto3" json:"markUpRate,omitempty"`
-	// @inject_tag: json:"retrievalReferenceNumber,omitempty"
-	RetrievalReferenceNumber string `protobuf:"bytes,4,opt,name=RetrievalReferenceNumber,proto3" json:"retrievalReferenceNumber,omitempty"`
-	// @inject_tag: json:"sourceAmount,omitempty"
-	SourceAmount string `protobuf:"bytes,5,opt,name=SourceAmount,proto3" json:"sourceAmount,omitempty"`
-	// @inject_tag: json:"sourceCurrencyCode,omitempty"
-	SourceCurrencyCode string `protobuf:"bytes,6,opt,name=SourceCurrencyCode,proto3" json:"sourceCurrencyCode,omitempty"`
-	// @inject_tag: json:"systemsTraceAuditNumber,omitempty"
-	SystemsTraceAuditNumber string   `protobuf:"bytes,7,opt,name=SystemsTraceAuditNumber,proto3" json:"systemsTraceAuditNumber,omitempty"`
-	XXX_NoUnkeyedLiteral    struct{} `json:"-"`
-	XXX_unrecognized        []byte   `json:"-"`
-	XXX_sizecache           int32    `json:"-"`
+	CardAcceptor             *CardAcceptor `protobuf:"bytes,1,opt,name=cardAcceptor,proto3" json:"cardAcceptor,omitempty"`
+	DestinationCurrencyCode  string        `protobuf:"bytes,2,opt,name=destinationCurrencyCode,proto3" json:"destinationCurrencyCode,omitempty"`
+	MarkUpRate               string        `protobuf:"bytes,3,opt,name=markUpRate,proto3" json:"markUpRate,omitempty"`
+	RetrievalReferenceNumber string        `protobuf:"bytes,4,opt,name=retrievalReferenceNumber,proto3" json:"retrievalReferenceNumber,omitempty"`
+	SourceAmount             string        `protobuf:"bytes,5,opt,name=sourceAmount,proto3" json:"sourceAmount,omitempty"`
+	SourceCurrencyCode       string        `protobuf:"bytes,6,opt,name=sourceCurrencyCode,proto3" json:"sourceCurrencyCode,omitempty"`
+	SystemsTraceAuditNumber  string        `protobuf:"bytes,7,opt,name=systemsTraceAuditNumber,proto3" json:"systemsTraceAuditNumber,omitempty"`
+	XXX_NoUnkeyedLiteral     struct{}      `json:"-"`
+	XXX_unrecognized         []byte        `json:"-"`
+	XXX_sizecache            int32         `json:"-"`
 }
 
 func (m *VisaForexRequest) Reset()         { *m = VisaForexRequest{} }
 func (m *VisaForexRequest) String() string { return proto.CompactTextString(m) }
 func (*VisaForexRequest) ProtoMessage()    {}
 func (*VisaForexRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_cb0a7d9e34538282, []int{2}
+	return fileDescriptor_cb0a7d9e34538282, []int{25}
 }
 
 func (m *VisaForexRequest) XXX_Unmarshal(b []byte) error {
@@ -262,14 +2710,10 @@ func (m *VisaForexRequest) GetSystemsTraceAuditNumber() string {
 }
 
 type VisaForexReply struct {
-	// @inject_tag: json:"conversionRate,omitempty"
-	ConversionRate float32 `protobuf:"fixed32,1,opt,name=ConversionRate,proto3" json:"conversionRate,omitempty"`
-	// @inject_tag: json:"destinationAmount,omitempty"
-	DestinationAmount string `protobuf:"bytes,2,opt,name=DestinationAmount,proto3" json:"destinationAmount,omitempty"`
-	// @inject_tag: json:"markUpRateApplied,omitempty"
-	MarkUpRateApplied string `protobuf:"bytes,3,opt,name=MarkUpRateApplied,proto3" json:"markUpRateApplied,omitempty"`
-	// @inject_tag: json:"originalDestnAmtBeforeMarkUp,omitempty"
-	OriginalDestnAmtBeforeMarkUp string   `protobuf:"bytes,4,opt,name=OriginalDestnAmtBeforeMarkUp,proto3" json:"originalDestnAmtBeforeMarkUp,omitempty"`
+	ConversionRate               float32  `protobuf:"fixed32,1,opt,name=conversionRate,proto3" json:"conversionRate,omitempty"`
+	DestinationAmount            string   `protobuf:"bytes,2,opt,name=destinationAmount,proto3" json:"destinationAmount,omitempty"`
+	MarkUpRateApplied            string   `protobuf:"bytes,3,opt,name=markUpRateApplied,proto3" json:"markUpRateApplied,omitempty"`
+	OriginalDestnAmtBeforeMarkUp string   `protobuf:"bytes,4,opt,name=originalDestnAmtBeforeMarkUp,proto3" json:"originalDestnAmtBeforeMarkUp,omitempty"`
 	XXX_NoUnkeyedLiteral         struct{} `json:"-"`
 	XXX_unrecognized             []byte   `json:"-"`
 	XXX_sizecache                int32    `json:"-"`
@@ -279,7 +2723,7 @@ func (m *VisaForexReply) Reset()         { *m = VisaForexReply{} }
 func (m *VisaForexReply) String() string { return proto.CompactTextString(m) }
 func (*VisaForexReply) ProtoMessage()    {}
 func (*VisaForexReply) Descriptor() ([]byte, []int) {
-	return fileDescriptor_cb0a7d9e34538282, []int{3}
+	return fileDescriptor_cb0a7d9e34538282, []int{26}
 }
 
 func (m *VisaForexReply) XXX_Unmarshal(b []byte) error {
@@ -331,6 +2775,29 @@ func (m *VisaForexReply) GetOriginalDestnAmtBeforeMarkUp() string {
 func init() {
 	proto.RegisterType((*Address)(nil), "visa.Address")
 	proto.RegisterType((*CardAcceptor)(nil), "visa.CardAcceptor")
+	proto.RegisterType((*MagneticStripeData)(nil), "visa.MagneticStripeData")
+	proto.RegisterType((*PointOfServiceData)(nil), "visa.PointOfServiceData")
+	proto.RegisterType((*PointOfServiceCapability)(nil), "visa.PointOfServiceCapability")
+	proto.RegisterType((*PinData)(nil), "visa.PinData")
+	proto.RegisterType((*SecurityRelatedControlInfo)(nil), "visa.SecurityRelatedControlInfo")
+	proto.RegisterType((*PullFundsTransactionRequest)(nil), "visa.PullFundsTransactionRequest")
+	proto.RegisterType((*PushFundsTransactionRequest)(nil), "visa.PushFundsTransactionRequest")
+	proto.RegisterType((*ReverseFundsTransactionRequest)(nil), "visa.ReverseFundsTransactionRequest")
+	proto.RegisterType((*ReverseOriginalDataElements)(nil), "visa.ReverseOriginalDataElements")
+	proto.RegisterType((*PullFundsTransactionRequestMultiData)(nil), "visa.PullFundsTransactionRequestMultiData")
+	proto.RegisterType((*PushFundsTransactionRequestMultiData)(nil), "visa.PushFundsTransactionRequestMultiData")
+	proto.RegisterType((*ReverseFundsTransactionRequestMultiData)(nil), "visa.ReverseFundsTransactionRequestMultiData")
+	proto.RegisterType((*PullFundsTransactionRequestMulti)(nil), "visa.PullFundsTransactionRequestMulti")
+	proto.RegisterType((*PushFundsTransactionRequestMulti)(nil), "visa.PushFundsTransactionRequestMulti")
+	proto.RegisterType((*ReverseFundsTransactionRequestMulti)(nil), "visa.ReverseFundsTransactionRequestMulti")
+	proto.RegisterType((*PullFundsTransactionResponse)(nil), "visa.PullFundsTransactionResponse")
+	proto.RegisterType((*PushFundsTransactionResponse)(nil), "visa.PushFundsTransactionResponse")
+	proto.RegisterType((*ReverseFundsTransactionResponse)(nil), "visa.ReverseFundsTransactionResponse")
+	proto.RegisterType((*PullFundsTransactionRequestMultiResponse)(nil), "visa.PullFundsTransactionRequestMultiResponse")
+	proto.RegisterType((*PushFundsTransactionRequestMultiResponse)(nil), "visa.PushFundsTransactionRequestMultiResponse")
+	proto.RegisterType((*ReverseFundsTransactionRequestMultiResponse)(nil), "visa.ReverseFundsTransactionRequestMultiResponse")
+	proto.RegisterType((*ReverseFundsTransactionResponseAftrResponse)(nil), "visa.ReverseFundsTransactionResponseAftrResponse")
+	proto.RegisterType((*ReverseFundsTransactionResponseAftrResponseDetail)(nil), "visa.ReverseFundsTransactionResponseAftrResponseDetail")
 	proto.RegisterType((*VisaForexRequest)(nil), "visa.VisaForexRequest")
 	proto.RegisterType((*VisaForexReply)(nil), "visa.VisaForexReply")
 }
@@ -338,36 +2805,140 @@ func init() {
 func init() { proto.RegisterFile("pb/visa.proto", fileDescriptor_cb0a7d9e34538282) }
 
 var fileDescriptor_cb0a7d9e34538282 = []byte{
-	// 464 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x53, 0x4d, 0x8b, 0xd4, 0x40,
-	0x10, 0x75, 0xc6, 0xd9, 0x19, 0xac, 0xfd, 0x40, 0x8b, 0x65, 0x0c, 0x22, 0x22, 0x39, 0xa8, 0x07,
-	0x19, 0x61, 0x05, 0x11, 0x6f, 0xd9, 0x0c, 0xca, 0x1e, 0x5c, 0x21, 0x59, 0x3d, 0x78, 0xeb, 0x49,
-	0x6a, 0xa5, 0x31, 0x49, 0xc7, 0xea, 0xce, 0x60, 0x4e, 0x1e, 0xfc, 0x93, 0xfe, 0x0a, 0x7f, 0x83,
-	0xf4, 0x87, 0xbb, 0x99, 0x1d, 0xc7, 0x5b, 0xd5, 0x7b, 0x95, 0xe2, 0xbd, 0xd7, 0x15, 0x38, 0x6c,
-	0x57, 0x2f, 0xd6, 0x52, 0x8b, 0x45, 0xcb, 0xca, 0x28, 0x9c, 0xd8, 0x3a, 0xfe, 0x01, 0xb3, 0xa4,
-	0x2c, 0x99, 0xb4, 0x46, 0x84, 0x49, 0x2a, 0x4d, 0x1f, 0x8d, 0x1e, 0x8f, 0x9e, 0xdd, 0xc9, 0x5c,
-	0x8d, 0x11, 0xcc, 0x52, 0xd5, 0x35, 0x86, 0xfb, 0x68, 0xec, 0xe0, 0xbf, 0x2d, 0xce, 0x61, 0xea,
-	0xca, 0x3e, 0xba, 0xed, 0x88, 0xd0, 0xe1, 0x31, 0xec, 0xe5, 0x46, 0x18, 0x8a, 0x26, 0x0e, 0xf6,
-	0x8d, 0xdd, 0xf3, 0x59, 0xb6, 0xa9, 0x2a, 0x29, 0xda, 0xf3, 0x7b, 0x42, 0x1b, 0xff, 0x1c, 0xc1,
-	0x41, 0x2a, 0xb8, 0x4c, 0x8a, 0x82, 0x5a, 0xa3, 0x18, 0x9f, 0x5e, 0x29, 0x72, 0x4a, 0xf6, 0x4f,
-	0x0e, 0x17, 0x4e, 0x75, 0x00, 0xb3, 0x2b, 0xbd, 0x73, 0x98, 0x9e, 0x2d, 0xdd, 0x4a, 0x2f, 0x2d,
-	0x74, 0xd6, 0xc7, 0xb9, 0xa8, 0x29, 0xe8, 0x72, 0x35, 0x3e, 0x02, 0xb8, 0x20, 0xae, 0x65, 0x23,
-	0xaa, 0xb3, 0x65, 0x90, 0x36, 0x40, 0xe2, 0xdf, 0x63, 0xb8, 0xfb, 0x49, 0x6a, 0xf1, 0x56, 0x31,
-	0x7d, 0xcf, 0xe8, 0x5b, 0x47, 0xda, 0xe0, 0xab, 0x4d, 0x65, 0x41, 0x0e, 0x7a, 0x39, 0x43, 0x26,
-	0xdb, 0x74, 0xf0, 0x1a, 0xee, 0x2f, 0x49, 0x1b, 0xd9, 0x08, 0x23, 0x55, 0x93, 0x76, 0xcc, 0xd4,
-	0x14, 0xfd, 0x40, 0xe9, 0x2e, 0xda, 0xca, 0x7c, 0x2f, 0xf8, 0xeb, 0xc7, 0x36, 0xb3, 0x09, 0x7a,
-	0x03, 0x03, 0x04, 0xdf, 0x40, 0x94, 0x91, 0x61, 0x49, 0x6b, 0x51, 0x65, 0x74, 0x49, 0xf6, 0x4b,
-	0x3a, 0xef, 0xea, 0x15, 0x71, 0x30, 0xb5, 0x93, 0xc7, 0x18, 0x0e, 0x72, 0xd5, 0x71, 0x41, 0x49,
-	0x6d, 0x5f, 0x2a, 0xbc, 0xc3, 0x06, 0x86, 0x0b, 0x40, 0xdf, 0x6f, 0x88, 0x9e, 0xba, 0xc9, 0x7f,
-	0x30, 0xd6, 0x69, 0xde, 0x6b, 0x43, 0xb5, 0xbe, 0x60, 0x51, 0x50, 0xd2, 0x95, 0xd2, 0x04, 0x39,
-	0x33, 0xef, 0x74, 0x07, 0x1d, 0xff, 0x1a, 0xc1, 0xd1, 0x20, 0xf0, 0xb6, 0xea, 0xf1, 0x09, 0x1c,
-	0xa5, 0xaa, 0x59, 0x13, 0x6b, 0xa9, 0x1a, 0x17, 0x80, 0x0d, 0x7c, 0x9c, 0xdd, 0x40, 0xf1, 0x39,
-	0xdc, 0x1b, 0xe4, 0x17, 0xdc, 0xf8, 0x60, 0xb7, 0x09, 0x3b, 0x7d, 0x1d, 0x60, 0xd2, 0xb6, 0x95,
-	0xa4, 0x32, 0x24, 0xbb, 0x4d, 0xe0, 0x29, 0x3c, 0xfc, 0xc0, 0xf2, 0x8b, 0xbd, 0x0a, 0xbb, 0xaa,
-	0x49, 0x6a, 0x73, 0x4a, 0x97, 0x8a, 0xc9, 0x8f, 0x86, 0x90, 0xff, 0x3b, 0x73, 0x92, 0xc3, 0xbe,
-	0x75, 0x96, 0x13, 0xaf, 0x65, 0x41, 0xb8, 0x04, 0x7c, 0x47, 0xc6, 0xf9, 0xbc, 0x36, 0x82, 0x73,
-	0x7f, 0x45, 0x37, 0x6f, 0xee, 0xc1, 0xf1, 0x16, 0xde, 0x56, 0x7d, 0x7c, 0x6b, 0x35, 0x75, 0x3f,
-	0xed, 0xcb, 0x3f, 0x01, 0x00, 0x00, 0xff, 0xff, 0xd2, 0x59, 0x1b, 0xde, 0xc5, 0x03, 0x00, 0x00,
+	// 2122 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xec, 0x5b, 0xcd, 0x6f, 0x23, 0x49,
+	0x15, 0xc7, 0x1f, 0xb1, 0xe3, 0xe7, 0x7c, 0xcc, 0x54, 0x32, 0x49, 0x93, 0x9d, 0x1d, 0x86, 0x66,
+	0xc5, 0x46, 0xcb, 0x32, 0xec, 0x04, 0xb4, 0x8c, 0x38, 0x20, 0x39, 0x4e, 0xb2, 0x44, 0x28, 0x3b,
+	0x51, 0x27, 0xcb, 0x81, 0x03, 0x52, 0xa5, 0xbb, 0xec, 0x29, 0x4d, 0xbb, 0xbb, 0xb7, 0xba, 0x1c,
+	0x8d, 0xf7, 0x02, 0x12, 0x5c, 0x91, 0x38, 0x21, 0xc4, 0xff, 0x03, 0x07, 0x24, 0x24, 0x24, 0x2e,
+	0x5c, 0xe0, 0xc6, 0x95, 0x1b, 0x17, 0xc4, 0x01, 0xd5, 0x87, 0xed, 0x6e, 0x77, 0x57, 0xbb, 0xed,
+	0x98, 0xdd, 0x85, 0x9d, 0x5b, 0xd7, 0x7b, 0xf5, 0xf1, 0xea, 0xbd, 0xaa, 0x5f, 0xfd, 0xde, 0x8b,
+	0x03, 0x9b, 0xd1, 0xcd, 0xb7, 0x6e, 0x69, 0x8c, 0x9f, 0x44, 0x2c, 0xe4, 0x21, 0xaa, 0x8b, 0x6f,
+	0xfb, 0xa7, 0xd0, 0xec, 0x78, 0x1e, 0x23, 0x71, 0x8c, 0x10, 0xd4, 0x5d, 0xca, 0x47, 0x56, 0xe5,
+	0x71, 0xe5, 0xb0, 0xe5, 0xc8, 0x6f, 0x64, 0x41, 0xd3, 0x0d, 0x87, 0x01, 0x67, 0x23, 0xab, 0x2a,
+	0xc5, 0xe3, 0x26, 0xda, 0x83, 0x86, 0xfc, 0x1c, 0x59, 0x35, 0xa9, 0xd0, 0x2d, 0xb4, 0x0b, 0x6b,
+	0x31, 0xc7, 0x9c, 0x58, 0x75, 0x29, 0x56, 0x0d, 0x31, 0xcf, 0x27, 0x34, 0xea, 0x86, 0x1e, 0xb1,
+	0xd6, 0xd4, 0x3c, 0xba, 0x69, 0xff, 0xbc, 0x02, 0x1b, 0x5d, 0xcc, 0xbc, 0x8e, 0xeb, 0x92, 0x88,
+	0x87, 0x0c, 0xbd, 0x0d, 0x4d, 0xac, 0x2c, 0x92, 0x96, 0xb4, 0x8f, 0x36, 0x9f, 0x48, 0xab, 0xb5,
+	0x99, 0xce, 0x58, 0x2b, 0x2c, 0xa0, 0x9e, 0x2b, 0xa6, 0x54, 0xa6, 0xe9, 0x96, 0xd8, 0x47, 0x80,
+	0x07, 0x44, 0xdb, 0x25, 0xbf, 0xd1, 0x23, 0x00, 0x4e, 0xd8, 0x80, 0x06, 0xd8, 0x3f, 0xf7, 0xb4,
+	0x69, 0x09, 0x89, 0x7d, 0x0d, 0xe8, 0x02, 0xf7, 0x03, 0xc2, 0xa9, 0x7b, 0xc5, 0x19, 0x8d, 0xc8,
+	0x09, 0xe6, 0x58, 0x8e, 0x62, 0xd8, 0x7d, 0xf9, 0x54, 0xb4, 0xb4, 0x5f, 0x12, 0x92, 0x89, 0xfe,
+	0x48, 0xea, 0xab, 0x09, 0xbd, 0x94, 0xd8, 0xbf, 0xaa, 0x00, 0xba, 0x0c, 0x69, 0xc0, 0x9f, 0xf7,
+	0xae, 0x08, 0xbb, 0xa5, 0xae, 0x9a, 0xd6, 0x86, 0x8d, 0x08, 0x07, 0xa7, 0xc2, 0x8d, 0x17, 0xc2,
+	0x7c, 0x31, 0x71, 0xcd, 0x49, 0xc9, 0xd0, 0x3b, 0x70, 0x2f, 0x0a, 0xe3, 0x6e, 0x18, 0x78, 0x94,
+	0xd3, 0x30, 0xe8, 0x8e, 0xb7, 0x59, 0x73, 0x32, 0x72, 0xd1, 0x77, 0x10, 0xf2, 0xf0, 0xb4, 0x7b,
+	0x7e, 0x1e, 0x78, 0xd4, 0xc5, 0x3c, 0x64, 0x7a, 0xf3, 0x19, 0xb9, 0xfd, 0x8b, 0x0a, 0x58, 0x69,
+	0x93, 0xba, 0x38, 0xc2, 0x37, 0xd4, 0x17, 0xd1, 0x3e, 0x84, 0xed, 0x28, 0x8c, 0xaf, 0xb5, 0x5b,
+	0xae, 0x47, 0xd1, 0xd8, 0xb6, 0x59, 0x31, 0xfa, 0x3e, 0x1c, 0x24, 0x44, 0xd2, 0xec, 0xe9, 0x3c,
+	0xda, 0xd0, 0x82, 0x1e, 0xf6, 0x2f, 0x2b, 0xd0, 0xbc, 0xa4, 0xc1, 0xc4, 0x1d, 0xea, 0xf3, 0xd8,
+	0x0f, 0xdd, 0x97, 0xda, 0xcf, 0x29, 0x19, 0xfa, 0x09, 0x1c, 0xc4, 0xc4, 0x1d, 0x32, 0xca, 0x47,
+	0x0e, 0xf1, 0x31, 0x27, 0x5e, 0x37, 0x0c, 0x38, 0x0b, 0xfd, 0xf3, 0xa0, 0x17, 0xca, 0xf5, 0xda,
+	0x47, 0x8f, 0xd4, 0x39, 0x31, 0xed, 0xce, 0x29, 0x98, 0xc1, 0x8e, 0xe0, 0xe0, 0xca, 0xa8, 0x45,
+	0x4f, 0x00, 0x45, 0x34, 0x90, 0x96, 0x9c, 0x85, 0x6c, 0x80, 0x79, 0x77, 0x1a, 0xb6, 0x1c, 0x8d,
+	0xd8, 0xd1, 0x27, 0x61, 0x40, 0x7e, 0x48, 0x46, 0xe7, 0x81, 0x47, 0x5e, 0x69, 0x7f, 0xa4, 0x64,
+	0xf6, 0xef, 0xd7, 0xe1, 0x8d, 0xcb, 0xa1, 0xef, 0x9f, 0x0d, 0x03, 0x2f, 0xbe, 0x66, 0x38, 0x88,
+	0xb1, 0x2b, 0x22, 0xea, 0x90, 0x8f, 0x87, 0x24, 0xe6, 0xe8, 0x19, 0xec, 0xc7, 0xa3, 0x98, 0x93,
+	0x81, 0x50, 0xba, 0xa4, 0x33, 0xf4, 0x28, 0xff, 0x70, 0x38, 0xb8, 0x21, 0x4c, 0x2f, 0x6c, 0x52,
+	0xa3, 0xef, 0x81, 0xc5, 0x08, 0x67, 0x94, 0xdc, 0x62, 0xdf, 0x21, 0x3d, 0xc2, 0x48, 0xe0, 0x12,
+	0x3d, 0x54, 0x9d, 0x51, 0xa3, 0x5e, 0x8c, 0xc5, 0xa1, 0x8b, 0xfd, 0x84, 0x41, 0x27, 0x98, 0x93,
+	0x6b, 0x3a, 0xb9, 0x4f, 0x46, 0xbd, 0xd8, 0x35, 0x76, 0x3f, 0x1e, 0x52, 0x46, 0x83, 0xfe, 0x31,
+	0x0d, 0xe4, 0x2d, 0xab, 0x39, 0x29, 0x19, 0x7a, 0x0f, 0x76, 0x54, 0x9b, 0xb0, 0xae, 0x02, 0x92,
+	0x09, 0x26, 0xd4, 0x9c, 0x3c, 0x95, 0x38, 0x69, 0x31, 0x09, 0x3c, 0xc2, 0x2e, 0x19, 0x1d, 0x60,
+	0x36, 0xea, 0xb8, 0x12, 0x68, 0xf4, 0x7e, 0x1a, 0xd2, 0xa6, 0x82, 0x1e, 0xe8, 0x08, 0x76, 0x95,
+	0x56, 0x80, 0xcc, 0xe9, 0xab, 0x88, 0xb2, 0x91, 0xb0, 0xd8, 0x6a, 0xca, 0x91, 0xb9, 0x3a, 0x11,
+	0x6f, 0x2d, 0x1f, 0x32, 0xe1, 0x1d, 0x65, 0xe4, 0xba, 0x1c, 0x91, 0xa3, 0x11, 0x48, 0x84, 0x07,
+	0x62, 0x4d, 0xab, 0xf5, 0xb8, 0x72, 0x58, 0x75, 0x74, 0x0b, 0x3d, 0x84, 0x56, 0x3c, 0x64, 0xee,
+	0x0b, 0xcc, 0xfa, 0xc4, 0x02, 0xa9, 0x9a, 0x0a, 0x24, 0xde, 0xe2, 0xdb, 0x5b, 0xab, 0xad, 0xf1,
+	0x16, 0xdf, 0xde, 0xa2, 0x13, 0x78, 0xb3, 0x17, 0x32, 0x42, 0xfb, 0xc1, 0xe9, 0x2b, 0xf7, 0x05,
+	0x0e, 0xfa, 0xe4, 0x8c, 0x90, 0x84, 0xb3, 0xad, 0x0d, 0x39, 0x4b, 0x71, 0x27, 0xf4, 0x1d, 0x78,
+	0x70, 0x33, 0x8c, 0x69, 0x40, 0xe2, 0xb8, 0x13, 0x45, 0xbe, 0xb8, 0xfa, 0x34, 0x0c, 0xce, 0x3d,
+	0x6b, 0x53, 0x2e, 0x95, 0xaf, 0x14, 0x9e, 0x1a, 0x10, 0x61, 0x5c, 0xc0, 0xbb, 0x98, 0x93, 0x7e,
+	0xa8, 0x83, 0xb3, 0x25, 0x83, 0x93, 0xab, 0x43, 0xef, 0xc3, 0x86, 0x9b, 0x00, 0x6f, 0x6b, 0x5b,
+	0xde, 0x44, 0xa4, 0x6e, 0x62, 0x12, 0xd6, 0x9d, 0x54, 0x3f, 0xf4, 0x03, 0x40, 0x83, 0x0c, 0xde,
+	0x5a, 0xf7, 0xe4, 0x68, 0x4b, 0x8d, 0xce, 0xe2, 0xb1, 0x93, 0x33, 0x46, 0xcc, 0x14, 0x65, 0x20,
+	0xd6, 0xba, 0x9f, 0x9c, 0x29, 0x0b, 0xc1, 0x4e, 0xce, 0x18, 0xf4, 0x63, 0xb0, 0x22, 0x03, 0x76,
+	0x58, 0xa8, 0x14, 0xc2, 0x18, 0xc7, 0x8b, 0x47, 0x4d, 0xe3, 0x99, 0xb5, 0x93, 0x7c, 0xd4, 0x34,
+	0x06, 0x3a, 0x63, 0xad, 0xb8, 0x20, 0x3d, 0x42, 0x2e, 0x59, 0xd8, 0x67, 0x78, 0x30, 0x85, 0xf3,
+	0x5d, 0x19, 0xb8, 0x3c, 0x95, 0xfd, 0x6f, 0x10, 0x40, 0x12, 0xbf, 0xf8, 0xdc, 0x01, 0x89, 0x3f,
+	0x07, 0x48, 0xfc, 0x4f, 0x17, 0x48, 0xde, 0x83, 0x1d, 0x75, 0x75, 0xf3, 0x10, 0x24, 0x4f, 0x85,
+	0xde, 0x82, 0x4d, 0x2d, 0xd6, 0x7c, 0x44, 0x61, 0x46, 0x5a, 0x28, 0x48, 0x80, 0x86, 0x04, 0x71,
+	0x50, 0x14, 0x48, 0x24, 0x24, 0xe2, 0x51, 0x55, 0xad, 0x2b, 0xc1, 0x84, 0xa4, 0x95, 0x2d, 0xd9,
+	0x69, 0x56, 0x8c, 0xde, 0x85, 0xfb, 0x7a, 0x5c, 0x62, 0x47, 0x20, 0xfb, 0x66, 0x15, 0xd3, 0x75,
+	0x3f, 0x14, 0x64, 0xa7, 0x9d, 0x5c, 0x57, 0x48, 0xa6, 0xeb, 0x4e, 0x42, 0x23, 0xc1, 0x63, 0xb2,
+	0xee, 0x44, 0x3c, 0x5d, 0x57, 0x44, 0xe0, 0x79, 0xef, 0x98, 0x32, 0xfe, 0x42, 0x43, 0x45, 0x56,
+	0x21, 0xbc, 0xc2, 0x88, 0x4b, 0x23, 0x4a, 0x02, 0x2e, 0x97, 0xde, 0x52, 0x5e, 0x49, 0x09, 0x05,
+	0x90, 0x4d, 0x04, 0xb9, 0xc8, 0xbd, 0x2d, 0x47, 0x15, 0x77, 0x12, 0x40, 0xc6, 0xa7, 0x07, 0xe4,
+	0xdc, 0x23, 0x01, 0xa7, 0x3d, 0x4a, 0x98, 0x44, 0x8a, 0x9a, 0x93, 0xaf, 0x14, 0x27, 0x3e, 0xa1,
+	0x48, 0x61, 0xf8, 0x7d, 0xb9, 0xaa, 0x49, 0x2d, 0x3d, 0x11, 0x0e, 0x99, 0x4b, 0x9e, 0xf7, 0xe4,
+	0x75, 0x92, 0x63, 0x90, 0xf6, 0xc4, 0xac, 0x22, 0x01, 0xfb, 0x3b, 0x29, 0xd8, 0x37, 0xc2, 0xef,
+	0xee, 0x32, 0xf0, 0xfb, 0x60, 0x01, 0xf8, 0xdd, 0xbb, 0x13, 0xfc, 0xee, 0xaf, 0x0c, 0x7e, 0xad,
+	0x15, 0xc3, 0xef, 0x97, 0x57, 0x07, 0xbf, 0x07, 0xcb, 0xc0, 0xef, 0x9b, 0x66, 0xf8, 0xfd, 0x7b,
+	0x13, 0x1e, 0x39, 0xe4, 0x96, 0xb0, 0x98, 0xfc, 0x7f, 0x23, 0x70, 0xeb, 0x0b, 0x41, 0xe5, 0x8c,
+	0x88, 0xa3, 0x30, 0xdb, 0x80, 0x38, 0x53, 0x24, 0x00, 0x33, 0x01, 0x6c, 0xcf, 0x12, 0xc0, 0xd5,
+	0x90, 0xbd, 0x8f, 0x60, 0x37, 0x64, 0xb4, 0x2f, 0xb2, 0x2c, 0x71, 0x84, 0x4f, 0x7d, 0x32, 0x20,
+	0x01, 0x8f, 0x25, 0x80, 0xb7, 0x8f, 0xbe, 0xaa, 0x0e, 0xba, 0x3e, 0xa1, 0xcf, 0x73, 0x3a, 0x3a,
+	0xb9, 0xc3, 0x33, 0xd0, 0xb2, 0x55, 0x1e, 0x5a, 0x72, 0x00, 0x61, 0x7b, 0xc5, 0x80, 0x70, 0xef,
+	0x8e, 0x80, 0xb0, 0xf8, 0x3d, 0xff, 0x73, 0x05, 0xde, 0x28, 0xf0, 0xa2, 0xbc, 0x32, 0x51, 0xc4,
+	0xc2, 0x5b, 0xec, 0x4f, 0xb2, 0x43, 0x71, 0x65, 0x12, 0xb2, 0x22, 0x20, 0xa8, 0x16, 0x03, 0xc1,
+	0x11, 0xec, 0xca, 0x93, 0x37, 0xa0, 0x71, 0x9c, 0xbd, 0xc8, 0xb9, 0xba, 0x32, 0x34, 0xca, 0xfe,
+	0x6b, 0x03, 0xde, 0x2a, 0xc8, 0x42, 0x2f, 0x86, 0x3e, 0xa7, 0x32, 0x18, 0x45, 0x68, 0x52, 0x99,
+	0x83, 0x26, 0xcb, 0x6f, 0xbb, 0x08, 0xff, 0x6a, 0x73, 0xf0, 0xaf, 0x18, 0x6d, 0xea, 0x4b, 0xa3,
+	0xcd, 0xf6, 0xc2, 0x68, 0xb3, 0x56, 0x22, 0x71, 0x6c, 0x98, 0x71, 0xa3, 0x69, 0x4a, 0x1c, 0xd7,
+	0x17, 0x49, 0x1c, 0x5b, 0x65, 0xb0, 0x64, 0xf6, 0xd2, 0xc3, 0x9d, 0xf8, 0x44, 0x7b, 0x65, 0x7c,
+	0x62, 0x63, 0xc5, 0xf0, 0xb1, 0xb9, 0x3a, 0x3e, 0xb1, 0x55, 0xc4, 0x27, 0xec, 0xdf, 0xb5, 0xc4,
+	0xfd, 0x32, 0x26, 0x67, 0xd3, 0xfb, 0xf5, 0xbf, 0xc7, 0x11, 0x0c, 0xf9, 0x54, 0x7d, 0x81, 0x7c,
+	0x6a, 0x6d, 0x7e, 0x3e, 0xd5, 0x28, 0x93, 0x4f, 0x35, 0x17, 0xc8, 0xa7, 0xd6, 0xcb, 0xe5, 0x53,
+	0xad, 0x32, 0xf9, 0x14, 0x2c, 0x90, 0x4f, 0xb5, 0x4b, 0xe7, 0x53, 0x1b, 0x4b, 0xe5, 0x53, 0x9b,
+	0x77, 0xca, 0xa7, 0xb6, 0x96, 0xcc, 0xa7, 0xb6, 0x97, 0xc8, 0xa7, 0xee, 0xcd, 0xcf, 0xa7, 0x50,
+	0x0a, 0x0d, 0x67, 0x51, 0x69, 0xe7, 0x4e, 0xa8, 0xb4, 0xbb, 0x32, 0x54, 0x7a, 0xb0, 0x62, 0x54,
+	0xda, 0x5b, 0x1d, 0x2a, 0xed, 0x2f, 0x93, 0xe5, 0x58, 0x66, 0xf6, 0xf3, 0x9b, 0x26, 0xbc, 0x5d,
+	0x9c, 0xe5, 0x7c, 0xd6, 0x50, 0x66, 0x3c, 0xda, 0xb5, 0xa2, 0xa3, 0x5d, 0x04, 0x80, 0xf5, 0x39,
+	0x00, 0x58, 0x4c, 0x30, 0xd6, 0x96, 0x26, 0x18, 0x8d, 0x85, 0x09, 0x46, 0xb3, 0x04, 0xc1, 0x58,
+	0x37, 0x13, 0x8c, 0xd6, 0xc2, 0x89, 0x09, 0xdc, 0x25, 0x31, 0x69, 0xaf, 0x36, 0x31, 0xd9, 0xb8,
+	0x53, 0x62, 0xb2, 0xb9, 0xe2, 0x3b, 0xbc, 0xf5, 0xdf, 0x49, 0x4c, 0xb6, 0xcd, 0x57, 0xf3, 0xd7,
+	0x35, 0x78, 0x3c, 0x8f, 0xc2, 0xdf, 0x89, 0xbe, 0xcf, 0xe6, 0x11, 0xd5, 0xf2, 0xe5, 0xd8, 0x9a,
+	0xb9, 0x18, 0x60, 0x2c, 0x92, 0xd5, 0x97, 0x29, 0x92, 0xad, 0x15, 0x14, 0xc9, 0x4e, 0xa0, 0xc9,
+	0x94, 0x2f, 0xac, 0xc6, 0xe3, 0xda, 0x61, 0xfb, 0xe8, 0x1d, 0x1d, 0x9d, 0x12, 0x79, 0x8f, 0x33,
+	0x1e, 0x6a, 0x0a, 0x4c, 0x73, 0x5e, 0x60, 0x8a, 0xb9, 0xdf, 0xeb, 0xc0, 0xe4, 0x06, 0x66, 0x3e,
+	0x61, 0xbe, 0x4b, 0x60, 0x7e, 0x56, 0x85, 0xaf, 0x95, 0x78, 0xcc, 0x3e, 0x87, 0xb1, 0xf9, 0x60,
+	0xea, 0xb1, 0xba, 0xf4, 0xd8, 0x37, 0x53, 0x28, 0x5a, 0xda, 0x69, 0xf6, 0x6f, 0x6b, 0xf0, 0x30,
+	0xff, 0xfc, 0xc7, 0x51, 0x18, 0xc4, 0xf2, 0x37, 0x05, 0x31, 0xc7, 0x7c, 0x18, 0x27, 0x5e, 0x52,
+	0xb5, 0xe7, 0x8c, 0xdc, 0xfc, 0xf4, 0x56, 0x8b, 0x9e, 0xde, 0x47, 0x00, 0x9a, 0x31, 0x8e, 0x37,
+	0xdd, 0x72, 0x12, 0x92, 0x4c, 0x41, 0xa5, 0x9e, 0x53, 0x50, 0x31, 0x95, 0x45, 0xd6, 0x0a, 0xca,
+	0x22, 0x5f, 0x87, 0x2d, 0x91, 0x31, 0x3b, 0x24, 0x1e, 0xfa, 0xea, 0x0f, 0xf9, 0xea, 0xc1, 0x9d,
+	0x91, 0x8a, 0xf5, 0x99, 0xf6, 0x46, 0xe2, 0x91, 0x4d, 0xc9, 0x4c, 0x67, 0x6f, 0xdd, 0x78, 0xf6,
+	0xc4, 0xac, 0x84, 0xb1, 0x90, 0x5d, 0x90, 0x38, 0xc6, 0xfd, 0x71, 0x9e, 0x91, 0x92, 0xd9, 0xff,
+	0x92, 0xc1, 0xc9, 0xbb, 0x03, 0xaf, 0x83, 0xf3, 0x59, 0x07, 0x07, 0xbd, 0x0f, 0x7b, 0x97, 0x8c,
+	0x44, 0x98, 0x7a, 0xc7, 0xd8, 0xc7, 0x81, 0x4b, 0xc6, 0x7c, 0x4b, 0x67, 0x83, 0x06, 0xad, 0xd8,
+	0x59, 0x5a, 0xa3, 0x33, 0xc2, 0x19, 0xa9, 0xfd, 0xcf, 0x2a, 0x7c, 0xc5, 0x78, 0x9d, 0xa7, 0xf1,
+	0xbf, 0x32, 0xc4, 0xff, 0x2a, 0x27, 0xfe, 0xd7, 0x45, 0xf1, 0xbf, 0x36, 0xc5, 0xbf, 0x93, 0x89,
+	0x7f, 0x27, 0x15, 0xff, 0x4e, 0x4e, 0xfc, 0x3b, 0x33, 0xf1, 0xbf, 0x2e, 0x88, 0xff, 0xb5, 0xa1,
+	0x66, 0xe9, 0x24, 0xe3, 0xaa, 0xa2, 0x9f, 0x92, 0x89, 0xb8, 0x9e, 0x99, 0x01, 0xff, 0x2c, 0x3f,
+	0xae, 0xa7, 0xc9, 0xb8, 0xaa, 0x23, 0x90, 0x92, 0xd9, 0x7f, 0xa8, 0xc1, 0xe1, 0x3c, 0x46, 0xb0,
+	0xd4, 0x05, 0x2c, 0x7a, 0x45, 0xaa, 0x0b, 0xbe, 0x22, 0xb5, 0xf2, 0xaf, 0x48, 0x7d, 0x89, 0x17,
+	0x7e, 0x6d, 0x99, 0x17, 0x5e, 0xa7, 0x2b, 0xf3, 0x5e, 0xf8, 0xe6, 0xca, 0xa9, 0x97, 0xf9, 0x22,
+	0xeb, 0x60, 0x16, 0xb3, 0x88, 0xd7, 0xc1, 0x5c, 0x59, 0x30, 0x57, 0x40, 0xd7, 0x0a, 0x82, 0xf9,
+	0xb7, 0x0a, 0x7c, 0xa3, 0x04, 0xc1, 0xf9, 0x14, 0x5f, 0xc7, 0x0b, 0x58, 0x1f, 0xbf, 0x34, 0x56,
+	0x4d, 0xba, 0xe2, 0xe9, 0x1c, 0x1e, 0xa6, 0x3a, 0x77, 0x7a, 0x9c, 0x8d, 0xbf, 0x9d, 0xc9, 0x14,
+	0xf6, 0x9f, 0x8a, 0x36, 0x98, 0x1d, 0x89, 0xfa, 0x80, 0x70, 0xa2, 0x7d, 0x42, 0x38, 0xa6, 0xbe,
+	0xfe, 0xb1, 0xec, 0x77, 0x17, 0x36, 0x44, 0x0d, 0x77, 0x72, 0xa6, 0x44, 0xcf, 0x60, 0xff, 0xca,
+	0x50, 0xc9, 0x51, 0x87, 0xd7, 0xa4, 0xb6, 0xff, 0x58, 0x85, 0xa7, 0x0b, 0xdb, 0x30, 0xc3, 0x3a,
+	0x2a, 0x73, 0x59, 0x47, 0x75, 0x01, 0xd6, 0x51, 0x5b, 0x88, 0x75, 0xd4, 0x4b, 0xb1, 0x8e, 0xb5,
+	0xf2, 0xac, 0xa3, 0x51, 0x9e, 0x75, 0x34, 0x73, 0x28, 0xe1, 0x3f, 0xaa, 0x70, 0xef, 0x47, 0x34,
+	0xc6, 0x67, 0x21, 0x23, 0xaf, 0xc6, 0xbf, 0x2b, 0x98, 0xad, 0x84, 0x54, 0x4a, 0x56, 0x42, 0x9e,
+	0xc1, 0xbe, 0x47, 0x62, 0x4e, 0x03, 0x9c, 0xa9, 0xe7, 0x2a, 0x8f, 0x9a, 0xd4, 0x22, 0x40, 0x03,
+	0xcc, 0x5e, 0x7e, 0x14, 0x39, 0x98, 0x4f, 0x68, 0xc1, 0x54, 0x52, 0x58, 0xc0, 0xab, 0xcf, 0x29,
+	0xe0, 0xd9, 0xb0, 0xa1, 0x4a, 0xc2, 0x1d, 0x55, 0xb0, 0xd2, 0xce, 0x4d, 0xca, 0x64, 0xf9, 0x4b,
+	0xb6, 0x53, 0x46, 0x37, 0x74, 0xf9, 0x2b, 0xa3, 0x29, 0x2a, 0x45, 0x2a, 0x2f, 0x9b, 0xd4, 0xf6,
+	0x5f, 0x2a, 0xb0, 0x95, 0x70, 0x78, 0xe4, 0x4b, 0x06, 0xe7, 0x86, 0x81, 0x38, 0xd3, 0xe2, 0x14,
+	0x0b, 0x07, 0x54, 0x64, 0x19, 0x6c, 0x46, 0x8a, 0xde, 0x85, 0xfb, 0x09, 0xff, 0xe9, 0xdd, 0x28,
+	0xc7, 0x66, 0x15, 0xa2, 0xf7, 0xd4, 0x81, 0x12, 0xa4, 0x89, 0xa7, 0x3d, 0x9b, 0x55, 0xa0, 0x63,
+	0x78, 0x38, 0x29, 0x8a, 0x91, 0x98, 0x07, 0x9d, 0x01, 0x3f, 0x26, 0xbd, 0x90, 0x91, 0x0b, 0xd9,
+	0x55, 0x3b, 0xb9, 0xb0, 0xcf, 0xd1, 0x15, 0xb4, 0xc5, 0xce, 0x74, 0xed, 0x09, 0x9d, 0x00, 0xfa,
+	0x80, 0x70, 0xb9, 0xcf, 0xee, 0x64, 0x23, 0x68, 0x4f, 0x9d, 0xa2, 0xd9, 0x33, 0x77, 0xb0, 0x9b,
+	0x91, 0x47, 0xfe, 0xc8, 0xfe, 0xd2, 0x4d, 0x43, 0xfe, 0x53, 0xc1, 0xb7, 0xff, 0x13, 0x00, 0x00,
+	0xff, 0xff, 0xf1, 0x28, 0x54, 0x92, 0x65, 0x30, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.

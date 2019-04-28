@@ -2,64 +2,413 @@ syntax = "proto3";
 
 package visa;
 
-
 service VisaService {
-    rpc GetForexConversion (VisaForexRequest) returns (VisaForexReply) {}
+  rpc GetForexConversion(VisaForexRequest) returns (VisaForexReply) {}
 }
-
 
 // Address card address
 message Address {
-    // @inject_tag: json:"city,omitempty"
-    string City = 1;
-    // @inject_tag: json:"country,omitempty"
-    string Country = 2;
-    // @inject_tag: json:"county,omitempty"
-    string County = 3;
-    // @inject_tag: json:"state,omitempty"
-    string State = 4;
-    // @inject_tag: json:"zipCode,omitempty"
-    string ZipCode = 5;
+  string city = 1;
+  string country = 2;
+  string county = 3;
+  string state = 4;
+  string zipCode = 5;
 }
 
 // CardAcceptor id
 message CardAcceptor {
-    // @inject_tag: json:"adress,omitempty"
-    Address Address = 1;
-    // @inject_tag: json:"idcode,omitempty"
-    string IDCode     = 2;
-    // @inject_tag: json:"name,omitempty"
-    string Name       =3;
-    // @inject_tag: json:"terminalId,omitempty"
-	string TerminalID = 4;
+  Address address = 1;
+  string idcode = 2;
+  string name = 3;
+  string terminalId = 4;
 }
 
+message MagneticStripeData {
+  // Conditional: string | Length: maximum 76 Conditional: string | hex binary
+  // value is sent as String, Length: maximum 19
+  string track1Data = 1;
+  string track2Data = 2;
+}
+
+message PointOfServiceData {
+  // Conditional: integer | positive, Length: totaldigits 2
+  int64 panEntryMode = 1;
+  // Conditional: integer | positive,Length: totalDigits 2
+  int64 posConditionCode = 2;
+  // Conditional: string | Length: 1 , max: 1 characters
+  string motoECIIndicator = 3;
+}
+
+message PointOfServiceCapability {
+  int64 posTerminalType = 1; // Conditional: integer | positive, totalDigits 0
+  // Conditional: integer | positive, Length: totalDigits 1
+  int64 posTerminalEntryCapability = 2;
+}
+
+message PinData {
+  string pinDataBlock = 1; // Conditional: string | Length: 16, hexbinary format
+  // Conditional: object
+  PointOfServiceCapability securityRelatedControlInfo = 2;
+}
+
+message SecurityRelatedControlInfo {
+  // Conditional: integer |positive Length: totalDigits 2
+  int64 pinBlockFormatCode = 1;
+  // Conditional: integer |positive Length: totalDigits 2
+  int64 zoneKeyIndex = 2;
+}
+
+// --- START Transaction Requests ---
+message PullFundsTransactionRequest {
+  int64 systemsTraceAuditNumber = 1; // required, 6
+  // ydddhhnnnnnn(numeric characters only), Length: 12
+  string retrievalReferenceNumber = 2;
+  // RFC3339. dateTime | YYYY-MM-DDThh:mm:ss. The date and time you
+  // submit the transaction
+  string aocalTransactionDateTime = 3;
+  int64 acquiringBin = 4;                // integer | positive, Length: 6 - 11
+  int64 acquirerCountryCode = 5;         // integer | Length: 3
+  string senderPrimaryAccountNumber = 6; // string | Length: 13 - 19
+  string senderCardExpiryDate = 7;       // string | YYYY-MM
+  string senderCurrencyCode = 8;         // string | Length: 3
+  // Optional: decimal | Length: totalDigits 12,fractionDigits 3 (minimum value
+  // is 0)
+  float amount = 9;
+  // Optional: decimal | Length: totalDigits 12,fractionDigits 3(minimum value
+  // is 0)
+  float surcharge = 10;
+  string cavv = 11; // string | Length:40
+
+  // Optional: decimal | Length: totalDigits 12, fractionDigits 3 (minimum value
+  // is 0)
+  float foreignExchangeFeeTransaction = 12;
+  string businessApplicationId = 13; // string | Length: 2
+  // Conditional: integer | Length: total 4 digits
+  int64 merchantCategoryCode = 14;
+  CardAcceptor cardAcceptor = 15;                         // Object
+  MagneticStripeData magneticStripeData = 16;             // Optional: Object
+  PointOfServiceData pointOfServiceData = 17;             // Conditional: Object
+  PointOfServiceCapability pointOfServiceCapability = 18; // Conditional: Object
+  PinData pinData = 19;                                   // Conditional: Object
+  string feeProgramIndicator = 20; // Optional: string | Length:3
+}
+
+message PushFundsTransactionRequest {
+  int64 systemsTraceAuditNumber = 1; // required, 6
+  // ydddhhnnnnnn(numeric characters only), Length: 12
+  string retrievalReferenceNumber = 2;
+  // RFC3339. dateTime | YYYY-MM-DDThh:mm:ss. The date and time you submit the
+  // transaction
+  string localTransactionDateTime = 3;
+  int64 acquiringBin = 4;         // integer | positive, Length: 6 - 11
+  int64 acquirerCountryCode = 5;  // integer | Length: 3
+  string senderAccountNumber = 6; // Conditional: string | Length: 0 - 34
+  string senderAddress = 7;       // Conditional: string | Length: 1 to 35
+  string senderCity = 8;          // Conditional: string | Length: 1 to 25
+  string senderStateCode = 9;     // Optional: string | Length: 2
+  string senderCountryCode = 10;  // Optional: string | Length: 2 or 33
+  string senderName = 11;         // Optional: string | Length: 1 to 30
+  // Optional: string | only alphabets (a-z, A-Z) and/or numbers (0-9) allowed ,
+  // max: 16 characters
+  string senderReference = 12;
+  string senderDateOfBirth = 13; // Optional: string | YYYY-MM-DD
+  // Conditional: string | Length: minimum 1, maximum 30
+  string recipientName = 14;
+  string recipientPrimaryAccountNumber = 15; // string | Length: 13 - 19
+  int64 transactionIdentifier = 16;          // integer | positive, Length: 15
+  string transactionCurrencyCode = 17;       // string | Length: 3
+  string sourceOfFundsCode = 18;             // Conditional: string | Length: 2
+  // Optional: decimal | Length: totalDigits 12,fractionDigits 3 (minimum value
+  // is 0)
+  float amount = 19;
+  string businessApplicationId = 20; // string | Length: 2
+  // Conditional: integer | Length: total 4 digits
+  int64 merchantCategoryCode = 21;
+  CardAcceptor cardAcceptor = 22;                         // Object
+  MagneticStripeData magneticStripeData = 23;             // Optional: Object
+  PointOfServiceData pointOfServiceData = 24;             // Conditional: Object
+  PointOfServiceCapability pointOfServiceCapability = 25; // Conditional: Object
+  PinData pinData = 26;                                   // Conditional: Object
+  string feeProgramIndicator = 29; // Optional: string | Length:3
+}
+
+message ReverseFundsTransactionRequest {
+  int64 systemsTraceAuditNumber = 1; // required, 6
+  // ydddhhnnnnnn(numeric characters only), Length: 12
+  string retrievalReferenceNumber = 2;
+  // RFC3339. dateTime | YYYY-MM-DDThh:mm:ss. The date and time you submit the
+  // transaction
+  string localTransactionDateTime = 3;
+  string acquiringBin = 4;               // integer | positive, Length: 6 - 11
+  int64 acquirerCountryCode = 5;         // integer | Length: 3
+  string senderPrimaryAccountNumber = 6; // Conditional: string | Length: 0 - 34
+  string senderCardExpiryDate = 7;  // Conditional: string | Length: 1 to 35
+  string senderCurrencyCode = 8;    // Conditional: string | Length: 1 to 25
+  string transactionIdentifier = 9; // integer | positive, Length: 15
+  // Optional: decimal | Length: totalDigits 12, fractionDigits 3 (minimum value
+  // is 0)
+  float amount = 10;
+  // Optional: decimal | Length: totalDigits 12, fractionDigits 3(minimum value
+  // is 0)
+  float surcharge = 11;
+  // Optional: decimal | Length: totalDigits 12, fractionDigits 3(minimum value
+  // is 0)
+  float foreignExchangeFeeTransaction = 12;
+  ReverseOriginalDataElements originalDataElements = 13;  // Object
+  CardAcceptor cardAcceptor = 14;                         // Object
+  PointOfServiceData pointOfServiceData = 15;             // Conditional: Object
+  PointOfServiceCapability pointOfServiceCapability = 16; // Conditional: Object
+  string feeProgramIndicator = 29; // Optional: string | Length:3
+}
+
+message ReverseOriginalDataElements {
+  string approvalCode = 1;           // string | Length: 6
+  int64 systemsTraceAuditNumber = 2; // integer | required, 6
+  string transmissionDateTime = 3;   // dateTime | YYYY-MM-DDThh:mm:ss
+  int64 acquiringBin = 4;            // integer | positive, Length: 6 - 11
+}
+
+// -- END Transaction Requests ---
+
+// --- START Multi Transaction Requests ---
+
+message PullFundsTransactionRequestMultiData {
+  // RFC3339. dateTime | YYYY-MM-DDThh:mm:ss. The date and time you submit the
+  // transaction
+  string localTransactionDateTime = 1;
+  int64 systemsTraceAuditNumber = 2; // required, 6
+  // ydddhhnnnnnn(numeric characters only), Length: 12
+  string retrievalReferenceNumber = 3;
+  string senderPrimaryAccountNumber = 4; // string | Length: 13 - 19
+  string senderCardExpiryDate = 15;      // string | YYYY-MM
+  string senderCurrencyCode = 5;         // string | Length: 3
+  // Optional: decimal | Length: totalDigits 12, fractionDigits 3 (minimum value
+  // is 0)
+  float amount = 6;
+  // Optional: decimal | Length: totalDigits 12, fractionDigits 3 (minimum value
+  // is 0)
+  float surcharge = 7;
+  string cavv = 8; // string | Length:40
+  // Optional: decimal | Length: totalDigits 12, fractionDigits 3 (minimum value
+  // is 0)
+  float foreignExchangeFeeTransaction = 9;
+  CardAcceptor cardAcceptor = 10;                         // Object
+  MagneticStripeData magneticStripeData = 11;             // Optional: Object
+  PointOfServiceData pointOfServiceData = 12;             // Conditional: Object
+  PointOfServiceCapability pointOfServiceCapability = 13; // Conditional: Object
+  PinData pinData = 14;
+}
+
+message PushFundsTransactionRequestMultiData {
+  int64 systemsTraceAuditNumber = 1; // required, 6
+  // ydddhhnnnnnn(numeric characters only), Length: 12
+  string retrievalReferenceNumber = 2;
+  // RFC3339. dateTime | YYYY-MM-DDThh:mm:ss. The date and time you
+  // submit the transaction
+  string localTransactionDateTime = 3;
+  string senderAccountNumber = 4; // Conditional: string | Length: 0 - 34
+  string senderAddress = 5;       // Conditional: string | Length: 1 to 35
+  string senderCity = 6;          // Conditional: string | Length: 1 to 25
+  string senderStateCode = 7;     // Optional: string | Length: 2
+  string senderCountryCode = 8;   // Optional: string | Length: 2 or 33
+  string senderName = 9;          // Optional: string | Length: 1 to 30
+  // Optional: string | only alphabets (a-z, A-Z) and/or numbers (0-9)
+  // allowed , max: 16 characters
+  string senderReference = 10;
+  string senderDateOfBirth = 11; // Optional: string | YYYY-MM-DD
+  // Conditional: string | Length: minimum 1, maximum 30
+  string recipientName = 12;
+  string recipientPrimaryAccountNumber = 13; // string | Length: 13 - 19
+  int64 transactionIdentifier = 14;          // integer | positive, Length: 15
+  string transactionCurrencyCode = 15;       // string | Length: 3
+  string sourceOfFundsCode = 16;             // Conditional: string | Length: 2
+  // Optional: decimal | Length: totalDigits 12,
+  // fractionDigits 3 (minimum value is 0)
+  float amount = 18;
+  CardAcceptor cardAcceptor = 19;                         // Object
+  MagneticStripeData magneticStripeData = 20;             // Optional: Object
+  PointOfServiceData pointOfServiceData = 21;             // Conditional: Object
+  PointOfServiceCapability pointOfServiceCapability = 22; // Conditional: Object
+  PinData pinData = 23;                                   // Conditional: Object
+  string feeProgramIndicator = 24; // Optional: string | Length:3
+}
+
+message ReverseFundsTransactionRequestMultiData {
+  int64 systemsTraceAuditNumber = 1; // required, 6
+  // ydddhhnnnnnn(numeric characters only), Length: 12
+  string retrievalReferenceNumber = 2;
+  int64 transactionIdentifier = 3; // integer | positive, Length: 15
+  // RFC3339. dateTime | YYYY-MM-DDThh:mm:ss. The date and time you
+  // submit the transaction
+  string localTransactionDateTime = 4;
+  string senderPrimaryAccountNumber = 5; // Conditional: string | Length: 0 - 34
+  string senderCardExpiryDate = 6; // Conditional: string | Length: 1 to 35
+  string senderCurrencyCode = 7;   // Conditional: string | Length: 1 to 25
+
+  // Optional: decimal | Length: totalDigits 12,
+  // fractionDigits 3 (minimum value is 0)
+  float amount = 8;
+  // Optional: decimal | Length: totalDigits 12,
+  // fractionDigits 3(minimum value is 0)
+  float surcharge = 9;
+  // Optional: decimal | Length: totalDigits 12, fractionDigits 3
+  // (minimum value is 0)
+  float foreignExchangeFeeTransaction = 10;
+  ReverseOriginalDataElements originalDataElements = 11;  // Object
+  CardAcceptor cardAcceptor = 12;                         // Object
+  PointOfServiceData pointOfServiceData = 13;             // Conditional: Object
+  PointOfServiceCapability pointOfServiceCapability = 14; // Conditional: Object
+  string feeProgramIndicator = 15; // Optional: string | Length:3
+}
+
+message PullFundsTransactionRequestMulti {
+  // RFC3339. dateTime | YYYY-MM-DDThh:mm:ss. The date and time you submit the
+  // transaction
+  string localTransactionDateTime = 1;
+  int64 acquiringBin = 2;           // integer | positive, Length: 6 - 11
+  int64 acquirerCountryCode = 3;    // integer | Length: 3
+  string businessApplicationId = 4; // string | Length: 2
+  // Conditional: integer | Length: total 4 digits
+  int64 merchantCategoryCode = 5;
+  repeated PullFundsTransactionRequestMultiData request = 6;
+  string feeProgramIndicator = 7; // Optional: string | Length:3
+}
+
+message PushFundsTransactionRequestMulti {
+  // RFC3339. dateTime | YYYY-MM-DDThh:mm:ss. The date and time you
+  // submit the transaction
+  string localTransactionDateTime = 1;
+  int64 acquiringBin = 2;           // integer | positive, Length: 6 - 11
+  int64 acquirerCountryCode = 3;    // integer | Length: 3
+  string businessApplicationId = 4; // string | Length: 2
+  // Conditional: integer | Length: total 4 digits
+  int64 merchantCategoryCode = 5;
+  repeated PushFundsTransactionRequestMultiData request = 6;
+  string feeProgramIndicator = 7; // Optional: string | Length:3
+}
+
+message ReverseFundsTransactionRequestMulti {
+  // RFC3339. dateTime | YYYY-MM-DDThh:mm:ss. The date and time you
+  // submit the transaction
+  string localTransactionDateTime = 1;
+  int64 acquiringBin = 2;        // integer | positive, Length: 6 - 11
+  int64 acquirerCountryCode = 3; // integer | Length: 3
+  repeated ReverseFundsTransactionRequestMultiData request = 4;
+}
+
+// --- END Multi Transaction Requests ---
+
+// --- START Response Structs ---
+message PullFundsTransactionResponse {
+  string statusIdentifier = 1; // string | required when call times out
+  // integer | positive and required when call does not timeout, Length: 15
+  int64 transactionIdentifier = 2;
+  string actionCode = 3;           // string | Length: 2
+  string approvalCode = 4;         // Optional: string | Length: 6
+  string transmissionDateTime = 5; // dateTime | YYYY-MM-DDThh:mm:ss
+  string cavvResultCode = 6;       // Optional: string | Length: 1
+  string responseCode = 7;         // string | Length: 1
+  string feeProgramIndicator = 8;  // Optional: string | Length:3
+  string errorMessage = 9;         // Optional: string | Length:3
+}
+
+message PushFundsTransactionResponse {
+
+  string statusIdentifier = 1; // string | required when call times out
+  // integer | positive and required when call does not timeout, Length: 15
+  int64 transactionIdentifier = 2;
+  string actionCode = 3;              // string | Length: 2
+  string approvalCode = 4;            // Optional: string | Length: 6
+  string transmissionDateTime = 5;    // dateTime | YYYY-MM-DDThh:mm:ss
+  string cavvResultCode = 6;          // Optional: string | Length: 1
+  string responseCode = 7;            // string | Length: 1
+  string feeProgramIndicator = 8;     // Optional: string | Length:3
+  string errorMessage = 9;            // Optional: string | Length:3
+  string PrepaidBalanceCurrency = 10; // string | Length:3
+  string PrepaidBalance = 11;         // string
+}
+
+// --- END Response Structs ---
+
+// --- START Multi Response Structs ---
+message ReverseFundsTransactionResponse {
+  string StatusIdentifier = 1; // string | required when call times out
+  // integer | positive and required when call
+  // does not timeout, Length: 15
+  int64 TransactionIdentifier = 2;
+  string ActionCode = 3;           // string | Length: 2
+  string ApprovalCode = 4;         // Optional: string | Length: 6
+  string TransmissionDateTime = 5; // dateTime | YYYY-MM-DDThh:mm:ss
+  string ResponseCode = 6;         // string | Length: 1
+  string FeeProgramIndicator = 7;  // Optional: string | Length:3
+  string ErrorMessage = 8;         // Optional: string | Length:3
+}
+
+message PullFundsTransactionRequestMultiResponse {
+  string statusIdentifier = 1; // string | required when call times out
+  // RFC3339. dateTime | YYYY-MM-DDThh:mm:ss. The date and time you
+  // submit the transaction
+  string localTransactionDateTime = 2;
+  int64 acquiringBin = 3;           // integer | positive, Length: 6 - 11
+  int64 acquirerCountryCode = 4;    // integer | Length: 3
+  string businessApplicationId = 5; // string | Length: 2
+  // Conditional: integer | Length: total 4 digits
+  string merchantCategoryCode = 6;
+  repeated PullFundsTransactionRequestMultiData request = 7;
+  string feeProgramIndicator = 8; // Optional: string | Length:3
+}
+
+message PushFundsTransactionRequestMultiResponse {
+  string statusIdentifier = 1; // string | required when call times out
+  // RFC3339. dateTime | YYYY-MM-DDThh:mm:ss. The date and time you
+  // submit the transaction
+  string localTransactionDateTime = 2;
+  int64 acquiringBin = 3;           // integer | positive, Length: 6 - 11
+  int64 acquirerCountryCode = 4;    // integer | Length: 3
+  string businessApplicationId = 5; // string | Length: 2
+  // Conditional: integer | Length: total 4 digits
+  string merchantCategoryCode = 6;
+  repeated PushFundsTransactionRequestMultiData request = 7;
+  string feeProgramIndicator = 8; // Optional: string | Length:3
+}
+
+message ReverseFundsTransactionRequestMultiResponse {
+  string statusIdentifier = 1;     // string | required when call times out
+  int64 transactionIdentifier = 2; // integer | positive and required when
+                                   // call does not timeout, Length: 15
+  repeated ReverseFundsTransactionResponseAftrResponse response = 3;
+}
+
+message ReverseFundsTransactionResponseAftrResponse {
+  ReverseFundsTransactionResponseAftrResponseDetail aftrResponseDetail = 1;
+  int64 SystemsTraceAuditNumber = 3; // required, 6
+}
+
+message ReverseFundsTransactionResponseAftrResponseDetail {
+  string actionCode = 1;           // string | Length: 2
+  string approvalCode = 2;         // Optional: string | Length: 6
+  string transmissionDateTime = 3; // dateTime | YYYY-MM-DDThh:mm:ss
+  string cavvResultCode = 4;       // Optional: string | Length: 1
+  string responseCode = 5;         // string | Length: 1
+  string feeProgramIndicator = 6;  // Optional: string | Length:3
+  string errorMessage = 7;         // Optional: string | Length:3
+}
+
+// --- END Multi Response Structs ---
 
 message VisaForexRequest {
-    // @inject_tag: json:"cardAcceptor"
-    CardAcceptor   CardAcceptor = 1;
-    // @inject_tag: json:"destinationCurrencyCode,omitempty"
-    string DestinationCurrencyCode  =2;
-    // @inject_tag: json:"markUpRate,omitempty"
-    string MarkUpRate              =3;
-    // @inject_tag: json:"retrievalReferenceNumber,omitempty"
-    string RetrievalReferenceNumber =4;
-    // @inject_tag: json:"sourceAmount,omitempty"
-    string SourceAmount             =5;
-    // @inject_tag: json:"sourceCurrencyCode,omitempty"
-    string SourceCurrencyCode       =6;
-    // @inject_tag: json:"systemsTraceAuditNumber,omitempty"
-	string SystemsTraceAuditNumber  =7;
-
+  CardAcceptor cardAcceptor = 1;
+  string destinationCurrencyCode = 2;
+  string markUpRate = 3;
+  string retrievalReferenceNumber = 4;
+  string sourceAmount = 5;
+  string sourceCurrencyCode = 6;
+  string systemsTraceAuditNumber = 7;
 }
 
 message VisaForexReply {
-    // @inject_tag: json:"conversionRate,omitempty"
-    float ConversionRate              =1;
-    // @inject_tag: json:"destinationAmount,omitempty"
-    string DestinationAmount            =2;
-    // @inject_tag: json:"markUpRateApplied,omitempty"
-    string MarkUpRateApplied            =3;
-    // @inject_tag: json:"originalDestnAmtBeforeMarkUp,omitempty"
-	string OriginalDestnAmtBeforeMarkUp =4;
+  float conversionRate = 1;
+  string destinationAmount = 2;
+  string markUpRateApplied = 3;
+  string originalDestnAmtBeforeMarkUp = 4;
 }

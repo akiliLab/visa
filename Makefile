@@ -12,4 +12,3 @@ test: install
 
 proto-gen:
 	 protoc --micro_out=. --go_out=plugins=grpc:. ./pb/*.proto
-	 protoc-go-inject-tag -input=./pb/visa.pb.go
