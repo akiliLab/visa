@@ -3,7 +3,7 @@ syntax = "proto3";
 package visa;
 
 
-service VisaForexService {
+service VisaService {
     rpc GetForexConversion (VisaForexRequest) returns (VisaForexReply) {}
 }
 
