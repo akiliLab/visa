@@ -4,7 +4,33 @@ package visa;
 
 service VisaService {
   rpc GetForexConversion(VisaForexRequest) returns (VisaForexReply) {}
+  rpc PullFundsTransactionsPost(PullFundsTransactionRequest)
+      returns (PullFundsTransactionResponse);
+  rpc GetPullFundsTransactionDetails(TransactionStatusIdentifierRequest)
+      returns (PullFundsTransactionResponse);
+  rpc MultiPullFundsTransactionsPost(PullFundsTransactionRequestMulti)
+      returns (PullFundsTransactionResponse);
+  rpc MultiPullFundsTransactionsGet(TransactionStatusIdentifierRequest)
+      returns (PullFundsTransactionRequestMultiResponse);
+  rpc PushFundsTransactionsPost(PushFundsTransactionRequest)
+      returns (PushFundsTransactionResponse);
+  rpc PushFundsTransactionsGet(TransactionStatusIdentifierRequest)
+      returns (PushFundsTransactionResponse);
+  rpc MultiPushFundsTransactionsPost(PushFundsTransactionRequestMulti)
+      returns (PushFundsTransactionResponse);
+  rpc MultiPushFundsTransactionsGet(TransactionStatusIdentifierRequest)
+      returns (PushFundsTransactionRequestMultiResponse);
+  rpc ReverseFundsTransactionsPost(ReverseFundsTransactionRequest)
+      returns (ReverseFundsTransactionResponse);
+  rpc ReverseFundsTransactionsGet(TransactionStatusIdentifierRequest)
+      returns (ReverseFundsTransactionResponse);
+  rpc MultiReverseFundsTransactionsPost(ReverseFundsTransactionRequestMulti)
+      returns (ReverseFundsTransactionRequestMultiResponse);
+  rpc MultiReverseFundsTransactionsGet(TransactionStatusIdentifierRequest)
+      returns (ReverseFundsTransactionRequestMultiResponse);
 }
+
+message TransactionStatusIdentifierRequest { string statusIdentifier = 1; }
 
 // Address card address
 message Address {

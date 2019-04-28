@@ -35,6 +35,18 @@ var _ server.Option
 
 type VisaService interface {
 	GetForexConversion(ctx context.Context, in *VisaForexRequest, opts ...client.CallOption) (*VisaForexReply, error)
+	PullFundsTransactionsPost(ctx context.Context, in *PullFundsTransactionRequest, opts ...client.CallOption) (*PullFundsTransactionResponse, error)
+	GetPullFundsTransactionDetails(ctx context.Context, in *TransactionStatusIdentifierRequest, opts ...client.CallOption) (*PullFundsTransactionResponse, error)
+	MultiPullFundsTransactionsPost(ctx context.Context, in *PullFundsTransactionRequestMulti, opts ...client.CallOption) (*PullFundsTransactionResponse, error)
+	MultiPullFundsTransactionsGet(ctx context.Context, in *TransactionStatusIdentifierRequest, opts ...client.CallOption) (*PullFundsTransactionRequestMultiResponse, error)
+	PushFundsTransactionsPost(ctx context.Context, in *PushFundsTransactionRequest, opts ...client.CallOption) (*PushFundsTransactionResponse, error)
+	PushFundsTransactionsGet(ctx context.Context, in *TransactionStatusIdentifierRequest, opts ...client.CallOption) (*PushFundsTransactionResponse, error)
+	MultiPushFundsTransactionsPost(ctx context.Context, in *PushFundsTransactionRequestMulti, opts ...client.CallOption) (*PushFundsTransactionResponse, error)
+	MultiPushFundsTransactionsGet(ctx context.Context, in *TransactionStatusIdentifierRequest, opts ...client.CallOption) (*PushFundsTransactionRequestMultiResponse, error)
+	ReverseFundsTransactionsPost(ctx context.Context, in *ReverseFundsTransactionRequest, opts ...client.CallOption) (*ReverseFundsTransactionResponse, error)
+	ReverseFundsTransactionsGet(ctx context.Context, in *TransactionStatusIdentifierRequest, opts ...client.CallOption) (*ReverseFundsTransactionResponse, error)
+	MultiReverseFundsTransactionsPost(ctx context.Context, in *ReverseFundsTransactionRequestMulti, opts ...client.CallOption) (*ReverseFundsTransactionRequestMultiResponse, error)
+	MultiReverseFundsTransactionsGet(ctx context.Context, in *TransactionStatusIdentifierRequest, opts ...client.CallOption) (*ReverseFundsTransactionRequestMultiResponse, error)
 }
 
 type visaService struct {
@@ -65,15 +77,159 @@ func (c *visaService) GetForexConversion(ctx context.Context, in *VisaForexReque
 	return out, nil
 }
 
+func (c *visaService) PullFundsTransactionsPost(ctx context.Context, in *PullFundsTransactionRequest, opts ...client.CallOption) (*PullFundsTransactionResponse, error) {
+	req := c.c.NewRequest(c.name, "VisaService.PullFundsTransactionsPost", in)
+	out := new(PullFundsTransactionResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *visaService) GetPullFundsTransactionDetails(ctx context.Context, in *TransactionStatusIdentifierRequest, opts ...client.CallOption) (*PullFundsTransactionResponse, error) {
+	req := c.c.NewRequest(c.name, "VisaService.GetPullFundsTransactionDetails", in)
+	out := new(PullFundsTransactionResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *visaService) MultiPullFundsTransactionsPost(ctx context.Context, in *PullFundsTransactionRequestMulti, opts ...client.CallOption) (*PullFundsTransactionResponse, error) {
+	req := c.c.NewRequest(c.name, "VisaService.MultiPullFundsTransactionsPost", in)
+	out := new(PullFundsTransactionResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *visaService) MultiPullFundsTransactionsGet(ctx context.Context, in *TransactionStatusIdentifierRequest, opts ...client.CallOption) (*PullFundsTransactionRequestMultiResponse, error) {
+	req := c.c.NewRequest(c.name, "VisaService.MultiPullFundsTransactionsGet", in)
+	out := new(PullFundsTransactionRequestMultiResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *visaService) PushFundsTransactionsPost(ctx context.Context, in *PushFundsTransactionRequest, opts ...client.CallOption) (*PushFundsTransactionResponse, error) {
+	req := c.c.NewRequest(c.name, "VisaService.PushFundsTransactionsPost", in)
+	out := new(PushFundsTransactionResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *visaService) PushFundsTransactionsGet(ctx context.Context, in *TransactionStatusIdentifierRequest, opts ...client.CallOption) (*PushFundsTransactionResponse, error) {
+	req := c.c.NewRequest(c.name, "VisaService.PushFundsTransactionsGet", in)
+	out := new(PushFundsTransactionResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *visaService) MultiPushFundsTransactionsPost(ctx context.Context, in *PushFundsTransactionRequestMulti, opts ...client.CallOption) (*PushFundsTransactionResponse, error) {
+	req := c.c.NewRequest(c.name, "VisaService.MultiPushFundsTransactionsPost", in)
+	out := new(PushFundsTransactionResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *visaService) MultiPushFundsTransactionsGet(ctx context.Context, in *TransactionStatusIdentifierRequest, opts ...client.CallOption) (*PushFundsTransactionRequestMultiResponse, error) {
+	req := c.c.NewRequest(c.name, "VisaService.MultiPushFundsTransactionsGet", in)
+	out := new(PushFundsTransactionRequestMultiResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *visaService) ReverseFundsTransactionsPost(ctx context.Context, in *ReverseFundsTransactionRequest, opts ...client.CallOption) (*ReverseFundsTransactionResponse, error) {
+	req := c.c.NewRequest(c.name, "VisaService.ReverseFundsTransactionsPost", in)
+	out := new(ReverseFundsTransactionResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *visaService) ReverseFundsTransactionsGet(ctx context.Context, in *TransactionStatusIdentifierRequest, opts ...client.CallOption) (*ReverseFundsTransactionResponse, error) {
+	req := c.c.NewRequest(c.name, "VisaService.ReverseFundsTransactionsGet", in)
+	out := new(ReverseFundsTransactionResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *visaService) MultiReverseFundsTransactionsPost(ctx context.Context, in *ReverseFundsTransactionRequestMulti, opts ...client.CallOption) (*ReverseFundsTransactionRequestMultiResponse, error) {
+	req := c.c.NewRequest(c.name, "VisaService.MultiReverseFundsTransactionsPost", in)
+	out := new(ReverseFundsTransactionRequestMultiResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *visaService) MultiReverseFundsTransactionsGet(ctx context.Context, in *TransactionStatusIdentifierRequest, opts ...client.CallOption) (*ReverseFundsTransactionRequestMultiResponse, error) {
+	req := c.c.NewRequest(c.name, "VisaService.MultiReverseFundsTransactionsGet", in)
+	out := new(ReverseFundsTransactionRequestMultiResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for VisaService service
 
 type VisaServiceHandler interface {
 	GetForexConversion(context.Context, *VisaForexRequest, *VisaForexReply) error
+	PullFundsTransactionsPost(context.Context, *PullFundsTransactionRequest, *PullFundsTransactionResponse) error
+	GetPullFundsTransactionDetails(context.Context, *TransactionStatusIdentifierRequest, *PullFundsTransactionResponse) error
+	MultiPullFundsTransactionsPost(context.Context, *PullFundsTransactionRequestMulti, *PullFundsTransactionResponse) error
+	MultiPullFundsTransactionsGet(context.Context, *TransactionStatusIdentifierRequest, *PullFundsTransactionRequestMultiResponse) error
+	PushFundsTransactionsPost(context.Context, *PushFundsTransactionRequest, *PushFundsTransactionResponse) error
+	PushFundsTransactionsGet(context.Context, *TransactionStatusIdentifierRequest, *PushFundsTransactionResponse) error
+	MultiPushFundsTransactionsPost(context.Context, *PushFundsTransactionRequestMulti, *PushFundsTransactionResponse) error
+	MultiPushFundsTransactionsGet(context.Context, *TransactionStatusIdentifierRequest, *PushFundsTransactionRequestMultiResponse) error
+	ReverseFundsTransactionsPost(context.Context, *ReverseFundsTransactionRequest, *ReverseFundsTransactionResponse) error
+	ReverseFundsTransactionsGet(context.Context, *TransactionStatusIdentifierRequest, *ReverseFundsTransactionResponse) error
+	MultiReverseFundsTransactionsPost(context.Context, *ReverseFundsTransactionRequestMulti, *ReverseFundsTransactionRequestMultiResponse) error
+	MultiReverseFundsTransactionsGet(context.Context, *TransactionStatusIdentifierRequest, *ReverseFundsTransactionRequestMultiResponse) error
 }
 
 func RegisterVisaServiceHandler(s server.Server, hdlr VisaServiceHandler, opts ...server.HandlerOption) error {
 	type visaService interface {
 		GetForexConversion(ctx context.Context, in *VisaForexRequest, out *VisaForexReply) error
+		PullFundsTransactionsPost(ctx context.Context, in *PullFundsTransactionRequest, out *PullFundsTransactionResponse) error
+		GetPullFundsTransactionDetails(ctx context.Context, in *TransactionStatusIdentifierRequest, out *PullFundsTransactionResponse) error
+		MultiPullFundsTransactionsPost(ctx context.Context, in *PullFundsTransactionRequestMulti, out *PullFundsTransactionResponse) error
+		MultiPullFundsTransactionsGet(ctx context.Context, in *TransactionStatusIdentifierRequest, out *PullFundsTransactionRequestMultiResponse) error
+		PushFundsTransactionsPost(ctx context.Context, in *PushFundsTransactionRequest, out *PushFundsTransactionResponse) error
+		PushFundsTransactionsGet(ctx context.Context, in *TransactionStatusIdentifierRequest, out *PushFundsTransactionResponse) error
+		MultiPushFundsTransactionsPost(ctx context.Context, in *PushFundsTransactionRequestMulti, out *PushFundsTransactionResponse) error
+		MultiPushFundsTransactionsGet(ctx context.Context, in *TransactionStatusIdentifierRequest, out *PushFundsTransactionRequestMultiResponse) error
+		ReverseFundsTransactionsPost(ctx context.Context, in *ReverseFundsTransactionRequest, out *ReverseFundsTransactionResponse) error
+		ReverseFundsTransactionsGet(ctx context.Context, in *TransactionStatusIdentifierRequest, out *ReverseFundsTransactionResponse) error
+		MultiReverseFundsTransactionsPost(ctx context.Context, in *ReverseFundsTransactionRequestMulti, out *ReverseFundsTransactionRequestMultiResponse) error
+		MultiReverseFundsTransactionsGet(ctx context.Context, in *TransactionStatusIdentifierRequest, out *ReverseFundsTransactionRequestMultiResponse) error
 	}
 	type VisaService struct {
 		visaService
@@ -88,4 +244,52 @@ type visaServiceHandler struct {
 
 func (h *visaServiceHandler) GetForexConversion(ctx context.Context, in *VisaForexRequest, out *VisaForexReply) error {
 	return h.VisaServiceHandler.GetForexConversion(ctx, in, out)
+}
+
+func (h *visaServiceHandler) PullFundsTransactionsPost(ctx context.Context, in *PullFundsTransactionRequest, out *PullFundsTransactionResponse) error {
+	return h.VisaServiceHandler.PullFundsTransactionsPost(ctx, in, out)
+}
+
+func (h *visaServiceHandler) GetPullFundsTransactionDetails(ctx context.Context, in *TransactionStatusIdentifierRequest, out *PullFundsTransactionResponse) error {
+	return h.VisaServiceHandler.GetPullFundsTransactionDetails(ctx, in, out)
+}
+
+func (h *visaServiceHandler) MultiPullFundsTransactionsPost(ctx context.Context, in *PullFundsTransactionRequestMulti, out *PullFundsTransactionResponse) error {
+	return h.VisaServiceHandler.MultiPullFundsTransactionsPost(ctx, in, out)
+}
+
+func (h *visaServiceHandler) MultiPullFundsTransactionsGet(ctx context.Context, in *TransactionStatusIdentifierRequest, out *PullFundsTransactionRequestMultiResponse) error {
+	return h.VisaServiceHandler.MultiPullFundsTransactionsGet(ctx, in, out)
+}
+
+func (h *visaServiceHandler) PushFundsTransactionsPost(ctx context.Context, in *PushFundsTransactionRequest, out *PushFundsTransactionResponse) error {
+	return h.VisaServiceHandler.PushFundsTransactionsPost(ctx, in, out)
+}
+
+func (h *visaServiceHandler) PushFundsTransactionsGet(ctx context.Context, in *TransactionStatusIdentifierRequest, out *PushFundsTransactionResponse) error {
+	return h.VisaServiceHandler.PushFundsTransactionsGet(ctx, in, out)
+}
+
+func (h *visaServiceHandler) MultiPushFundsTransactionsPost(ctx context.Context, in *PushFundsTransactionRequestMulti, out *PushFundsTransactionResponse) error {
+	return h.VisaServiceHandler.MultiPushFundsTransactionsPost(ctx, in, out)
+}
+
+func (h *visaServiceHandler) MultiPushFundsTransactionsGet(ctx context.Context, in *TransactionStatusIdentifierRequest, out *PushFundsTransactionRequestMultiResponse) error {
+	return h.VisaServiceHandler.MultiPushFundsTransactionsGet(ctx, in, out)
+}
+
+func (h *visaServiceHandler) ReverseFundsTransactionsPost(ctx context.Context, in *ReverseFundsTransactionRequest, out *ReverseFundsTransactionResponse) error {
+	return h.VisaServiceHandler.ReverseFundsTransactionsPost(ctx, in, out)
+}
+
+func (h *visaServiceHandler) ReverseFundsTransactionsGet(ctx context.Context, in *TransactionStatusIdentifierRequest, out *ReverseFundsTransactionResponse) error {
+	return h.VisaServiceHandler.ReverseFundsTransactionsGet(ctx, in, out)
+}
+
+func (h *visaServiceHandler) MultiReverseFundsTransactionsPost(ctx context.Context, in *ReverseFundsTransactionRequestMulti, out *ReverseFundsTransactionRequestMultiResponse) error {
+	return h.VisaServiceHandler.MultiReverseFundsTransactionsPost(ctx, in, out)
+}
+
+func (h *visaServiceHandler) MultiReverseFundsTransactionsGet(ctx context.Context, in *TransactionStatusIdentifierRequest, out *ReverseFundsTransactionRequestMultiResponse) error {
+	return h.VisaServiceHandler.MultiReverseFundsTransactionsGet(ctx, in, out)
 }
