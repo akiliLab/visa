@@ -11,7 +11,7 @@ import (
 )
 
 // GetForexChangeRate : get foreignExchange
-func (c *Client) GetForexChangeRate(transactionID string, request pb.VisaForexRequest) (*pb.VisaForexReply, error) {
+func (c *Client) GetForexChangeRate(transactionID string, request *pb.VisaForexRequest) (*pb.VisaForexReply, error) {
 
 	urlFull := &url.URL{
 		Scheme: "https",
@@ -35,6 +35,7 @@ func (c *Client) GetForexChangeRate(transactionID string, request pb.VisaForexRe
 	if err != nil {
 		return nil, fmt.Errorf("Could not load HTTPS client: %v", err)
 	}
+
 	defer resp.Body.Close()
 
 	// HTTP 200 and 404 are not errors

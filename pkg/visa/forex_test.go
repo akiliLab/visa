@@ -3,6 +3,7 @@ package visa
 import (
 	"crypto/tls"
 	"github.com/joho/godotenv"
+	pb "github.com/ubunifupay/visa/pb"
 	"io/ioutil"
 	"os"
 	"reflect"
@@ -17,25 +18,28 @@ func TestForexConvesion(t *testing.T) {
 		t.Errorf("Error loading variables: %v", err)
 	}
 
-	testData := &ForexRequest{
+	cardAddress := &pb.Address{
+		City:    "Foster City",
+		Country: "RU",
+		County:  "San Mateo",
+		State:   "CA",
+		ZipCode: "94404",
+	}
+	cardAcceptor := &pb.CardAcceptor{
+		Address:    cardAddress,
+		IDCode:     "ABCD1234ABCD123",
+		Name:       "ABCD",
+		TerminalID: "ABCD1234",
+	}
+
+	testData := &pb.VisaForexRequest{
 		DestinationCurrencyCode:  "840",
 		MarkUpRate:               "1",
 		RetrievalReferenceNumber: "201010101031",
 		SourceAmount:             "100",
 		SourceCurrencyCode:       "643",
 		SystemsTraceAuditNumber:  "350421",
-		CardAcceptor: CardAcceptor{
-			Address: Address{
-				City:    "Foster City",
-				Country: "RU",
-				County:  "San Mateo",
-				State:   "CA",
-				ZipCode: "94404",
-			},
-			IDCode:     "ABCD1234ABCD123",
-			Name:       "ABCD",
-			TerminalID: "ABCD1234",
-		},
+		CardAcceptor:             cardAcceptor,
 	}
 
 	userID := os.Getenv("USER_ID")
