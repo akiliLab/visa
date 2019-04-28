@@ -7,7 +7,7 @@ import (
 	"github.com/micro/go-grpc"
 	"github.com/micro/go-micro"
 	pb "github.com/ubunifupay/visa/pb"
-	"github.com/ubunifupay/visa/server/visa"
+	"github.com/ubunifupay/visa/srv/visa"
 	"io/ioutil"
 	"log"
 	"os"
